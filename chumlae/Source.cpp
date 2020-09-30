@@ -70,12 +70,12 @@ int main() {
 	//wall2//
 
 	sf::Texture wall2_tx;
-	wall2_tx.loadFromFile("wall03.png");
-	if (!wall2_tx.loadFromFile("wall03.jpg")) {
+	wall2_tx.loadFromFile("wall02.jpg");
+	if (!wall2_tx.loadFromFile("wall02.jpg")) {
 		printf("Loading. . .\n");
 	}
 	else {
-		printf("Loading wall 03 done!\n");
+		printf("Loading wall 02 done!\n");
 	}
 	sf::RectangleShape wall2(sf::Vector2f(400, 150));
 	wall2.setPosition(900, 310);
@@ -86,6 +86,35 @@ int main() {
 	sf::RectangleShape wall3(sf::Vector2f(100, 400));
 	wall3.setPosition(700, 500);
 	wall3.setFillColor(sf::Color(0, 0, 0));
+
+	//wall4//
+
+	sf::Texture wall4_tx;
+	wall4_tx.loadFromFile("wall04.jpg");
+	if (!wall4_tx.loadFromFile("wall04.jpg")) {
+		printf("loading. . .\n");
+	}
+	else {
+		printf("Loading wall04 done!\n");
+	}
+	sf::RectangleShape wall4(sf::Vector2f(100, 200));
+	wall4.setTexture(&wall4_tx);
+	wall4.setPosition(800, 0);
+
+	//wall5//
+
+	sf::Texture wall5_tx;
+	wall4_tx.loadFromFile("wall05.jpg");
+	if (!wall5_tx.loadFromFile("wall05.jpg")) {
+		printf("loading. . .\n");
+	}
+	else {
+		printf("Loading wall04 done!\n");
+	}
+	sf::RectangleShape wall5(sf::Vector2f(100, 200));
+	wall5.setTexture(&wall5_tx);
+	wall5.setPosition(200, 0);
+
 
 	//Enemy01//
 
@@ -242,10 +271,13 @@ int main() {
 		window.draw(background);
 		window.draw(wall1);
 		window.draw(wall2);
+		window.draw(player);
 		window.draw(wall3);
+		window.draw(wall4);
+		window.draw(wall5);
 		window.draw(enemy01);
 		window.draw(enemy02);
-		window.draw(player);
+		
 		window.display();
 	}
 }
