@@ -279,7 +279,45 @@ int main() {
 	int  enemyLV203MaxY = 0;
 	float enemyLV203PosY = 0, enemyLV203FrameX = 0, enemyLV203FrameY = 8;
 
+
 	//---------------------------------------level 3----------------------------------------------//
+
+
+	//**********wall1**********//
+
+	sf::RectangleShape wallLV301(sf::Vector2f(200, 600));
+	wallLV301.setPosition(200, 300);
+	wallLV301.setFillColor(sf::Color(0, 0, 0));
+
+	//**********wall2**********//
+
+	sf::Texture wallLV302_tx;
+	wallLV302_tx.loadFromFile("wallLV302.jpg");
+	if (!wallLV302_tx.loadFromFile("wallLV302.jpg")) {
+		printf("loading. . .\n");
+	}
+	else {
+		printf("Loading wallLV302 done!\n");
+	}
+	sf::RectangleShape wallLV302(sf::Vector2f(100, 200));
+	wallLV302.setTexture(&wallLV302_tx);
+	wallLV302.setPosition(300, 0);
+
+	//**********wall3**********//
+
+	sf::Texture wallLV303_tx;
+	wallLV303_tx.loadFromFile("wallLV303.jpg");
+	if (!wallLV303_tx.loadFromFile("wallLV303.jpg")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading wallLV303 done!\n");
+	}
+	sf::RectangleShape wallLV303(sf::Vector2f(500, 150));
+	wallLV303.setPosition(400, 300);
+	wallLV303.setTexture(&wallLV303_tx);
+
+	//**********Enemy01**********//
 
 
 
@@ -594,6 +632,14 @@ int main() {
 			}
 			window.draw(wallLV204);
 			window.draw(DoorLV2);
+		}
+
+		//RENDER:LEVEL3//
+		
+		else if (n == 4) {
+			window.draw(wallLV302);
+			window.draw(wallLV301);
+			window.draw(wallLV303);
 		}
 
 		
