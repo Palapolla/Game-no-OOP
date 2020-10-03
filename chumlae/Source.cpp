@@ -365,6 +365,126 @@ int main() {
 
 
 
+	//---------------------------------------level 4----------------------------------------------//
+
+	
+
+	//**********Stage1**********//
+
+	//**********wall1**********//
+
+	sf::Texture wallLV401_tx;
+	wallLV401_tx.loadFromFile("wallLV401.jpg");
+	if (!wallLV401_tx.loadFromFile("wallLV401.jpg")) {
+		printf("loading. . .\n");
+	}
+	else {
+		printf("Loading wallLV401 done!\n");
+	}
+	sf::RectangleShape wallLV401(sf::Vector2f(900, 150));
+	wallLV401.setTexture(&wallLV401_tx);
+	wallLV401.setPosition(0, 400);
+	
+	//**********wall2**********//
+
+	sf::Texture wallLV402_tx;
+	wallLV402_tx.loadFromFile("wallLV402.jpg");
+	if (!wallLV402_tx.loadFromFile("wallLV402.jpg")) {
+		printf("loading. . .\n");
+	}
+	else {
+		printf("Loading wallLV402 done!\n");
+	}
+	sf::RectangleShape wallLV402(sf::Vector2f(100, 200));
+	wallLV402.setTexture(&wallLV402_tx);
+	wallLV402.setPosition(300, 0);
+
+	//**********Enemy01**********//
+
+	sf::Texture enemyLV401_tx;
+	enemyLV401_tx.loadFromFile("EnemyLV401.png");
+	if (!enemyLV401_tx.loadFromFile("EnemyLV401.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading EnemyLV401 Done!\n");
+	}
+	sf::RectangleShape enemyLV401(sf::Vector2f(100.0f, 100.0f));
+	enemyLV401.setTexture(&enemyLV401_tx);
+	sf::Vector2u enemyLV401TextureSize = enemyLV401_tx.getSize();
+	int enemyLV401SizeX = enemyLV401TextureSize.x / 13;
+	int enemyLV401SizeY = enemyLV401TextureSize.y / 21;
+	enemyLV401.setTextureRect(sf::IntRect(enemyLV401SizeX * 2, enemyLV401SizeY * 2, enemyLV401SizeX, enemyLV401SizeY));
+	enemyLV401.setPosition(1000, 600);
+	int  enemyLV401MaxX = 0;
+	float enemyLV401PosX = 0, enemyLV401FrameX = 0, enemyLV401FrameY = 9;
+
+	//**********Enemy02**********//
+
+	sf::Texture enemyLV402_tx;
+	enemyLV402_tx.loadFromFile("EnemyLV402.png");
+	if (!enemyLV402_tx.loadFromFile("EnemyLV402.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading EnemyLV402 Done!\n");
+	}
+	sf::RectangleShape enemyLV402(sf::Vector2f(100.0f, 100.0f));
+	enemyLV402.setTexture(&enemyLV402_tx);
+	sf::Vector2u enemyLV402TextureSize = enemyLV402_tx.getSize();
+	int enemyLV402SizeX = enemyLV402TextureSize.x / 13;
+	int enemyLV402SizeY = enemyLV402TextureSize.y / 21;
+	enemyLV402.setTextureRect(sf::IntRect(enemyLV402SizeX * 2, enemyLV402SizeY * 2, enemyLV402SizeX, enemyLV402SizeY));
+	enemyLV402.setPosition(1000, 450);
+	int  enemyLV402MaxY = 0;
+	float enemyLV402PosY = 0, enemyLV402FrameX = 0, enemyLV402FrameY = 8;
+
+	//**********Stage2**********//
+
+	//**********wallTop**********//
+
+
+	//**********Enemy03**********//
+
+	sf::Texture enemyLV403_tx;
+	enemyLV403_tx.loadFromFile("EnemyLV403.png");
+	if (!enemyLV403_tx.loadFromFile("EnemyLV403.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading EnemyLV403 Done!\n");
+	}
+	sf::RectangleShape enemyLV403(sf::Vector2f(100.0f, 100.0f));
+	enemyLV403.setTexture(&enemyLV403_tx);
+	sf::Vector2u enemyLV403TextureSize = enemyLV403_tx.getSize();
+	int enemyLV403SizeX = enemyLV403TextureSize.x / 13;
+	int enemyLV403SizeY = enemyLV403TextureSize.y / 21;
+	enemyLV403.setTextureRect(sf::IntRect(enemyLV403SizeX * 2, enemyLV403SizeY * 2, enemyLV403SizeX, enemyLV403SizeY));
+	enemyLV403.setPosition(300, 500);
+	int  enemyLV403MaxY = 0;
+	float enemyLV403PosY = 0, enemyLV403FrameX = 0, enemyLV403FrameY = 8;
+
+	//**********Enemy04**********//
+
+	sf::Texture enemyLV404_tx;
+	enemyLV404_tx.loadFromFile("EnemyLV404.png");
+	if (!enemyLV404_tx.loadFromFile("EnemyLV404.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading EnemyLV404 Done!\n");
+	}
+	sf::RectangleShape enemyLV404(sf::Vector2f(100.0f, 100.0f));
+	enemyLV404.setTexture(&enemyLV404_tx);
+	sf::Vector2u enemyLV404TextureSize = enemyLV404_tx.getSize();
+	int enemyLV404SizeX = enemyLV404TextureSize.x / 13;
+	int enemyLV404SizeY = enemyLV404TextureSize.y / 21;
+	enemyLV404.setTextureRect(sf::IntRect(enemyLV404SizeX * 2, enemyLV404SizeY * 2, enemyLV404SizeX, enemyLV404SizeY));
+	enemyLV404.setPosition(600, 100);
+	int  enemyLV404MaxY = 0;
+	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 8;
+
+
 	/*----------------------------------------------------------------------------------------------------------
 
 	-------------------------------------------- Loop Zone ----------------------------------------------------
@@ -435,7 +555,7 @@ int main() {
 			}
 		}
 		sf::Vector2f playerPosition = player.getPosition();
-		printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
+		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
 
 
 
@@ -641,6 +761,116 @@ int main() {
 		sf::Vector2f enemyLV302Position = enemyLV302.getPosition();
 
 
+		//--------------------------------------ENEMY LEVEL4------------------------------------------//
+
+
+		//**********enemy01 animation**********//
+
+		enemyLV401.move(enemyLV401PosX, 0.0f);
+		enemyLV401.setTextureRect(sf::IntRect(enemyLV401SizeX* enemyLV401FrameX, enemyLV401SizeY* enemyLV401FrameY, enemyLV401SizeX, enemyLV401SizeY));
+		enemyLV401FrameX++;
+		if (enemyLV401FrameX >= 9) {
+			enemyLV401FrameX = 0;
+		}
+
+		//Check Enemy 01 Position//
+
+		if (enemyLV401MaxX < 100) {
+			enemyLV401PosX = -4.5;
+			enemyLV401MaxX++;
+		}
+		else if (enemyLV401MaxX >= 100 && enemyLV401MaxX < 200) {
+			enemyLV401FrameY = 11;
+			enemyLV401PosX = 4.5;
+			enemyLV401MaxX++;
+		}
+		else {
+			enemyLV401MaxX = 0;
+			enemyLV401PosX = 0;
+			enemyLV401FrameY = 9;
+		}
+		sf::Vector2f enemyLV401Position = enemyLV401.getPosition();
+
+		//**********enemy02 animation**********//
+
+		enemyLV402.move(0.0f, enemyLV402PosY);
+		enemyLV402.setTextureRect(sf::IntRect(enemyLV402SizeX* enemyLV402FrameX, enemyLV402SizeY* enemyLV402FrameY, enemyLV402SizeX, enemyLV402SizeY));
+		enemyLV402FrameX++;
+		if (enemyLV402FrameX >= 9) {
+			enemyLV402FrameX = 0;
+		}
+
+		//Check Enemy 02 Position//
+
+		if (enemyLV402MaxY < 100) {
+			enemyLV402PosY = -4.5;
+			enemyLV402MaxY++;
+		}
+		else if (enemyLV402MaxY >= 100 && enemyLV402MaxY < 200) {
+			enemyLV402FrameY = 10;
+			enemyLV402PosY = 4.5;
+			enemyLV402MaxY++;
+		}
+		else {
+			enemyLV402MaxY = 0;
+			enemyLV402PosY = 0;
+			enemyLV402FrameY = 8;
+		}
+		sf::Vector2f enemyLV402Position = enemyLV402.getPosition();
+
+		//**********enemy03 animation**********//
+
+		enemyLV403.move(0.0f, enemyLV403PosY);
+		enemyLV403.setTextureRect(sf::IntRect(enemyLV403SizeX * enemyLV403FrameX, enemyLV403SizeY * enemyLV403FrameY, enemyLV403SizeX, enemyLV403SizeY));
+		enemyLV403FrameX++;
+		if (enemyLV403FrameX >= 9) {
+			enemyLV403FrameX = 0;
+		}
+
+		//Check Enemy 03 Position//
+
+		if (enemyLV403MaxY < 100) {
+			enemyLV403PosY = -4.5;
+			enemyLV403MaxY++;
+		}
+		else if (enemyLV403MaxY >= 100 && enemyLV403MaxY < 200) {
+			enemyLV403FrameY = 10;
+			enemyLV403PosY = 4.5;
+			enemyLV403MaxY++;
+		}
+		else {
+			enemyLV403MaxY = 0;
+			enemyLV403PosY = 0;
+			enemyLV403FrameY = 8;
+		}
+		sf::Vector2f enemyLV403Position = enemyLV403.getPosition();
+
+		//**********enemy04 animation**********//
+
+		enemyLV404.move(0.0f, enemyLV404PosY);
+		enemyLV404.setTextureRect(sf::IntRect(enemyLV404SizeX* enemyLV404FrameX, enemyLV404SizeY* enemyLV404FrameY, enemyLV404SizeX, enemyLV404SizeY));
+		enemyLV404FrameX++;
+		if (enemyLV404FrameX >= 9) {
+			enemyLV404FrameX = 0;
+		}
+
+		//Check Enemy 04 Position//
+
+		if (enemyLV404MaxY < 100) {
+			enemyLV404PosY = 4.5;
+			enemyLV404MaxY++;
+		}
+		else if (enemyLV404MaxY >= 100 && enemyLV404MaxY < 200) {
+			enemyLV404FrameY = 10;
+			enemyLV404PosY = -4.5;
+			enemyLV404MaxY++;
+		}
+		else {
+			enemyLV404MaxY = 0;
+			enemyLV404PosY = 0;
+			enemyLV404FrameY = 8;
+		}
+		sf::Vector2f enemyLV404Position = enemyLV404.getPosition();
 
 		/*----------------------------------------------------------------------------------------------------------
 
@@ -667,7 +897,7 @@ int main() {
 			window.draw(player);
 			window.draw(enemy01);
 			window.draw(enemy02);
-			window.draw(wall3);
+			
 			if (playerPosition.y < 300&&playerPosition.y > 200) {
 				window.draw(enemy01);
 				window.draw(player);
@@ -690,6 +920,7 @@ int main() {
 				window.draw(player);
 				window.draw(enemy02);
 			}
+			window.draw(wall3);
 		}
 
 		//RENDER:LEVEL 2//
@@ -755,7 +986,7 @@ int main() {
 				window.draw(enemyLV302);
 				window.draw(player);
 			}
-			if( enemyLV302Position.y > playerPosition.y) {\
+			if( enemyLV302Position.y > playerPosition.y) {
 				window.draw(player);
 				window.draw(enemyLV302);
 			}
@@ -789,7 +1020,56 @@ int main() {
 			window.draw(wallLV301);
 		}
 
+		//RENDER:LEVEL4//
+
+		else if (n == 5) {
+			window.draw(enemyLV402);
+			window.draw(wallLV402);
+			window.draw(wallLV401);
+			window.draw(enemyLV401);
+			if (playerPosition.y < 350) {
+				if (playerPosition.y < enemyLV401Position.y) {
+					window.draw(player);
+					window.draw(enemyLV401);
+				}
+				if (!(playerPosition.y < enemyLV401Position.y)) {
+					window.draw(enemyLV401);
+					window.draw(player);
+
+				}
+				if (playerPosition.y < enemyLV402Position.y) {
+					window.draw(player);
+					window.draw(enemyLV402);
+				}
+				if (!(playerPosition.y < enemyLV402Position.y)) {
+					window.draw(enemyLV402);
+					window.draw(player);
+				}
+
+				window.draw(wallLV401);  
+
+			}
+			if (!(playerPosition.y < 350)) {
+				window.draw(wallLV401);
+				if (playerPosition.y < enemyLV401Position.y) {
+					window.draw(player);
+					window.draw(enemyLV401);
+				}
+				if (!(playerPosition.y < enemyLV401Position.y)) {
+					window.draw(enemyLV401);
+					window.draw(player);
+
+				}
+			}
 		
+
+		}
+		
+		else if (n == 6) {
+			window.draw(enemyLV403);
+			window.draw(enemyLV404);
+
+		}
 		window.display();
 	}
 	/*----------------------------------------------------------------------------------------------------------
