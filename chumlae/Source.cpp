@@ -50,8 +50,7 @@ int main() {
 	player.setTextureRect(sf::IntRect(playerSizeX* 2, playerSizeY * 2, playerSizeX, playerSizeY));
 	int animationFrame = 0,skillFrame = 0;
 	bool spaceCheck = false;
-
-
+	
 
 
 	//---------------------------------------level 1----------------------------------------------//
@@ -64,7 +63,7 @@ int main() {
 	//**********wall1**********//
 
 	sf::Texture wall1_tx;
-	wall1_tx.loadFromFile("wall01.png");
+	wall1_tx.loadFromFile("wall01.jpg");
 	if (!wall1_tx.loadFromFile("wall01.jpg")){
 		printf("Loading. . .\n");
 	}
@@ -74,6 +73,7 @@ int main() {
 	sf::RectangleShape wall1(sf::Vector2f(600,150));
 	wall1.setPosition(0, 310);
 	wall1.setTexture(&wall1_tx);
+	sf::Vector2f wall1Pos = wall1.getPosition();
 
 	//**********wall2**********//
 
@@ -88,12 +88,14 @@ int main() {
 	sf::RectangleShape wall2(sf::Vector2f(400, 150));
 	wall2.setPosition(900, 310);
 	wall2.setTexture(&wall2_tx);
+	sf::Vector2f wall2Pos = wall2.getPosition();
 	
 	//**********wall3**********//
 
 	sf::RectangleShape wall3(sf::Vector2f(100, 400));
 	wall3.setPosition(700, 500);
 	wall3.setFillColor(sf::Color(0, 0, 0));
+	sf::Vector2f wall3Pos = wall3.getPosition();
 
 	//**********wall4**********//
 
@@ -108,6 +110,7 @@ int main() {
 	sf::RectangleShape wall4(sf::Vector2f(100, 200));
 	wall4.setTexture(&wall4_tx);
 	wall4.setPosition(800, 0);
+	sf::Vector2f wall4Pos = wall4.getPosition();
 
 	//**********wall5**********//
 
@@ -122,6 +125,7 @@ int main() {
 	sf::RectangleShape wall5(sf::Vector2f(100, 200));
 	wall5.setTexture(&wall5_tx);
 	wall5.setPosition(200, 0);
+	sf::Vector2f wall5Pos = wall5.getPosition();
 
 
 	//**********Enemy01**********//
@@ -485,11 +489,16 @@ int main() {
 	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 8;
 
 
-	/*----------------------------------------------------------------------------------------------------------
 
-	-------------------------------------------- Loop Zone ----------------------------------------------------
+	/**********************************************************************************************************
+
+	-----------------------------------------------------------------------------------------------------------
+
+	-----------------------------------------> > Loop Zone < <-------------------------------------------------
 	
-	----------------------------------------------------------------------------------------------------------*/
+	-----------------------------------------------------------------------------------------------------------
+
+	***********************************************************************************************************/
 
 
 
@@ -507,35 +516,148 @@ int main() {
 		}
 
 
+
+	/*------------------------------------------------------------------------------------------------------------------------
+
+	-------------------------------------------- //Collision Check Zone// ----------------------------------------------------
+
+	------------------------------------------------------------------------------------------------------------------------*/
+
+
+		//Collision Check Zone//
+
+		if (player.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+			printf("chon laew na");
+		}
+
+		//collision with walls check//
+
+		sf::Vector2f playerPosition = player.getPosition();
+		bool w = true, a = true, s = true, d = true;
+
+		//LEVEL 1//
+
+		if (n == 1) {
+			
+			//Level1 > > wall1//
+
+			if ((playerPosition.y < wall1Pos.y + 75 && playerPosition.y>wall1Pos.y) && (playerPosition.x < wall1Pos.x + 570)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wall1Pos.y + 40 && playerPosition.y > wall1Pos.y - 80) && (playerPosition.x < wall1Pos.x + 570)) {
+				s = false;
+				//printf("s\n");
+			}
+			if ((playerPosition.y<wall1Pos.y + 75 && playerPosition.y > wall1Pos.y - 80) && (playerPosition.x < wall1Pos.x + 580 && playerPosition.x > wall1Pos.x + 570)) {
+				a = false;
+				//printf("a\n");
+			}
+
+			//Level1 > > wall2//
+
+			if ((playerPosition.y < wall2Pos.y + 75 && playerPosition.y > wall2Pos.y) && (playerPosition.x > wall2Pos.x-70)) {
+				w = false;
+				//printf("w1\n");
+			}
+			if ((playerPosition.y < wall2Pos.y + 40 && playerPosition.y > wall2Pos.y - 80) && (playerPosition.x > wall2Pos.x-70)) {
+				s = false;
+				//printf("s1\n");
+			}
+			if ((playerPosition.y<wall2Pos.y + 75 && playerPosition.y > wall2Pos.y - 80) && (playerPosition.x < wall2Pos.x-70 && playerPosition.x > wall2Pos.x-80)) {
+				d = false;
+				//printf("d1\n");
+			}
+
+			//Level1 > > wall3//
+
+			if ((playerPosition.y < wall3Pos.y+40 && playerPosition.y > wall3Pos.y - 80) && (playerPosition.x > wall3Pos.x-70 && playerPosition.x<wall3Pos.x + 70)) {
+				s = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wall3Pos.y-80) && (playerPosition.x < wall3Pos.x - 70 && playerPosition.x > wall3Pos.x - 80)) {
+				d = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wall3Pos.y - 80) && (playerPosition.x > wall3Pos.x + 70 && playerPosition.x < wall3Pos.x + 80)) {
+				a = false;
+				//printf("a2\n");
+			}
+
+			//Level1 > > wall4//
+
+			if ((playerPosition.y < wall4Pos.y +130) && (playerPosition.x > wall4Pos.x - 70 && playerPosition.x < wall4Pos.x + 70)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wall4Pos.y + 130) && (playerPosition.x < wall4Pos.x - 70 && playerPosition.x > wall4Pos.x - 80)) {
+				d = false;
+				//printf("d\n");
+			}
+			if ((playerPosition.y < wall4Pos.y + 130) && (playerPosition.x > wall4Pos.x + 70 && playerPosition.x < wall4Pos.x + 80)) {
+				a = false;
+				//printf("a\n");
+			}
+
+			//Level1 > > wall4//
+
+			if ((playerPosition.y < wall5Pos.y + 130) && (playerPosition.x > wall5Pos.x - 70 && playerPosition.x < wall5Pos.x + 70)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wall5Pos.y + 130) && (playerPosition.x < wall5Pos.x - 70 && playerPosition.x > wall5Pos.x - 80)) {
+				d = false;
+				//printf("d\n");
+			}
+			if ((playerPosition.y < wall5Pos.y + 130) && (playerPosition.x > wall5Pos.x + 70 && playerPosition.x < wall5Pos.x + 80)) {
+				a = false;
+				//printf("a\n");
+			}
+
+		}
+
 		// ---------------------------------KeyboardInput------------------------------------// 
 
 
 		player.setTextureRect(sf::IntRect(playerSizeX * 0, playerSizeY * 2, playerSizeX, playerSizeY));
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			player.move(4.5f, 0.0f);
-			player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 11, playerSizeX, playerSizeY));
-			//printf("Keypress : D\n");
+		if (d == true) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				player.move(4.5f, 0.0f);
+				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 11, playerSizeX, playerSizeY));
+				//printf("Keypress : D\n");
 
+			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			player.move(-4.5f, 0.0f);
-			player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 9, playerSizeX, playerSizeY));
-			//printf("Keypress : A\n");
+		if (a == true) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				player.move(-4.5f, 0.0f);
+				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 9, playerSizeX, playerSizeY));
+				//printf("Keypress : A\n");
+			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			player.move(0.0f, -4.5f);
-			player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 8, playerSizeX, playerSizeY));
-			//printf("Keypress : W\n");
+		if (w == true) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+				player.move(0.0f, -4.5f);
+				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 8, playerSizeX, playerSizeY));
+				//printf("Keypress : W\n");
+			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			player.move(0.0f, 4.5f);
-			player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 10, playerSizeX, playerSizeY));
-			//printf("Keypress : S\n");
+		if (s == true) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				player.move(0.0f, 4.5f);
+				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 10, playerSizeX, playerSizeY));
+				//printf("Keypress : S\n");
+			}
 		}
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			spaceCheck = true;
 			//printf("Keypress : Space\n");
+		}
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::A)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::W)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			player.setTextureRect(sf::IntRect(playerSizeX* animationFrame, playerSizeY * 2, playerSizeX, playerSizeY));
+			if (animationFrame >= 2 ) {
+				animationFrame = 0;
+			}
 		}
 		if (spaceCheck == true) {
 			skillFrame++;
@@ -554,7 +676,7 @@ int main() {
 				animationFrame = 0;
 			}
 		}
-		sf::Vector2f playerPosition = player.getPosition();
+		
 		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
 
 
@@ -872,15 +994,19 @@ int main() {
 		}
 		sf::Vector2f enemyLV404Position = enemyLV404.getPosition();
 
-		/*----------------------------------------------------------------------------------------------------------
+
+
+		
+
+		/***********************************************************************************************************
 
 		------------------------------------------------------------------------------------------------------------
 
-		---------------------------------------------Render Zone----------------------------------------------------
+		-----------------------------------------> > Render Zone < <------------------------------------------------
 		
 		------------------------------------------------------------------------------------------------------------
 		
-		----------------------------------------------------------------------------------------------------------*/
+		***********************************************************************************************************/
 
 
 
