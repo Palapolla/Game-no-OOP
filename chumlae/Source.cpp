@@ -27,9 +27,29 @@ int main() {
 
 	//-------------------------------------background-------------------------------------------//
 
+
+
+	//-------------------------------------background-------------------------------------------//
+
 	backgroundtexture.loadFromFile("Background.png");
 	sf::Sprite background(backgroundtexture);
 	background.setScale(0.6f, 0.5f);
+
+	//-------------------------------------Wall top-------------------------------------------//
+
+	sf::Texture walltop_tx;
+	walltop_tx.loadFromFile("walltop.jpg");
+	if (!walltop_tx.loadFromFile("walltop.jpg")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading wall 01 done!\n");
+	}
+	sf::RectangleShape walltop(sf::Vector2f(1240 ,100));
+	walltop.setPosition(0, 0);
+	walltop.setTexture(&walltop_tx);
+	sf::Vector2f walltopPos = walltop.getPosition();
+
 	
 	//--------------------------------------player & texture----------------------------------------//
 	
@@ -191,6 +211,8 @@ int main() {
 	sf::RectangleShape wallLV201(sf::Vector2f(1000, 150));
 	wallLV201.setPosition(0, 400);
 	wallLV201.setTexture(&wallLV201_tx);
+	sf::Vector2f wallLV201Pos = wallLV201.getPosition();
+
 
 	//**********wall2**********//
 
@@ -205,6 +227,7 @@ int main() {
 	sf::RectangleShape wallLV202(sf::Vector2f(1000, 150));
 	wallLV202.setPosition(240, 150);
 	wallLV202.setTexture(&wallLV202_tx);
+	sf::Vector2f wallLV202Pos = wallLV202.getPosition();
 
 	//**********wall3**********//
 
@@ -526,14 +549,21 @@ int main() {
 
 		//Collision Check Zone//
 
-		if (player.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
-			printf("chon laew na");
+		/*if (player.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+			printf("chon laew na1\n");
 		}
+		if (player.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+			printf("chon laew na2\n");
+		}*/
 
 		//collision with walls check//
 
 		sf::Vector2f playerPosition = player.getPosition();
 		bool w = true, a = true, s = true, d = true;
+
+		if ((playerPosition.y < walltopPos.y + 20)) {
+			w = false;
+		}
 
 		//LEVEL 1//
 
@@ -616,6 +646,43 @@ int main() {
 
 		}
 
+		//LEVEL 2//
+
+		if (n == 2) {
+
+			//Level2 > > wall2//
+
+			if ((playerPosition.y < wallLV201Pos.y + 75 && playerPosition.y>wallLV201Pos.y) && (playerPosition.x < wallLV201Pos.x + 975)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wallLV201Pos.y + 40 && playerPosition.y > wallLV201Pos.y - 80) && (playerPosition.x < wallLV201Pos.x + 975)) {
+				s = false;
+				//printf("s\n");
+			}
+			if ((playerPosition.y<wallLV201Pos.y + 75 && playerPosition.y > wallLV201Pos.y - 80) && (playerPosition.x < wallLV201Pos.x + 985 && playerPosition.x > wallLV201Pos.x + 975)) {
+				a = false;
+				//printf("a\n");
+			}
+
+			//Level2 > > wall2//
+
+			if ((playerPosition.y < wallLV202Pos.y + 75 && playerPosition.y > wallLV202Pos.y) && (playerPosition.x > wallLV202Pos.x - 70)) {
+				w = false;
+				//printf("w1\n");
+			}
+			if ((playerPosition.y < wallLV202Pos.y + 40 && playerPosition.y > wallLV202Pos.y - 80) && (playerPosition.x > wallLV202Pos.x - 70)) {
+				s = false;
+				//printf("s1\n");
+			}
+			if ((playerPosition.y < wallLV202Pos.y + 75 && playerPosition.y > wallLV202Pos.y - 80) && (playerPosition.x < wallLV202Pos.x - 70 && playerPosition.x > wallLV202Pos.x - 80)) {
+				d = false;
+				//printf("d1\n");
+			}
+
+		}
+
+
 		// ---------------------------------KeyboardInput------------------------------------// 
 
 
@@ -653,12 +720,12 @@ int main() {
 			spaceCheck = true;
 			//printf("Keypress : Space\n");
 		}
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::A)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::W)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		/*if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::A)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::W)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 			player.setTextureRect(sf::IntRect(playerSizeX* animationFrame, playerSizeY * 2, playerSizeX, playerSizeY));
 			if (animationFrame >= 2 ) {
 				animationFrame = 0;
 			}
-		}
+		}*/
 		if (spaceCheck == true) {
 			skillFrame++;
 			player.setTextureRect(sf::IntRect(playerSizeX * skillFrame, playerSizeY * 2, playerSizeX, playerSizeY));
@@ -1010,8 +1077,10 @@ int main() {
 
 
 
+
 		window.clear();
 		window.draw(background);
+		window.draw(walltop);
 
 		//Render:LEVEL 1//
 
@@ -1190,11 +1259,10 @@ int main() {
 		
 
 		}
-		
 		else if (n == 6) {
 			window.draw(enemyLV403);
 			window.draw(enemyLV404);
-
+			window.draw(player);
 		}
 		window.display();
 	}
