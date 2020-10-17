@@ -1,3 +1,14 @@
+/*
+background
+wall top
+player & texture
+Level 1
+Level 2
+Level 3
+Level 4
+LOOP Zone
+*/
+
 #include <SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include <stdlib.h>
@@ -19,15 +30,11 @@ void delay(int number_of_seconds)
 
 int main() {
 	int n;
-	scanf_s("%d", &n);
+	
 	//window
 
 	sf::RenderWindow window(sf::VideoMode(1240, 720), "Game");
 	printf("Opening window . . .\n");
-
-	//-------------------------------------background-------------------------------------------//
-
-
 
 	//-------------------------------------background-------------------------------------------//
 
@@ -70,7 +77,6 @@ int main() {
 	player.setTextureRect(sf::IntRect(playerSizeX* 2, playerSizeY * 2, playerSizeX, playerSizeY));
 	int animationFrame = 0,skillFrame = 0;
 	bool spaceCheck = false;
-	
 
 
 	//---------------------------------------level 1----------------------------------------------//
@@ -234,6 +240,7 @@ int main() {
 	sf::RectangleShape wallLV203(sf::Vector2f(100, 400));
 	wallLV203.setPosition(400, 600);
 	wallLV203.setFillColor(sf::Color(0, 0, 0));
+	sf::Vector2f wallLV203Pos = wallLV203.getPosition();
 
 	//**********Enemy01**********//
 
@@ -283,12 +290,15 @@ int main() {
 	sf::RectangleShape wallLV204(sf::Vector2f(300, 600));
 	wallLV204.setPosition(200,300);
 	wallLV204.setFillColor(sf::Color(0, 0, 0));
+	sf::Vector2f wallLV204Pos = wallLV204.getPosition();
+
 
 	//**********Door1**********//
 
 	sf::RectangleShape DoorLV2(sf::Vector2f(50, 720));
 	DoorLV2.setPosition(900, 0);
 	DoorLV2.setFillColor(sf::Color(0, 0, 0));
+	sf::Vector2f DoorLV2Pos = DoorLV2.getPosition();
 
 	//**********Enemy03**********//
 
@@ -321,6 +331,7 @@ int main() {
 	sf::RectangleShape wallLV301(sf::Vector2f(200, 600));
 	wallLV301.setPosition(200, 300);
 	wallLV301.setFillColor(sf::Color(0, 0, 0));
+	sf::Vector2f wallLV301Pos = wallLV301.getPosition();
 
 	//**********wall2**********//
 
@@ -335,6 +346,8 @@ int main() {
 	sf::RectangleShape wallLV302(sf::Vector2f(100, 200));
 	wallLV302.setTexture(&wallLV302_tx);
 	wallLV302.setPosition(300, 0);
+	sf::Vector2f wallLV302Pos = wallLV302.getPosition();
+
 
 	//**********wall3**********//
 
@@ -349,6 +362,7 @@ int main() {
 	sf::RectangleShape wallLV303(sf::Vector2f(500, 150));
 	wallLV303.setPosition(400, 300);
 	wallLV303.setTexture(&wallLV303_tx);
+	sf::Vector2f wallLV303Pos = wallLV303.getPosition();
 
 	//**********Enemy01**********//
 
@@ -411,6 +425,7 @@ int main() {
 	sf::RectangleShape wallLV401(sf::Vector2f(900, 150));
 	wallLV401.setTexture(&wallLV401_tx);
 	wallLV401.setPosition(0, 400);
+	sf::Vector2f wallLV401Pos= wallLV401.getPosition();
 	
 	//**********wall2**********//
 
@@ -425,6 +440,7 @@ int main() {
 	sf::RectangleShape wallLV402(sf::Vector2f(100, 200));
 	wallLV402.setTexture(&wallLV402_tx);
 	wallLV402.setPosition(300, 0);
+	sf::Vector2f wallLV402Pos = wallLV402.getPosition();
 
 	//**********Enemy01**********//
 
@@ -511,7 +527,7 @@ int main() {
 	int  enemyLV404MaxY = 0;
 	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 8;
 
-
+	scanf_s("%d", &n);
 
 	/**********************************************************************************************************
 
@@ -545,7 +561,8 @@ int main() {
 	-------------------------------------------- //Collision Check Zone// ----------------------------------------------------
 
 	------------------------------------------------------------------------------------------------------------------------*/
-
+		sf::Vector2f playerPosition = player.getPosition();
+		bool w = true, a = true, s = true, d = true;
 
 		//Collision Check Zone//
 
@@ -555,11 +572,20 @@ int main() {
 		if (player.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
 			printf("chon laew na2\n");
 		}*/
+		//collison with edge//
+		if (playerPosition.x <= -20) {
+			a = false;
+		 }
+		if (playerPosition.x > 1160) {
+			d = false;
+		}
+		if (playerPosition.y >= 620) {
+			s = false;
+		}
 
 		//collision with walls check//
 
-		sf::Vector2f playerPosition = player.getPosition();
-		bool w = true, a = true, s = true, d = true;
+		
 
 		if ((playerPosition.y < walltopPos.y + 20)) {
 			w = false;
@@ -629,7 +655,7 @@ int main() {
 				//printf("a\n");
 			}
 
-			//Level1 > > wall4//
+			//Level1 > > wall5//
 
 			if ((playerPosition.y < wall5Pos.y + 130) && (playerPosition.x > wall5Pos.x - 70 && playerPosition.x < wall5Pos.x + 70)) {
 				w = false;
@@ -647,6 +673,8 @@ int main() {
 		}
 
 		//LEVEL 2//
+		
+		//stage 1//
 
 		if (n == 2) {
 
@@ -680,8 +708,136 @@ int main() {
 				//printf("d1\n");
 			}
 
+			//Level2 > > wall3//
+
+			if ((playerPosition.y < wallLV203Pos.y + 40 && playerPosition.y > wallLV203Pos.y - 80) && (playerPosition.x > wallLV203Pos.x - 70 && playerPosition.x < wallLV203Pos.x + 70)) {
+				s = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wallLV203Pos.y - 80) && (playerPosition.x < wallLV203Pos.x - 70 && playerPosition.x > wallLV203Pos.x - 80)) {
+				d = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wallLV203Pos.y - 80) && (playerPosition.x > wallLV203Pos.x + 70 && playerPosition.x < wallLV203Pos.x + 80)) {
+				a = false;
+				//printf("a2\n");
+			}
+
 		}
 
+		//stage 2//
+		
+		if (n == 3) {
+
+			//Level1 > > wall3//
+
+			if ((playerPosition.y < wallLV204Pos.y + 40 && playerPosition.y > wallLV204Pos.y - 80) && (playerPosition.x > wallLV204Pos.x - 70 && playerPosition.x < wallLV204Pos.x + 270)) {
+				s = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wallLV204Pos.y - 80) && (playerPosition.x < wallLV204Pos.x - 70 && playerPosition.x > wallLV204Pos.x - 80)) {
+				d = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wallLV204Pos.y - 80) && (playerPosition.x > wallLV204Pos.x + 270 && playerPosition.x < wallLV204Pos.x + 280)) {
+				a = false;
+				//printf("a2\n");
+
+			}
+
+			//Level1 > > Door//
+
+			if ((playerPosition.y > DoorLV2Pos.y - 80) && (playerPosition.x < DoorLV2Pos.x - 70 && playerPosition.x > DoorLV2Pos.x - 80)) {
+				d = false;
+				//printf("d2\n");
+			}
+		}
+
+		//LEVEL 3//
+
+		if (n == 4) {
+			
+			//Level3 > > wall1//
+
+			if ((playerPosition.y < wallLV301Pos.y + 40 && playerPosition.y > wallLV301Pos.y - 80) && (playerPosition.x > wallLV301Pos.x - 70 && playerPosition.x < wallLV301Pos.x + 270)) {
+				s = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wallLV301Pos.y - 80) && (playerPosition.x < wallLV301Pos.x - 70 && playerPosition.x > wallLV301Pos.x - 80)) {
+				d = false;
+				//printf("d2\n");
+			}
+			if ((playerPosition.y > wallLV301Pos.y - 80) && (playerPosition.x > wallLV301Pos.x + 170 && playerPosition.x < wallLV301Pos.x + 180)) {
+				a = false;
+				//printf("a2\n");
+
+			}
+			//Level3 > > wall2//
+
+			if ((playerPosition.y < wallLV302Pos.y + 130) && (playerPosition.x > wallLV302Pos.x - 70 && playerPosition.x < wallLV302Pos.x + 70)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wallLV302Pos.y + 130) && (playerPosition.x < wallLV302Pos.x - 70 && playerPosition.x > wallLV302Pos.x - 80)) {
+				d = false;
+				//printf("d\n");
+			}
+			if ((playerPosition.y < wallLV302Pos.y + 130) && (playerPosition.x > wallLV302Pos.x + 70 && playerPosition.x < wallLV302Pos.x + 80)) {
+				a = false;
+				//printf("a\n");
+			}
+
+			//Level3 > > wall3//
+
+			if ((playerPosition.y < wallLV303Pos.y + 75 && playerPosition.y>wallLV303Pos.y) && (playerPosition.x < wallLV303Pos.x + 470 && playerPosition.x > wallLV303Pos.x -70)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wallLV303Pos.y + 40 && playerPosition.y > wallLV303Pos.y - 80) && (playerPosition.x < wallLV303Pos.x + 470)) {
+				s = false;
+				//printf("s\n");
+			}
+			if ((playerPosition.y<wallLV303Pos.y + 75 && playerPosition.y > wallLV303Pos.y - 80) && (playerPosition.x < wallLV303Pos.x + 480 && playerPosition.x > wallLV303Pos.x + 470)) {
+				a = false;
+				//printf("a\n");
+			}
+
+		}
+
+		//LEVEL 4//
+
+		if (n == 5) {
+
+			//Level4 > > wall1//
+
+			if ((playerPosition.y < wallLV401Pos.y + 75 && playerPosition.y>wallLV401Pos.y) && (playerPosition.x < wallLV401Pos.x + 870)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wallLV401Pos.y + 40 && playerPosition.y > wallLV401Pos.y - 80) && (playerPosition.x < wallLV401Pos.x + 870)) {
+				s = false;
+				//printf("s\n");
+			}
+			if ((playerPosition.y<wallLV401Pos.y + 75 && playerPosition.y > wallLV401Pos.y - 80) && (playerPosition.x < wallLV401Pos.x + 880 && playerPosition.x > wallLV401Pos.x + 870)) {
+				a = false;
+				//printf("a\n");
+			}
+
+			//Level4 > > wall2//
+
+			if ((playerPosition.y < wallLV402Pos.y + 130) && (playerPosition.x > wallLV402Pos.x - 70 && playerPosition.x < wallLV402Pos.x + 70)) {
+				w = false;
+				//printf("w\n");
+			}
+			if ((playerPosition.y < wallLV402Pos.y + 130) && (playerPosition.x < wallLV402Pos.x - 70 && playerPosition.x > wallLV402Pos.x - 80)) {
+				d = false;
+				//printf("d\n");
+			}
+			if ((playerPosition.y < wallLV402Pos.y + 130) && (playerPosition.x > wallLV402Pos.x + 70 && playerPosition.x < wallLV402Pos.x + 80)) {
+				a = false;
+				//printf("a\n");
+			}
+		}
 
 		// ---------------------------------KeyboardInput------------------------------------// 
 
@@ -744,7 +900,7 @@ int main() {
 			}
 		}
 		
-		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
+		printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
 
 
 
@@ -991,11 +1147,11 @@ int main() {
 
 		//Check Enemy 02 Position//
 
-		if (enemyLV402MaxY < 100) {
+		if (enemyLV402MaxY < 80) {
 			enemyLV402PosY = -4.5;
 			enemyLV402MaxY++;
 		}
-		else if (enemyLV402MaxY >= 100 && enemyLV402MaxY < 200) {
+		else if (enemyLV402MaxY >= 80 && enemyLV402MaxY < 160) {
 			enemyLV402FrameY = 10;
 			enemyLV402PosY = 4.5;
 			enemyLV402MaxY++;
