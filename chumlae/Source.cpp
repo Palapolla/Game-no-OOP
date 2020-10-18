@@ -29,8 +29,8 @@ void delay(int number_of_seconds)
 }
 
 int main() {
-	int n;
-	
+	int n = 1;
+	bool lv1ch = true;
 	//window
 
 	sf::RenderWindow window(sf::VideoMode(1240, 720), "Game");
@@ -83,9 +83,6 @@ int main() {
 
 
 
-
-	bool lv1 = true;
-	
 	//**********wall1**********//
 
 	sf::Texture wall1_tx;
@@ -194,7 +191,26 @@ int main() {
 	int  enemy02MaxY = 0;
 	float enemy02PosY = 0, enemy02FrameX = 0, enemy02FrameY = 8;
 
+	//**********DemocracLevel 1**********//
 
+	sf::Texture DemocracLV1_tx;
+	sf::RectangleShape DemocracLV1(sf::Vector2f(50.0f, 50.0f));
+	DemocracLV1.setPosition(50, 150);
+
+	//**********Door Level 1**********//
+	
+	sf::RectangleShape DoorLV1(sf::Vector2f(50.0f, 200.0f));
+	DoorLV1.setPosition(225, 125);
+	DoorLV1.setFillColor(sf::Color(0, 0, 0));
+	sf::Vector2f DoorLV1Pos = DoorLV1.getPosition();
+	bool DoorLV1Check = false;
+
+	//**********Key Level 1**********//
+
+	sf::Texture KeyLV1_tx;
+	sf::RectangleShape KeyLV1(sf::Vector2f(50.0f, 50.0f));
+	KeyLV1.setPosition(1100,150);
+	bool KeyLV1Check = false;
 
 
 	//---------------------------------------level 2----------------------------------------------//
@@ -282,6 +298,12 @@ int main() {
 	int  enemyLV202MaxX = 0;
 	float enemyLV202PosX = 0, enemyLV202FrameX = 0, enemyLV202FrameY = 9;
 
+	//**********Gate2**********//
+
+	sf::Texture GateLV2_tx;
+	sf::RectangleShape GateLV2(sf::Vector2f(50.0f, 50.0f));
+	GateLV2.setPosition(1100, 100);
+
 
 	//**********Stage2**********//
 
@@ -293,12 +315,13 @@ int main() {
 	sf::Vector2f wallLV204Pos = wallLV204.getPosition();
 
 
-	//**********Door1**********//
+	//**********DoorLV2**********//
 
 	sf::RectangleShape DoorLV2(sf::Vector2f(50, 720));
 	DoorLV2.setPosition(900, 0);
 	DoorLV2.setFillColor(sf::Color(0, 0, 0));
 	sf::Vector2f DoorLV2Pos = DoorLV2.getPosition();
+	bool DoorLV2Check = false;
 
 	//**********Enemy03**********//
 
@@ -320,7 +343,18 @@ int main() {
 	int  enemyLV203MaxY = 0;
 	float enemyLV203PosY = 0, enemyLV203FrameX = 0, enemyLV203FrameY = 8;
 
+	//**********DemocracLevel 2**********//
 
+	sf::Texture DemocracLV2_tx;
+	sf::RectangleShape DemocracLV2(sf::Vector2f(50.0f, 50.0f));
+	DemocracLV2.setPosition(1100, 150);
+
+	//**********KeyLevel 2**********//
+	
+	sf::Texture KeyLV2_tx;
+	sf::RectangleShape KeyLV2(sf::Vector2f(50.0f, 50.0f));
+	KeyLV2.setPosition(600,600);
+	bool KeyLV2Check = false;
 
 	//---------------------------------------level 3----------------------------------------------//
 
@@ -404,7 +438,11 @@ int main() {
 	int  enemyLV302MaxY = 0;
 	float enemyLV302PosY = 0, enemyLV302FrameX = 0, enemyLV302FrameY = 8;
 
+	//**********DemocracLevel 3**********//
 
+	sf::Texture DemocracLV3_tx;
+	sf::RectangleShape DemocracLV3(sf::Vector2f(50.0f, 50.0f));
+	DemocracLV3.setPosition(500, 600);
 
 	//---------------------------------------level 4----------------------------------------------//
 
@@ -482,9 +520,14 @@ int main() {
 	int  enemyLV402MaxY = 0;
 	float enemyLV402PosY = 0, enemyLV402FrameX = 0, enemyLV402FrameY = 8;
 
+	//**********Gate3**********//
+
+	sf::Texture GateLV3_tx;
+	sf::RectangleShape GateLV3(sf::Vector2f(50.0f, 50.0f));
+	GateLV3.setPosition(1000, 600);
+
 	//**********Stage2**********//
 
-	//**********wallTop**********//
 
 
 	//**********Enemy03**********//
@@ -527,7 +570,60 @@ int main() {
 	int  enemyLV404MaxY = 0;
 	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 8;
 
-	scanf_s("%d", &n);
+	//scanf_s("%d", &n);
+
+
+	/*#########################################################################################################
+
+													Heart
+
+	###########################################################################################################*/
+	
+	//1
+
+	sf::Texture heart1_tx;
+	heart1_tx.loadFromFile("Heart 1.png");
+	if (!heart1_tx.loadFromFile("Heart 1.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Heart 1 Done!\n");
+	}
+	sf::RectangleShape heart1(sf::Vector2f(25.0f, 25.0f));
+	heart1.setTexture(&heart1_tx);
+	heart1.setPosition(10, 10);
+	bool heart1Check = true;
+
+	//2
+
+	sf::Texture heart2_tx;
+	heart2_tx.loadFromFile("Heart 2.png");
+	if (!heart2_tx.loadFromFile("Heart 2.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Heart 2 Done!\n");
+	}
+	sf::RectangleShape heart2(sf::Vector2f(25.0f, 25.0f));
+	heart2.setTexture(&heart2_tx);
+	heart2.setPosition(50, 10);
+	bool heart2Check = true;
+
+	//3
+
+	sf::Texture heart3_tx;
+	heart3_tx.loadFromFile("Heart 3.png");
+	if (!heart3_tx.loadFromFile("Heart 3.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Heart 3 Done!\n");
+	}
+	sf::RectangleShape heart3(sf::Vector2f(25.0f, 25.0f));
+	heart3.setTexture(&heart3_tx);
+	heart3.setPosition(90, 10);
+	bool heart3Check = true;
+
 
 	/**********************************************************************************************************
 
@@ -549,20 +645,76 @@ int main() {
 				window.close();
 			}
 		}
-		if (lv1 == true) {
+		if (lv1ch == true) {
 			player.setPosition(20, 600);
-			lv1 = false;
+			lv1ch = false;
+			KeyLV1Check = false;
 		}
-
-
 
 	/*------------------------------------------------------------------------------------------------------------------------
 
 	-------------------------------------------- //Collision Check Zone// ----------------------------------------------------
 
 	------------------------------------------------------------------------------------------------------------------------*/
+
 		sf::Vector2f playerPosition = player.getPosition();
 		bool w = true, a = true, s = true, d = true;
+
+		//Collision to change level check//
+
+		//Level 1//
+
+		if (n == 1) {
+			if (player.getGlobalBounds().intersects(DemocracLV1.getGlobalBounds())) {
+				n = 2;
+				player.setPosition(20, 600);
+			}
+		}
+
+		//Level 2//
+		//Stage 1//
+		if (n == 2) {
+			if (player.getGlobalBounds().intersects(GateLV2.getGlobalBounds())) {
+				n = 3;
+				player.setPosition(20, 600);
+			}
+		}
+		//Stage 2//
+		if (n == 3) {
+			if (player.getGlobalBounds().intersects(DemocracLV2.getGlobalBounds())) {
+				n = 4;
+				player.setPosition(20, 600);
+			}
+		}
+		//Level 3//
+		if (n == 4) {
+			if (player.getGlobalBounds().intersects(DemocracLV3.getGlobalBounds())) {
+				n = 5;
+				player.setPosition(20, 600);
+			}
+		}
+
+		//Collision with item//
+
+		//Key Level 1//
+		if (n == 1) {
+			if (KeyLV1Check == false) {
+				if (player.getGlobalBounds().intersects(KeyLV1.getGlobalBounds())) {
+					KeyLV1Check = true;
+					DoorLV1Check = true;
+				}
+			}
+		}
+
+		//Key Level 2//
+		if (n == 3) {
+			if (KeyLV2Check == false) {
+				if (player.getGlobalBounds().intersects(KeyLV2.getGlobalBounds())) {
+					KeyLV2Check = true;
+					DoorLV2Check = true;
+				}
+			}
+		}
 
 		//Collision Check Zone//
 
@@ -669,6 +821,14 @@ int main() {
 				a = false;
 				//printf("a\n");
 			}
+			
+			//Level1 > > Door//
+			if (DoorLV1Check == false) {
+				if ((playerPosition.y > DoorLV1Pos.y - 80) && (playerPosition.x < DoorLV1Pos.x + 40 && playerPosition.x > DoorLV1Pos.x + 30)) {
+					a = false;
+					//printf("d2\n");
+				}
+			}
 
 		}
 
@@ -745,11 +905,12 @@ int main() {
 
 			}
 
-			//Level1 > > Door//
-
-			if ((playerPosition.y > DoorLV2Pos.y - 80) && (playerPosition.x < DoorLV2Pos.x - 70 && playerPosition.x > DoorLV2Pos.x - 80)) {
-				d = false;
-				//printf("d2\n");
+			//Level > > Door//
+			if (DoorLV2Check == false) {
+				if ((playerPosition.y > DoorLV2Pos.y - 80) && (playerPosition.x < DoorLV2Pos.x - 70 && playerPosition.x > DoorLV2Pos.x - 80)) {
+					d = false;
+					//printf("d2\n");
+				}
 			}
 		}
 
@@ -793,7 +954,7 @@ int main() {
 				w = false;
 				//printf("w\n");
 			}
-			if ((playerPosition.y < wallLV303Pos.y + 40 && playerPosition.y > wallLV303Pos.y - 80) && (playerPosition.x < wallLV303Pos.x + 470)) {
+			if ((playerPosition.y < wallLV303Pos.y + 40 && playerPosition.y > wallLV303Pos.y - 80) && (playerPosition.x < wallLV303Pos.x + 470 && playerPosition.x > wallLV303Pos.x - 70)) {
 				s = false;
 				//printf("s\n");
 			}
@@ -900,7 +1061,7 @@ int main() {
 			}
 		}
 		
-		printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
+		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
 
 
 
@@ -1238,16 +1399,33 @@ int main() {
 		window.draw(background);
 		window.draw(walltop);
 
+		//Render:Heart//
+
+		if (heart1Check == true) {
+			window.draw(heart1);
+		}
+		if (heart2Check == true) {
+			window.draw(heart2);
+		}
+		if (heart3Check == true) {
+			window.draw(heart3);
+		}
+
 		//Render:LEVEL 1//
 
 		if (n == 1) {
 			window.draw(wall5);
+			if (DoorLV1Check == false) {
+				window.draw(KeyLV1);
+				window.draw(DoorLV1);
+			}
 			window.draw(wall4);
 			window.draw(wall1);
 			window.draw(wall2);
 			window.draw(player);
 			window.draw(enemy01);
 			window.draw(enemy02);
+			window.draw(DemocracLV1);
 			
 			if (playerPosition.y < 300&&playerPosition.y > 200) {
 				window.draw(enemy01);
@@ -1271,12 +1449,15 @@ int main() {
 				window.draw(player);
 				window.draw(enemy02);
 			}
+			
 			window.draw(wall3);
+			
 		}
 
 		//RENDER:LEVEL 2//
 
 		else if (n == 2) {
+		
 			if (playerPosition.y <= 350 && playerPosition.y > 250) {
 				window.draw(wallLV202);
 				window.draw(enemyLV202);
@@ -1313,6 +1494,7 @@ int main() {
 				window.draw(enemyLV201);
 			}
 			window.draw(wallLV203);
+			window.draw(GateLV2);
 		}
 		else if (n == 3) {
 			if (enemyLV203Position.y < playerPosition.y) {
@@ -1324,7 +1506,11 @@ int main() {
 				window.draw(enemyLV203);
 			}
 			window.draw(wallLV204);
-			window.draw(DoorLV2);
+			if (DoorLV2Check == false) {
+				window.draw(KeyLV2);
+				window.draw(DoorLV2);
+			}
+			window.draw(DemocracLV2);
 		}
 
 		//RENDER:LEVEL3//
@@ -1368,7 +1554,9 @@ int main() {
 				}
 				window.draw(enemyLV301);
 			}
+			window.draw(DemocracLV3);
 			window.draw(wallLV301);
+		
 		}
 
 		//RENDER:LEVEL4//
