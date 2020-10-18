@@ -578,7 +578,7 @@ int main() {
 													Heart
 
 	###########################################################################################################*/
-	
+	int imortalTime = 0;
 	//1
 
 	sf::Texture heart1_tx;
@@ -660,70 +660,12 @@ int main() {
 		sf::Vector2f playerPosition = player.getPosition();
 		bool w = true, a = true, s = true, d = true;
 
-		//Collision to change level check//
-
-		//Level 1//
-
-		if (n == 1) {
-			if (player.getGlobalBounds().intersects(DemocracLV1.getGlobalBounds())) {
-				n = 2;
-				player.setPosition(20, 600);
-			}
-		}
-
-		//Level 2//
-		//Stage 1//
-		if (n == 2) {
-			if (player.getGlobalBounds().intersects(GateLV2.getGlobalBounds())) {
-				n = 3;
-				player.setPosition(20, 600);
-			}
-		}
-		//Stage 2//
-		if (n == 3) {
-			if (player.getGlobalBounds().intersects(DemocracLV2.getGlobalBounds())) {
-				n = 4;
-				player.setPosition(20, 600);
-			}
-		}
-		//Level 3//
-		if (n == 4) {
-			if (player.getGlobalBounds().intersects(DemocracLV3.getGlobalBounds())) {
-				n = 5;
-				player.setPosition(20, 600);
-			}
-		}
-
-		//Collision with item//
-
-		//Key Level 1//
-		if (n == 1) {
-			if (KeyLV1Check == false) {
-				if (player.getGlobalBounds().intersects(KeyLV1.getGlobalBounds())) {
-					KeyLV1Check = true;
-					DoorLV1Check = true;
-				}
-			}
-		}
 
 		//Key Level 2//
 		if (n == 3) {
-			if (KeyLV2Check == false) {
-				if (player.getGlobalBounds().intersects(KeyLV2.getGlobalBounds())) {
-					KeyLV2Check = true;
-					DoorLV2Check = true;
-				}
-			}
+	
 		}
 
-		//Collision Check Zone//
-
-		/*if (player.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
-			printf("chon laew na1\n");
-		}
-		if (player.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
-			printf("chon laew na2\n");
-		}*/
 		//collison with edge//
 		if (playerPosition.x <= -20) {
 			a = false;
@@ -823,6 +765,7 @@ int main() {
 			}
 			
 			//Level1 > > Door//
+
 			if (DoorLV1Check == false) {
 				if ((playerPosition.y > DoorLV1Pos.y - 80) && (playerPosition.x < DoorLV1Pos.x + 40 && playerPosition.x > DoorLV1Pos.x + 30)) {
 					a = false;
@@ -830,6 +773,21 @@ int main() {
 				}
 			}
 
+			//Level1 > > Democrac//
+
+			if (player.getGlobalBounds().intersects(DemocracLV1.getGlobalBounds())) {
+				n = 2;
+				player.setPosition(20, 600);
+			}
+
+			//Level1 > > Key//
+
+			if (KeyLV1Check == false) {
+				if (player.getGlobalBounds().intersects(KeyLV1.getGlobalBounds())) {
+					KeyLV1Check = true;
+					DoorLV1Check = true;
+				}
+			}
 		}
 
 		//LEVEL 2//
@@ -883,6 +841,13 @@ int main() {
 				//printf("a2\n");
 			}
 
+			//Level2 > > Gate//
+
+			if (player.getGlobalBounds().intersects(GateLV2.getGlobalBounds())) {
+				n = 3;
+				player.setPosition(20, 600);
+			}
+
 		}
 
 		//stage 2//
@@ -905,11 +870,28 @@ int main() {
 
 			}
 
-			//Level > > Door//
+			//Level2 > > Door//
+
 			if (DoorLV2Check == false) {
 				if ((playerPosition.y > DoorLV2Pos.y - 80) && (playerPosition.x < DoorLV2Pos.x - 70 && playerPosition.x > DoorLV2Pos.x - 80)) {
 					d = false;
 					//printf("d2\n");
+				}
+			}
+			
+			//Level2 > > Democrac//
+
+			if (player.getGlobalBounds().intersects(DemocracLV2.getGlobalBounds())) {
+				n = 4;
+				player.setPosition(20, 600);
+			}
+
+			//Level 2 >> Key//
+
+			if (KeyLV2Check == false) {
+				if (player.getGlobalBounds().intersects(KeyLV2.getGlobalBounds())) {
+					KeyLV2Check = true;
+					DoorLV2Check = true;
 				}
 			}
 		}
@@ -963,6 +945,12 @@ int main() {
 				//printf("a\n");
 			}
 
+			//Level3 > > Democradc//
+
+			if (player.getGlobalBounds().intersects(DemocracLV3.getGlobalBounds())) {
+				n = 5;
+				player.setPosition(20, 600);
+			}
 		}
 
 		//LEVEL 4//
