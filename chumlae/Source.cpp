@@ -58,6 +58,9 @@ int main() {
 	sf::Vector2f walltopPos = walltop.getPosition();
 
 	
+
+	
+	
 	//--------------------------------------player & texture----------------------------------------//
 	
 	sf::Texture playerTexture;
@@ -191,11 +194,25 @@ int main() {
 	int  enemy02MaxY = 0;
 	float enemy02PosY = 0, enemy02FrameX = 0, enemy02FrameY = 8;
 
-	//**********DemocracLevel 1**********//
+	//**********Democrac Level 1**********//
 
+	sf::Texture democrac_tx;
+	democrac_tx.loadFromFile("Democrac mk2.png");
+	if (!democrac_tx.loadFromFile("Democrac mk2.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Democrac Done!\n");
+	}
 	sf::Texture DemocracLV1_tx;
-	sf::RectangleShape DemocracLV1(sf::Vector2f(50.0f, 50.0f));
+	sf::RectangleShape DemocracLV1(sf::Vector2f(80.0f, 80.0f));
+	DemocracLV1.setTexture(&democrac_tx);
+	sf::Vector2u DemocracLV1TextureSize = democrac_tx.getSize();
+	int democracSizeX = DemocracLV1TextureSize.x / 10;
+	int democracSizeY = DemocracLV1TextureSize.y / 1;
+	DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * 0, democracSizeY * 0, democracSizeX, democracSizeY));
 	DemocracLV1.setPosition(50, 150);
+	float animateDemocracFrame = 0;
 
 	//**********Door Level 1**********//
 	
@@ -1051,6 +1068,14 @@ int main() {
 		
 		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
 
+		//--------------------------------------Democrac LEVEL1------------------------------------------//
+
+		DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * animateDemocracFrame, democracSizeY * 0, democracSizeX, democracSizeY));
+		animateDemocracFrame++;
+
+		if (animateDemocracFrame > 9) {
+			animateDemocracFrame=0;
+		}
 
 
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
