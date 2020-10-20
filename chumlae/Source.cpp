@@ -361,10 +361,22 @@ int main() {
 	float enemyLV203PosY = 0, enemyLV203FrameX = 0, enemyLV203FrameY = 8;
 
 	//**********DemocracLevel 2**********//
-
 	sf::Texture DemocracLV2_tx;
-	sf::RectangleShape DemocracLV2(sf::Vector2f(50.0f, 50.0f));
+	DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png");
+	if (!DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Democrac Done!\n");
+	}
+	sf::RectangleShape DemocracLV2(sf::Vector2f(80.0f, 80.0f));
+	DemocracLV2.setTexture(&DemocracLV2_tx);
+	sf::Vector2u DemocracLV2TextureSize = DemocracLV2_tx.getSize();
+	int democracLV2SizeX = DemocracLV2TextureSize.x / 10;
+	int democracLV2SizeY = DemocracLV2TextureSize.y / 1;
+	DemocracLV2.setTextureRect(sf::IntRect(democracLV2SizeX * 0, democracLV2SizeY * 0, democracLV2SizeX, democracLV2SizeY));
 	DemocracLV2.setPosition(1100, 150);
+	float animateDemocracLV2Frame = 0;
 
 	//**********KeyLevel 2**********//
 	
@@ -372,6 +384,7 @@ int main() {
 	sf::RectangleShape KeyLV2(sf::Vector2f(50.0f, 50.0f));
 	KeyLV2.setPosition(600,600);
 	bool KeyLV2Check = false;
+
 
 	//---------------------------------------level 3----------------------------------------------//
 
@@ -455,7 +468,9 @@ int main() {
 	int  enemyLV302MaxY = 0;
 	float enemyLV302PosY = 0, enemyLV302FrameX = 0, enemyLV302FrameY = 8;
 
+
 	//**********DemocracLevel 3**********//
+
 
 	sf::Texture DemocracLV3_tx;
 	sf::RectangleShape DemocracLV3(sf::Vector2f(50.0f, 50.0f));
@@ -537,11 +552,11 @@ int main() {
 	int  enemyLV402MaxY = 0;
 	float enemyLV402PosY = 0, enemyLV402FrameX = 0, enemyLV402FrameY = 8;
 
-	//**********Gate3**********//
+	//**********Gate4**********//
 
-	sf::Texture GateLV3_tx;
-	sf::RectangleShape GateLV3(sf::Vector2f(50.0f, 50.0f));
-	GateLV3.setPosition(1000, 600);
+	sf::Texture GateLV4_tx;
+	sf::RectangleShape GateLV4(sf::Vector2f(50.0f, 50.0f));
+	GateLV4.setPosition(200, 150);
 
 	//**********Stage2**********//
 
@@ -585,9 +600,19 @@ int main() {
 	enemyLV404.setTextureRect(sf::IntRect(enemyLV404SizeX * 2, enemyLV404SizeY * 2, enemyLV404SizeX, enemyLV404SizeY));
 	enemyLV404.setPosition(600, 100);
 	int  enemyLV404MaxY = 0;
-	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 8;
+	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 10;
 
-	//scanf_s("%d", &n);
+
+	//**********DemocracLevel 4**********//
+
+	sf::Texture DemocracLV4_tx;
+	sf::RectangleShape DemocracLV4(sf::Vector2f(50.0f, 50.0f));
+	DemocracLV4.setPosition(900, 350);
+
+
+	scanf_s("%d", &n);
+
+
 
 
 	/*#########################################################################################################
@@ -595,6 +620,7 @@ int main() {
 													Heart
 
 	###########################################################################################################*/
+
 	int imortalTime = 0;
 	//1
 
@@ -678,10 +704,6 @@ int main() {
 		bool w = true, a = true, s = true, d = true;
 
 
-		//Key Level 2//
-		if (n == 3) {
-	
-		}
 
 		//collison with edge//
 		if (playerPosition.x <= -20) {
@@ -1003,6 +1025,13 @@ int main() {
 				a = false;
 				//printf("a\n");
 			}
+
+			//Level4 > > Gate//
+
+			if (player.getGlobalBounds().intersects(GateLV4.getGlobalBounds())) {
+				n = 6;
+				player.setPosition(20, 600);
+			}
 		}
 
 		// ---------------------------------KeyboardInput------------------------------------// 
@@ -1077,6 +1106,14 @@ int main() {
 			animateDemocracFrame=0;
 		}
 
+		//--------------------------------------Democrac LEVEL------------------------------------------//
+
+		DemocracLV2.setTextureRect(sf::IntRect(democracLV2SizeX* animateDemocracLV2Frame, democracLV2SizeY * 0, democracLV2SizeX, democracLV2SizeY));
+		animateDemocracLV2Frame++;
+
+		if (animateDemocracLV2Frame > 9) {
+			animateDemocracLV2Frame = 0;
+		}
 
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
 
@@ -1380,14 +1417,14 @@ int main() {
 			enemyLV404MaxY++;
 		}
 		else if (enemyLV404MaxY >= 100 && enemyLV404MaxY < 200) {
-			enemyLV404FrameY = 10;
+			enemyLV404FrameY = 8;
 			enemyLV404PosY = -4.5;
 			enemyLV404MaxY++;
 		}
 		else {
 			enemyLV404MaxY = 0;
 			enemyLV404PosY = 0;
-			enemyLV404FrameY = 8;
+			enemyLV404FrameY = 10;
 		}
 		sf::Vector2f enemyLV404Position = enemyLV404.getPosition();
 
@@ -1613,6 +1650,7 @@ int main() {
 
 				}
 			}
+			window.draw(GateLV4);
 		
 
 		}
@@ -1620,6 +1658,7 @@ int main() {
 			window.draw(enemyLV403);
 			window.draw(enemyLV404);
 			window.draw(player);
+			window.draw(DemocracLV4);
 		}
 		window.display();
 	}
