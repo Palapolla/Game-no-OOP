@@ -57,7 +57,7 @@ int main() {
 	walltop.setTexture(&walltop_tx);
 	sf::Vector2f walltopPos = walltop.getPosition();
 
-	
+
 
 	
 	
@@ -80,7 +80,8 @@ int main() {
 	player.setTextureRect(sf::IntRect(playerSizeX* 2, playerSizeY * 2, playerSizeX, playerSizeY));
 	int animationFrame = 0,skillFrame = 0;
 	bool spaceCheck = false;
-
+	bool KeyW = false, KeyA = false, KeyS = false, KeyD = false;
+	player.setTextureRect(sf::IntRect(playerSizeX * 0, playerSizeY * 2, playerSizeX, playerSizeY));
 
 	//---------------------------------------level 1----------------------------------------------//
 
@@ -171,6 +172,7 @@ int main() {
 	int enemy01SizeY = enemy01TextureSize.y / 21;
 	enemy01.setTextureRect(sf::IntRect(enemy01SizeX * 2, enemy01SizeY * 2, enemy01SizeX, enemy01SizeY));
 	enemy01.setPosition(1000, 200);
+	sf::Vector2f enemyLV101Position = enemy01.getPosition();
 	int  enemyMaxX = 0;
 	float enemyPosX = 0, enemy01FrameX = 0, enemy01FrameY = 9;
 
@@ -361,6 +363,7 @@ int main() {
 	float enemyLV203PosY = 0, enemyLV203FrameX = 0, enemyLV203FrameY = 8;
 
 	//**********DemocracLevel 2**********//
+
 	sf::Texture DemocracLV2_tx;
 	DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png");
 	if (!DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png")) {
@@ -469,12 +472,24 @@ int main() {
 	float enemyLV302PosY = 0, enemyLV302FrameX = 0, enemyLV302FrameY = 8;
 
 
-	//**********DemocracLevel 3**********//
-
+	//**********Democrac Level 3**********//
 
 	sf::Texture DemocracLV3_tx;
-	sf::RectangleShape DemocracLV3(sf::Vector2f(50.0f, 50.0f));
-	DemocracLV3.setPosition(500, 600);
+	DemocracLV3_tx.loadFromFile("Democrac mk2 LV3.png");
+	if (!DemocracLV3_tx.loadFromFile("Democrac mk2 LV3.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Democrac Done!\n");
+	}
+	sf::RectangleShape DemocracLV3(sf::Vector2f(80.0f, 80.0f));
+	DemocracLV3.setTexture(&DemocracLV3_tx);
+	sf::Vector2u DemocracLV3TextureSize = DemocracLV3_tx.getSize();
+	int democracLV3SizeX = DemocracLV3TextureSize.x / 10;
+	int democracLV3SizeY = DemocracLV3TextureSize.y / 1;
+	DemocracLV3.setTextureRect(sf::IntRect(democracLV3SizeX * 0, democracLV3SizeY * 0, democracLV3SizeX, democracLV3SizeY));
+	DemocracLV3.setPosition(500, 550);
+	float animateDemocracLV3Frame = 0;
 
 	//---------------------------------------level 4----------------------------------------------//
 
@@ -603,12 +618,24 @@ int main() {
 	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 10;
 
 
-	//**********DemocracLevel 4**********//
+	//**********Democrac Level 4**********//
 
 	sf::Texture DemocracLV4_tx;
-	sf::RectangleShape DemocracLV4(sf::Vector2f(50.0f, 50.0f));
+	DemocracLV4_tx.loadFromFile("Democrac mk2 LV4.png");
+	if (!DemocracLV4_tx.loadFromFile("Democrac mk2 LV4.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Democrac Done!\n");
+	}
+	sf::RectangleShape DemocracLV4(sf::Vector2f(80.0f, 80.0f));
+	DemocracLV4.setTexture(&DemocracLV4_tx);
+	sf::Vector2u DemocracLV4TextureSize = DemocracLV4_tx.getSize();
+	int democracLV4SizeX = DemocracLV4TextureSize.x / 10;
+	int democracLV4SizeY = DemocracLV4TextureSize.y / 1;
+	DemocracLV4.setTextureRect(sf::IntRect(democracLV4SizeX * 0, democracLV4SizeY * 0, democracLV4SizeX, democracLV4SizeY));
 	DemocracLV4.setPosition(900, 350);
-
+	float animateDemocracLV4Frame = 0;
 
 	scanf_s("%d", &n);
 
@@ -806,7 +833,7 @@ int main() {
 			//Level1 > > Door//
 
 			if (DoorLV1Check == false) {
-				if ((playerPosition.y > DoorLV1Pos.y - 80) && (playerPosition.x < DoorLV1Pos.x + 40 && playerPosition.x > DoorLV1Pos.x + 30)) {
+				if ((playerPosition.y < DoorLV1Pos.y + 150) && (playerPosition.x < DoorLV1Pos.x + 40 && playerPosition.x > DoorLV1Pos.x + 30)) {
 					a = false;
 					//printf("d2\n");
 				}
@@ -826,6 +853,11 @@ int main() {
 					KeyLV1Check = true;
 					DoorLV1Check = true;
 				}
+			}
+
+			//Level1 > > Enemy 1//
+			if ((playerPosition.y + 100 >= enemyLV101Position.y || playerPosition.y <= enemyLV101Position.y + 100) && (playerPosition.x + 70 >= enemyLV101Position.x + 30 || playerPosition.x + 30 <= enemyLV101Position.y + 70)) {
+				printf("chonlaew");
 			}
 		}
 
@@ -1036,13 +1068,32 @@ int main() {
 
 		// ---------------------------------KeyboardInput------------------------------------// 
 
+		int initialFrame = 0;
+		
+		if (KeyD == true) {
 
-		player.setTextureRect(sf::IntRect(playerSizeX * 0, playerSizeY * 2, playerSizeX, playerSizeY));
+			initialFrame = 3;
+		}
+		else if (KeyA == true) {
+			initialFrame = 1;
+		}
+		else if (KeyW == true) {
+			initialFrame = 0;
+		}
+		else if (KeyS == true) {
+			initialFrame = 2;
+		}
+		player.setTextureRect(sf::IntRect(playerSizeX * 0, playerSizeY * initialFrame, playerSizeX, playerSizeY));
+
 		if (d == true) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 				player.move(4.5f, 0.0f);
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 11, playerSizeX, playerSizeY));
 				//printf("Keypress : D\n");
+				KeyW = false;
+				KeyA = false;
+				KeyS = false;
+				KeyD = true;
 
 			}
 		}
@@ -1051,6 +1102,10 @@ int main() {
 				player.move(-4.5f, 0.0f);
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 9, playerSizeX, playerSizeY));
 				//printf("Keypress : A\n");
+				KeyW = false;
+				KeyA = true;
+				KeyS = false;
+				KeyD = false;
 			}
 		}
 		if (w == true) {
@@ -1058,6 +1113,10 @@ int main() {
 				player.move(0.0f, -4.5f);
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 8, playerSizeX, playerSizeY));
 				//printf("Keypress : W\n");
+				KeyW = true;
+				KeyA = false;
+				KeyS = false;
+				KeyD = false;
 			}
 		}
 		if (s == true) {
@@ -1065,6 +1124,10 @@ int main() {
 				player.move(0.0f, 4.5f);
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 10, playerSizeX, playerSizeY));
 				//printf("Keypress : S\n");
+				KeyW = false;
+				KeyA = false;
+				KeyS = true;
+				KeyD = false;
 			}
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
@@ -1080,7 +1143,7 @@ int main() {
 		if (spaceCheck == true) {
 			skillFrame++;
 			player.setTextureRect(sf::IntRect(playerSizeX * skillFrame, playerSizeY * 2, playerSizeX, playerSizeY));
-			delay(100);
+			delay(50);
 			if (skillFrame >= 6) {
 				skillFrame = 0;
 				spaceCheck = false;
@@ -1089,11 +1152,12 @@ int main() {
 		}
 		else {
 			animationFrame++;
-			delay(45);
+			delay(40);
 			if (animationFrame >= 9) {
 				animationFrame = 0;
 			}
 		}
+		
 		
 		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
 
@@ -1106,13 +1170,31 @@ int main() {
 			animateDemocracFrame=0;
 		}
 
-		//--------------------------------------Democrac LEVEL------------------------------------------//
+		//--------------------------------------Democrac LEVEL2------------------------------------------//
 
 		DemocracLV2.setTextureRect(sf::IntRect(democracLV2SizeX* animateDemocracLV2Frame, democracLV2SizeY * 0, democracLV2SizeX, democracLV2SizeY));
 		animateDemocracLV2Frame++;
 
 		if (animateDemocracLV2Frame > 9) {
 			animateDemocracLV2Frame = 0;
+		}
+
+		//--------------------------------------Democrac LEVEL3------------------------------------------//
+
+		DemocracLV3.setTextureRect(sf::IntRect(democracLV3SizeX* animateDemocracLV3Frame, democracLV3SizeY * 0, democracLV3SizeX, democracLV3SizeY));
+		animateDemocracLV3Frame++;
+
+		if (animateDemocracLV3Frame > 9) {
+			animateDemocracLV3Frame = 0;
+		}
+
+		//--------------------------------------Democrac LEVEL3------------------------------------------//
+
+		DemocracLV4.setTextureRect(sf::IntRect(democracLV4SizeX* animateDemocracLV4Frame, democracLV4SizeY * 0, democracLV4SizeX, democracLV4SizeY));
+		animateDemocracLV4Frame++;
+
+		if (animateDemocracLV4Frame > 9) {
+			animateDemocracLV4Frame = 0;
 		}
 
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
