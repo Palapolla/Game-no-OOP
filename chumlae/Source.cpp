@@ -82,6 +82,31 @@ int main() {
 	bool spaceCheck = false;
 	bool KeyW = false, KeyA = false, KeyS = false, KeyD = false;
 	player.setTextureRect(sf::IntRect(playerSizeX * 0, playerSizeY * 2, playerSizeX, playerSizeY));
+	player.setOrigin(50, 50);
+	
+
+	//Player > > Bullet//
+
+	//BullKeyState//
+
+	bool bullW = false, bullA = false, bullS = false, bullD = false;
+	int bullState[5] = { 0,0,0,0,0 }, bulletNo = 0;
+
+	//Bullet > > 1//
+
+	sf::Texture bullet1_tx;
+	sf::RectangleShape bullet1(sf::Vector2f(30.0f, 30.0f));
+	bullet1.setOrigin(15, 15);
+	bool bull1out =false;
+	bool bull1Render = false;
+
+	//Bullet > > 1//
+	
+	sf::Texture bullet2_tx;
+	sf::RectangleShape bullet2(sf::Vector2f(30.0f, 30.0f));
+	bullet2.setOrigin(15, 15);
+	bool  bull2out = false;
+
 
 	//---------------------------------------level 1----------------------------------------------//
 
@@ -412,9 +437,25 @@ int main() {
 	//**********KeyLevel 2**********//
 	
 	sf::Texture KeyLV2_tx;
+	KeyLV2_tx.loadFromFile("Key LV2.png");
+	if (!KeyLV2_tx.loadFromFile("Key LV2.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Key LV2 Done!\n");
+	}
+
 	sf::RectangleShape KeyLV2(sf::Vector2f(50.0f, 50.0f));
-	KeyLV2.setPosition(600,600);
+	KeyLV2.setTexture(&KeyLV2_tx);
+	sf::Vector2u KeyLV2TextureSize = KeyLV2_tx.getSize();
+	int KeyLV2SizeX = KeyLV2TextureSize.x / 14;
+	int KeyLV2SizeY = KeyLV2TextureSize.y / 1;
+	KeyLV2.setTextureRect(sf::IntRect(KeyLV2SizeX * 0, KeyLV2SizeY * 0, KeyLV2SizeX, KeyLV2SizeY));
+	KeyLV2.setPosition(600, 600);
 	bool KeyLV2Check = false;
+	KeyLV2.setOrigin(25, 25);
+	float animateKeyLV2Frame = 0;
+	
 
 
 	//---------------------------------------level 3----------------------------------------------//
@@ -678,7 +719,7 @@ int main() {
 	DemocracLV4.setPosition(900, 350);
 	float animateDemocracLV4Frame = 0;
 
-	scanf_s("%d", &n);
+	//scanf_s("%d", &n);
 
 
 
@@ -770,8 +811,7 @@ int main() {
 
 		sf::Vector2f playerPosition = player.getPosition();
 		bool w = true, a = true, s = true, d = true;
-
-
+		
 
 		//collison with edge//
 		if (playerPosition.x <= -20) {
@@ -898,7 +938,7 @@ int main() {
 
 			//Level1 > > Enemy 1//
 			if ((playerPosition.y + 100 >= enemyLV101Position.y || playerPosition.y <= enemyLV101Position.y + 100) && (playerPosition.x + 70 >= enemyLV101Position.x + 30 || playerPosition.x + 30 <= enemyLV101Position.y + 70)) {
-				printf("chonlaew");
+				//printf("chonlaew");
 			}
 		}
 
@@ -1185,9 +1225,34 @@ int main() {
 			skillFrame++;
 			player.setTextureRect(sf::IntRect(playerSizeX * skillFrame, playerSizeY * 2, playerSizeX, playerSizeY));
 			delay(50);
+			if (KeyA == true) {
+				bullA = true;
+				bullW = false;
+				bullS = false;
+				bullD = false;
+			}
+			if (KeyW == true) {
+				bullA = false;
+				bullW = true;
+				bullS = false;
+				bullD = false;
+			}
+			if (KeyD == true) {
+				bullA = false;
+				bullW = false;
+				bullS = false;
+				bullD = true;
+			}
+			if (KeyS == true) {
+				bullA = false;
+				bullW = false;
+				bullS = true;
+				bullD = false;
+			}
 			if (skillFrame >= 6) {
 				skillFrame = 0;
 				spaceCheck = false;
+				bullState[bulletNo] = 1;
 				continue;
 			}
 		}
@@ -1200,7 +1265,48 @@ int main() {
 		}
 		
 		
+		
 		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
+
+		//--------------------------------------Bullet 1------------------------------------------//
+
+		if (bullState[0] == 1) {
+			bullet1.setPosition(playerPosition.x, playerPosition.y);
+			bull1out = true;
+			//printf("bull1 State %d", bull1out);
+			bullState[0] = 0;
+		}
+		/*if (bullState[1] == 1) {
+			bullet2.setPosition(playerPosition.x, playerPosition.y);
+			bull2out = true;
+			//printf("bull1 State %d", bull1out);
+			bullState[1] = 0;
+		}*/
+		
+		
+		//printf("bull1 State %d\n", bull1out);
+		if (bull1out == true) {
+			bull1Render = true;
+			if(bullA == true){
+				bullet1.move(-10.0f, 0.0f);
+				//printf("1");
+			}
+			if (KeyD == true) {
+				bullet1.move(10.0f, 0.0f);
+				//printf("1");
+			}
+
+		}
+		printf("bull a %d\n", bull1out);
+		/*if (bull2out == true) {
+
+			if (bullA == true) {
+				bullet2.move(-10.0f, 0.0f);
+			}
+			if (KeyD == true) {
+				bullet2.move(10.0f, 0.0f);
+			}
+		}*/
 
 		//--------------------------------------Democrac LEVEL1------------------------------------------//
 
@@ -1263,20 +1369,17 @@ int main() {
 		if (animateKeyLV1Frame >= 13) {
 			animateKeyLV1Frame = 0;
 		}
-		int waitTimeKeyLV1=0;
-		if (waitTimeKeyLV1 >= 1000) {
-			KeyLV1.rotate(0.0f);
-			waitTimeKeyLV1++;
-			if (waitTimeKeyLV1 > 2000) {
-				waitTimeKeyLV1 = 0.0f;
-			}
-		}
-		else {
-			KeyLV1.rotate(10.0f);
-			waitTimeKeyLV1++;
-		}
+		KeyLV1.rotate(10.0f);
 
+		//--------------------------------------Key LEVEL2------------------------------------------//
 
+		KeyLV2.setTextureRect(sf::IntRect(KeyLV2SizeX * animateKeyLV2Frame, KeyLV2SizeY * 0, KeyLV2SizeX, KeyLV2SizeY));
+		animateKeyLV2Frame++;
+
+		if (animateKeyLV2Frame >= 13) {
+			animateKeyLV2Frame = 0;
+		}
+		KeyLV2.rotate(10.0f);
 
 
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
@@ -1612,7 +1715,7 @@ int main() {
 		window.clear();
 		window.draw(background);
 		window.draw(walltop);
-
+		
 		//Render:Heart//
 
 		if (heart1Check == true) {
@@ -1824,6 +1927,14 @@ int main() {
 			window.draw(enemyLV404);
 			window.draw(player);
 			window.draw(DemocracLV4);
+		}
+
+		//Rendeer::Bullet//
+		if (bull1Render == true) {
+			window.draw(bullet1);
+		}
+		if (bull2out == true) {
+			window.draw(bullet2);
 		}
 		window.display();
 	}
