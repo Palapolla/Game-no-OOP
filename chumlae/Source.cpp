@@ -227,9 +227,24 @@ int main() {
 	//**********Key Level 1**********//
 
 	sf::Texture KeyLV1_tx;
+	KeyLV1_tx.loadFromFile("Key LV1.png");
+	if (!KeyLV1_tx.loadFromFile("Key LV1.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Key LV1 Done!\n");
+	}
+	
 	sf::RectangleShape KeyLV1(sf::Vector2f(50.0f, 50.0f));
-	KeyLV1.setPosition(1100,150);
+	KeyLV1.setTexture(&KeyLV1_tx);
+	sf::Vector2u KeyLV1TextureSize = KeyLV1_tx.getSize();
+	int KeyLV1SizeX = KeyLV1TextureSize.x / 14;
+	int KeyLV1SizeY = KeyLV1TextureSize.y / 1;
+	KeyLV1.setTextureRect(sf::IntRect(KeyLV1SizeX * 0, KeyLV1SizeY * 0, KeyLV1SizeX, KeyLV1SizeY));
+	KeyLV1.setPosition(1100, 150);
+	KeyLV1.setOrigin(25, 25);
 	bool KeyLV1Check = false;
+	float animateKeyLV1Frame = 0;
 
 
 	//---------------------------------------level 2----------------------------------------------//
@@ -320,8 +335,21 @@ int main() {
 	//**********Gate2**********//
 
 	sf::Texture GateLV2_tx;
-	sf::RectangleShape GateLV2(sf::Vector2f(50.0f, 50.0f));
-	GateLV2.setPosition(1100, 100);
+	GateLV2_tx.loadFromFile("gate.png");
+	if (!GateLV2_tx.loadFromFile("gate.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Gate Done!\n");
+	}
+	sf::RectangleShape GateLV2(sf::Vector2f(100.0f, 80.0f));
+	GateLV2.setTexture(&GateLV2_tx);
+	sf::Vector2u GateLV2TextureSize = GateLV2_tx.getSize();
+	int GateLV2SizeX = GateLV2TextureSize.x / 8;
+	int GateLV2SizeY = GateLV2TextureSize.y / 1;
+	GateLV2.setTextureRect(sf::IntRect(GateLV2SizeX * 0, GateLV2SizeY * 0, GateLV2SizeX, GateLV2SizeY));
+	GateLV2.setPosition(1100, 80);
+	float animateGateLV2Frame = 0;
 
 
 	//**********Stage2**********//
@@ -570,8 +598,21 @@ int main() {
 	//**********Gate4**********//
 
 	sf::Texture GateLV4_tx;
-	sf::RectangleShape GateLV4(sf::Vector2f(50.0f, 50.0f));
-	GateLV4.setPosition(200, 150);
+	GateLV4_tx.loadFromFile("gate4.png");
+	if (!GateLV4_tx.loadFromFile("gate4.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading Gate Done!\n");
+	}
+	sf::RectangleShape GateLV4(sf::Vector2f(100.0f, 80.0f));
+	GateLV4.setTexture(&GateLV4_tx);
+	sf::Vector2u GateLV4TextureSize = GateLV4_tx.getSize();
+	int GateLV4SizeX = GateLV4TextureSize.x / 8;
+	int GateLV4SizeY = GateLV4TextureSize.y / 1;
+	GateLV4.setTextureRect(sf::IntRect(GateLV4SizeX * 0, GateLV4SizeY * 0, GateLV4SizeX, GateLV4SizeY));
+	GateLV4.setPosition(100, 150);
+	float animateGateLV4Frame = 0;
 
 	//**********Stage2**********//
 
@@ -1188,7 +1229,7 @@ int main() {
 			animateDemocracLV3Frame = 0;
 		}
 
-		//--------------------------------------Democrac LEVEL3------------------------------------------//
+		//--------------------------------------Democrac LEVEL4------------------------------------------//
 
 		DemocracLV4.setTextureRect(sf::IntRect(democracLV4SizeX* animateDemocracLV4Frame, democracLV4SizeY * 0, democracLV4SizeX, democracLV4SizeY));
 		animateDemocracLV4Frame++;
@@ -1196,6 +1237,47 @@ int main() {
 		if (animateDemocracLV4Frame > 9) {
 			animateDemocracLV4Frame = 0;
 		}
+
+		//--------------------------------------Gate LEVEL2------------------------------------------//
+
+		GateLV2.setTextureRect(sf::IntRect(GateLV2SizeX * animateGateLV2Frame, GateLV2SizeY * 0, GateLV2SizeX, GateLV2SizeY));
+		animateGateLV2Frame++;
+
+		if (animateGateLV2Frame >= 8) {
+			animateGateLV2Frame = 0;
+		}
+		//--------------------------------------Gate LEVEL4------------------------------------------//
+
+		GateLV4.setTextureRect(sf::IntRect(GateLV4SizeX* animateGateLV4Frame, GateLV4SizeY * 0, GateLV4SizeX, GateLV4SizeY));
+		animateGateLV4Frame++;
+
+		if (animateGateLV4Frame >= 8) {
+			animateGateLV4Frame = 0;
+		}
+
+		//--------------------------------------Key LEVEL1------------------------------------------//
+
+		KeyLV1.setTextureRect(sf::IntRect(KeyLV1SizeX* animateKeyLV1Frame, KeyLV1SizeY * 0, KeyLV1SizeX, KeyLV1SizeY));
+		animateKeyLV1Frame++;
+
+		if (animateKeyLV1Frame >= 13) {
+			animateKeyLV1Frame = 0;
+		}
+		int waitTimeKeyLV1=0;
+		if (waitTimeKeyLV1 >= 1000) {
+			KeyLV1.rotate(0.0f);
+			waitTimeKeyLV1++;
+			if (waitTimeKeyLV1 > 2000) {
+				waitTimeKeyLV1 = 0.0f;
+			}
+		}
+		else {
+			KeyLV1.rotate(10.0f);
+			waitTimeKeyLV1++;
+		}
+
+
+
 
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
 
@@ -1589,7 +1671,7 @@ int main() {
 		//RENDER:LEVEL 2//
 
 		else if (n == 2) {
-		
+			window.draw(GateLV2);
 			if (playerPosition.y <= 350 && playerPosition.y > 250) {
 				window.draw(wallLV202);
 				window.draw(enemyLV202);
@@ -1625,8 +1707,9 @@ int main() {
 				window.draw(enemyLV202);
 				window.draw(enemyLV201);
 			}
+			
 			window.draw(wallLV203);
-			window.draw(GateLV2);
+			
 		}
 		else if (n == 3) {
 			if (enemyLV203Position.y < playerPosition.y) {
