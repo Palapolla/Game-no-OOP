@@ -92,11 +92,6 @@ int main() {
 	//Bullet > > 1//
 
 	sf::Texture bullet1_tx;
-	sf::RectangleShape bullet1(sf::Vector2f(20.0f, 20.0f));
-	bullet1.setOrigin(10, 10);
-	bool bull1out =false, bull1Col = false;
-
-	sf::Texture bullet1_tx;
 	bullet1_tx.loadFromFile("bullet.png");
 	printf("Loading. . .\n");
 	if (!bullet1_tx.loadFromFile("bullet.png")) {
@@ -105,28 +100,43 @@ int main() {
 	else {
 		printf("Loading bullet Done!\n");
 	}
-	sf::RectangleShape bullet1(sf::Vector2f(100.0f, 100.0f));
-	bullet1.setTexture(&playerTexture);
-	sf::Vector2u textureSize = bullet1_tx.getSize();
-	int bulletSizeX = textureSize.x / 13;
-	int bulletSizeY = textureSize.y / 21;
-	bullet1.setTextureRect(sf::IntRect(bulletSizeX * 2, bulletSizeY * 2, bulletSizeX, bulletSizeY));
-	int bulletAnimationFrame = 0;
+	sf::RectangleShape bullet1(sf::Vector2f(20.0f, 20.0f));
+	bullet1.setTexture(&bullet1_tx);
+	bullet1.setOrigin(15, 15);
+	bool bull1out = false, bull1Col = false;
 
 
 	//Bullet > > 2//
 	
 	sf::Texture bullet2_tx;
+	bullet2_tx.loadFromFile("bullet2.png");
+	printf("Loading. . .\n");
+	if (!bullet2_tx.loadFromFile("bullet2.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading bullet Done!\n");
+	}
 	sf::RectangleShape bullet2(sf::Vector2f(20.0f, 20.0f));
-	bullet2.setOrigin(10, 10);
-	bool  bull2out = false, bull2Col = false;
+	bullet2.setTexture(&bullet2_tx);
+	bullet2.setOrigin(15, 15);
+	bool bull2out = false, bull2Col = false;
 
 	//Bullet > > 3//
 
 	sf::Texture bullet3_tx;
+	bullet3_tx.loadFromFile("bullet3.png");
+	printf("Loading. . .\n");
+	if (!bullet3_tx.loadFromFile("bullet3.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading bullet Done!\n");
+	}
 	sf::RectangleShape bullet3(sf::Vector2f(20.0f, 20.0f));
-	bullet3.setOrigin(10, 10);
-	bool  bull3out = false, bull3Col = false;
+	bullet3.setTexture(&bullet3_tx);
+	bullet3.setOrigin(15, 15);
+	bool bull3out = false, bull3Col = false;
 
 
 	//---------------------------------------level 1----------------------------------------------//
@@ -1581,19 +1591,19 @@ int main() {
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[0] == 1) {
 			if (bullA == true) {
-				bullet1.move(-20.0f, 0.0f);
+				bullet1.move(-25.0f, 0.0f);
 				//printf("1");
 			}
 			else if (bullD == true) {
-				bullet1.move(20.0f, 0.0f);
+				bullet1.move(25.0f, 0.0f);
 				//printf("1");
 			}
 			else if (bullW == true) {
-				bullet1.move(0.0f, -20.0f);
+				bullet1.move(0.0f, -25.0f);
 				//printf("1");
 			}
 			else if (bullS == true) {
-				bullet1.move(0.0f, 20.0f);
+				bullet1.move(0.0f, 25.0f);
 				//printf("1");
 			}
 		}
@@ -1616,19 +1626,19 @@ int main() {
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[1] == 1) {
 			if (bullA == true) {
-				bullet2.move(-20.0f, 0.0f);
+				bullet2.move(-25.0f, 0.0f);
 				//printf("1");
 			}
 			if (bullD == true) {
-				bullet2.move(20.0f, 0.0f);
+				bullet2.move(25.0f, 0.0f);
 				//printf("1");
 			}
 			if (bullW == true) {
-				bullet2.move(0.0f, -20.0f);
+				bullet2.move(0.0f, -25.0f);
 				//printf("1");
 			}
 			if (bullS == true) {
-				bullet2.move(0.0f, 20.0f);
+				bullet2.move(0.0f, 25.0f);
 				//printf("1");
 			}
 		}
@@ -1650,19 +1660,19 @@ int main() {
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[2] == 1) {
 			if (bullA == true) {
-				bullet3.move(-20.0f, 0.0f);
+				bullet3.move(-25.0f, 0.0f);
 				//printf("1");
 			}
 			if (bullD == true) {
-				bullet3.move(20.0f, 0.0f);
+				bullet3.move(25.0f, 0.0f);
 				//printf("1");
 			}
 			if (bullW == true) {
-				bullet3.move(0.0f, -20.0f);
+				bullet3.move(0.0f, -25.0f);
 				//printf("1");
 			}
 			if (bullS == true) {
-				bullet3.move(0.0f, 20.0f);
+				bullet3.move(0.0f, 25.0f);
 				//printf("1");
 			}
 		}
@@ -1742,7 +1752,6 @@ int main() {
 			animateKeyLV2Frame = 0;
 		}
 		KeyLV2.rotate(10.0f);
-
 
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
 
