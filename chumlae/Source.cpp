@@ -52,17 +52,13 @@ int main() {
 	else {
 		printf("Loading wall 01 done!\n");
 	}
-	sf::RectangleShape walltop(sf::Vector2f(1240 ,100));
+	sf::RectangleShape walltop(sf::Vector2f(1240, 100));
 	walltop.setPosition(0, 0);
 	walltop.setTexture(&walltop_tx);
 	sf::Vector2f walltopPos = walltop.getPosition();
 
-
-
-	
-	
 	//--------------------------------------player & texture----------------------------------------//
-	
+
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("player texture the real one for sure dont need to fix anynmore.png");
 	printf("Loading. . .\n");
@@ -77,35 +73,43 @@ int main() {
 	sf::Vector2u textureSize = playerTexture.getSize();
 	int playerSizeX = textureSize.x / 13;
 	int playerSizeY = textureSize.y / 21;
-	player.setTextureRect(sf::IntRect(playerSizeX* 2, playerSizeY * 2, playerSizeX, playerSizeY));
-	int animationFrame = 0,skillFrame = 0;
+	player.setTextureRect(sf::IntRect(playerSizeX * 2, playerSizeY * 2, playerSizeX, playerSizeY));
+	int animationFrame = 0, skillFrame = 0;
 	bool spaceCheck = false;
 	bool KeyW = false, KeyA = false, KeyS = false, KeyD = false;
 	player.setTextureRect(sf::IntRect(playerSizeX * 0, playerSizeY * 2, playerSizeX, playerSizeY));
-	player.setOrigin(50, 50);
-	
+	//player.setOrigin(50, 50);
+
 
 	//Player > > Bullet//
 
 	//BullKeyState//
 
 	bool bullW = false, bullA = false, bullS = false, bullD = false;
-	int bullState[5] = { 0,0,0,0,0 }, bulletNo = 0;
-
+	int  bulletNo[3] = { 0, 0, 0}, bullOrder = 0;
+	bool bull1State = false, bull2State = false, bull3State = false;
+	
 	//Bullet > > 1//
 
 	sf::Texture bullet1_tx;
-	sf::RectangleShape bullet1(sf::Vector2f(30.0f, 30.0f));
-	bullet1.setOrigin(15, 15);
-	bool bull1out =false;
-	bool bull1Render = false;
+	sf::RectangleShape bullet1(sf::Vector2f(20.0f, 20.0f));
+	bullet1.setOrigin(10, 10);
+	bool bull1out =false, bull1Col = false;
 
-	//Bullet > > 1//
+
+	//Bullet > > 2//
 	
 	sf::Texture bullet2_tx;
-	sf::RectangleShape bullet2(sf::Vector2f(30.0f, 30.0f));
-	bullet2.setOrigin(15, 15);
-	bool  bull2out = false;
+	sf::RectangleShape bullet2(sf::Vector2f(20.0f, 20.0f));
+	bullet2.setOrigin(10, 10);
+	bool  bull2out = false, bull2Col = false;
+
+	//Bullet > > 3//
+
+	sf::Texture bullet3_tx;
+	sf::RectangleShape bullet3(sf::Vector2f(20.0f, 20.0f));
+	bullet3.setOrigin(10, 10);
+	bool  bull3out = false, bull3Col = false;
 
 
 	//---------------------------------------level 1----------------------------------------------//
@@ -719,7 +723,7 @@ int main() {
 	DemocracLV4.setPosition(900, 350);
 	float animateDemocracLV4Frame = 0;
 
-	//scanf_s("%d", &n);
+	scanf_s("%d", &n);
 
 
 
@@ -803,30 +807,52 @@ int main() {
 			KeyLV1Check = false;
 		}
 
-	/*------------------------------------------------------------------------------------------------------------------------
+		/*------------------------------------------------------------------------------------------------------------------------
 
-	-------------------------------------------- //Collision Check Zone// ----------------------------------------------------
+		-------------------------------------------- //Collision Check Zone// ----------------------------------------------------
 
-	------------------------------------------------------------------------------------------------------------------------*/
+		------------------------------------------------------------------------------------------------------------------------*/
 
 		sf::Vector2f playerPosition = player.getPosition();
+		sf::Vector2f bull1Pos = bullet1.getPosition();
+		sf::Vector2f bull2Pos = bullet2.getPosition();
+		sf::Vector2f bull3Pos = bullet3.getPosition();
 		bool w = true, a = true, s = true, d = true;
-		
+
 
 		//collison with edge//
+
 		if (playerPosition.x <= -20) {
 			a = false;
-		 }
-		if (playerPosition.x > 1160) {
+		}
+		if (playerPosition.x > 1160 || bull1Pos.x > 1160 || bull2Pos.x > 1160 || bull3Pos.x > 1160) {
 			d = false;
 		}
 		if (playerPosition.y >= 620) {
 			s = false;
 		}
 
+		if (bull1Pos.x <= -20 || bull1Pos.x > 1240 || bull1Pos.y >= 720 || bull1Pos.y < 0) {
+			bull1out = false;
+			bull1Col = false;
+			bullet1.setPosition(0, 0);
+		}
+
+		if (bull2Pos.x <= -20 || bull2Pos.x > 1240 || bull2Pos.y >= 720 || bull2Pos.y < 0) {
+			bull2out = false;
+			bull2Col = false;
+			bullet2.setPosition(0, 0);
+		}
+
+		if (bull3Pos.x <= -20 || bull3Pos.x > 1240 || bull3Pos.y >= 720 || bull3Pos.y < 0) {
+			bull3out = false;
+			bull3Col = false;
+			bullet3.setPosition(0, 0);
+		}
+
 		//collision with walls check//
 
-		
+
 
 		if ((playerPosition.y < walltopPos.y + 20)) {
 			w = false;
@@ -835,7 +861,7 @@ int main() {
 		//LEVEL 1//
 
 		if (n == 1) {
-			
+
 			//Level1 > > wall1//
 
 			if ((playerPosition.y < wall1Pos.y + 75 && playerPosition.y>wall1Pos.y) && (playerPosition.x < wall1Pos.x + 570)) {
@@ -853,26 +879,26 @@ int main() {
 
 			//Level1 > > wall2//
 
-			if ((playerPosition.y < wall2Pos.y + 75 && playerPosition.y > wall2Pos.y) && (playerPosition.x > wall2Pos.x-70)) {
+			if ((playerPosition.y < wall2Pos.y + 75 && playerPosition.y > wall2Pos.y) && (playerPosition.x > wall2Pos.x - 70)) {
 				w = false;
 				//printf("w1\n");
 			}
-			if ((playerPosition.y < wall2Pos.y + 40 && playerPosition.y > wall2Pos.y - 80) && (playerPosition.x > wall2Pos.x-70)) {
+			if ((playerPosition.y < wall2Pos.y + 40 && playerPosition.y > wall2Pos.y - 80) && (playerPosition.x > wall2Pos.x - 70)) {
 				s = false;
 				//printf("s1\n");
 			}
-			if ((playerPosition.y<wall2Pos.y + 75 && playerPosition.y > wall2Pos.y - 80) && (playerPosition.x < wall2Pos.x-70 && playerPosition.x > wall2Pos.x-80)) {
+			if ((playerPosition.y<wall2Pos.y + 75 && playerPosition.y > wall2Pos.y - 80) && (playerPosition.x < wall2Pos.x - 70 && playerPosition.x > wall2Pos.x - 80)) {
 				d = false;
 				//printf("d1\n");
 			}
 
 			//Level1 > > wall3//
 
-			if ((playerPosition.y < wall3Pos.y+40 && playerPosition.y > wall3Pos.y - 80) && (playerPosition.x > wall3Pos.x-70 && playerPosition.x<wall3Pos.x + 70)) {
+			if ((playerPosition.y < wall3Pos.y + 40 && playerPosition.y > wall3Pos.y - 80) && (playerPosition.x > wall3Pos.x - 70 && playerPosition.x < wall3Pos.x + 70)) {
 				s = false;
 				//printf("d2\n");
 			}
-			if ((playerPosition.y > wall3Pos.y-80) && (playerPosition.x < wall3Pos.x - 70 && playerPosition.x > wall3Pos.x - 80)) {
+			if ((playerPosition.y > wall3Pos.y - 80) && (playerPosition.x < wall3Pos.x - 70 && playerPosition.x > wall3Pos.x - 80)) {
 				d = false;
 				//printf("d2\n");
 			}
@@ -883,7 +909,7 @@ int main() {
 
 			//Level1 > > wall4//
 
-			if ((playerPosition.y < wall4Pos.y +130) && (playerPosition.x > wall4Pos.x - 70 && playerPosition.x < wall4Pos.x + 70)) {
+			if ((playerPosition.y < wall4Pos.y + 130) && (playerPosition.x > wall4Pos.x - 70 && playerPosition.x < wall4Pos.x + 70)) {
 				w = false;
 				//printf("w\n");
 			}
@@ -910,7 +936,7 @@ int main() {
 				a = false;
 				//printf("a\n");
 			}
-			
+
 			//Level1 > > Door//
 
 			if (DoorLV1Check == false) {
@@ -940,10 +966,79 @@ int main() {
 			if ((playerPosition.y + 100 >= enemyLV101Position.y || playerPosition.y <= enemyLV101Position.y + 100) && (playerPosition.x + 70 >= enemyLV101Position.x + 30 || playerPosition.x + 30 <= enemyLV101Position.y + 70)) {
 				//printf("chonlaew");
 			}
-		}
+
+			// bullet collision //
+
+			//bullet 1//
+
+			if ((bullet1.getGlobalBounds().intersects(wall1.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall2.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall3.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall4.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall5.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds()))
+				) {
+				bull1out = false;
+				bull1Col = false;
+				bullet1.setPosition(0, 0);
+			}
+			if (DoorLV1Check == false) {
+				if (bullet1.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bullet1.setPosition(0, 0);
+				}
+			}
+
+			//bullet 2//
+
+			if ((bullet2.getGlobalBounds().intersects(wall1.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall2.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall3.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall4.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall5.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds()))
+				) {
+				bull2out = false;
+				bull2Col = false;
+				bullet2.setPosition(0, 0);
+			}
+			if (DoorLV1Check == false) {
+				if (bullet2.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bullet2.setPosition(0, 0);
+				}
+			}
+
+			//bullet 3//
+
+			if ((bullet3.getGlobalBounds().intersects(wall1.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall2.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall3.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall4.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall5.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds()))
+				) {
+				bull3out = false;
+				bull3Col = false;
+				bullet3.setPosition(0, 0);
+			}
+			if (DoorLV1Check == false) {
+				if (bullet3.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bullet3.setPosition(0, 0);
+				}
+			}
+
+			
 
 		//LEVEL 2//
-		
+
 		//stage 1//
 
 		if (n == 2) {
@@ -1000,10 +1095,22 @@ int main() {
 				player.setPosition(20, 600);
 			}
 
+			// bullet collision //
+
+			if ((bullet1.getGlobalBounds().intersects(wallLV201.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wallLV202.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV201.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV202.getGlobalBounds()))) {
+				bull1out = false;
+				bullet1.setPosition(0, 0);
+			}
+
+
 		}
 
 		//stage 2//
-		
+
 		if (n == 3) {
 
 			//Level1 > > wall3//
@@ -1030,7 +1137,7 @@ int main() {
 					//printf("d2\n");
 				}
 			}
-			
+
 			//Level2 > > Democrac//
 
 			if (player.getGlobalBounds().intersects(DemocracLV2.getGlobalBounds())) {
@@ -1046,12 +1153,26 @@ int main() {
 					DoorLV2Check = true;
 				}
 			}
+
+			// bullet collision //
+
+			if ((bullet1.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV203.getGlobalBounds()))) {
+				bull1out = false;
+				bullet1.setPosition(0, 0);
+			}
+			if (DoorLV2Check == false) {
+				if ((bullet1.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
+					bull1out = false;
+					bullet1.setPosition(0, 0);
+				}
+			}
 		}
 
 		//LEVEL 3//
 
 		if (n == 4) {
-			
+
 			//Level3 > > wall1//
 
 			if ((playerPosition.y < wallLV301Pos.y + 40 && playerPosition.y > wallLV301Pos.y - 80) && (playerPosition.x > wallLV301Pos.x - 70 && playerPosition.x < wallLV301Pos.x + 270)) {
@@ -1084,7 +1205,7 @@ int main() {
 
 			//Level3 > > wall3//
 
-			if ((playerPosition.y < wallLV303Pos.y + 75 && playerPosition.y>wallLV303Pos.y) && (playerPosition.x < wallLV303Pos.x + 470 && playerPosition.x > wallLV303Pos.x -70)) {
+			if ((playerPosition.y < wallLV303Pos.y + 75 && playerPosition.y>wallLV303Pos.y) && (playerPosition.x < wallLV303Pos.x + 470 && playerPosition.x > wallLV303Pos.x - 70)) {
 				w = false;
 				//printf("w\n");
 			}
@@ -1102,6 +1223,17 @@ int main() {
 			if (player.getGlobalBounds().intersects(DemocracLV3.getGlobalBounds())) {
 				n = 5;
 				player.setPosition(20, 600);
+			}
+
+			// bullet collision //
+
+			if ((bullet1.getGlobalBounds().intersects(wallLV301.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wallLV302.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV301.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV302.getGlobalBounds()))) {
+				bull1out = false;
+				bullet1.setPosition(0, 0);
 			}
 		}
 
@@ -1145,12 +1277,31 @@ int main() {
 				n = 6;
 				player.setPosition(20, 600);
 			}
+
+			// bullet collision //
+
+			if ((bullet1.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV401.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV402.getGlobalBounds()))) {
+				bull1out = false;
+				bullet1.setPosition(0, 0);
+			}
+		}
+		if (n == 6) {
+			// bullet collision //
+
+			if ((bullet1.getGlobalBounds().intersects(enemyLV403.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds()))) {
+				bull1out = false;
+				bullet1.setPosition(0, 0);
+			}
 		}
 
 		// ---------------------------------KeyboardInput------------------------------------// 
 
 		int initialFrame = 0;
-		
+
 		if (KeyD == true) {
 
 			initialFrame = 3;
@@ -1221,6 +1372,7 @@ int main() {
 				animationFrame = 0;
 			}
 		}*/
+		
 		if (spaceCheck == true) {
 			skillFrame++;
 			player.setTextureRect(sf::IntRect(playerSizeX * skillFrame, playerSizeY * 2, playerSizeX, playerSizeY));
@@ -1252,9 +1404,21 @@ int main() {
 			if (skillFrame >= 6) {
 				skillFrame = 0;
 				spaceCheck = false;
-				bullState[bulletNo] = 1;
+				if (bull1Col == false || bull2Col == false || bull3Col == false) {
+					bulletNo[bullOrder] = 1;
+					switch (bullOrder) {
+					case 0: {bull1State = true; break; }
+					case 1: {bull2State = true; break; }
+					case 2: {bull3State = true; break; }
+					}
+					bullOrder++;
+					if (bullOrder > 2) {
+						bullOrder = 0;
+					}
+				}
 				continue;
 			}
+
 		}
 		else {
 			animationFrame++;
@@ -1263,51 +1427,116 @@ int main() {
 				animationFrame = 0;
 			}
 		}
-		
-		
-		
+
+
+
 		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
 
 		//--------------------------------------Bullet 1------------------------------------------//
-
-		if (bullState[0] == 1) {
-			bullet1.setPosition(playerPosition.x, playerPosition.y);
-			bull1out = true;
-			//printf("bull1 State %d", bull1out);
-			bullState[0] = 0;
-		}
-		/*if (bullState[1] == 1) {
-			bullet2.setPosition(playerPosition.x, playerPosition.y);
-			bull2out = true;
-			//printf("bull1 State %d", bull1out);
-			bullState[1] = 0;
-		}*/
 		
-		
-		//printf("bull1 State %d\n", bull1out);
-		if (bull1out == true) {
-			bull1Render = true;
-			if(bullA == true){
-				bullet1.move(-10.0f, 0.0f);
-				//printf("1");
-			}
-			if (KeyD == true) {
-				bullet1.move(10.0f, 0.0f);
-				//printf("1");
-			}
+		if (bull1State == true) {
+			if (bull1Col == false) {
+				bull1Col = true;
+				bullet1.setPosition(playerPosition.x + 50, playerPosition.y + 60);
+				bull1out = true;
 
+				//printf("bull1 State %d", bull1out);
+				bull1State = false;
+				bulletNo[0] = 1;
+			}
 		}
-		printf("bull a %d\n", bull1out);
-		/*if (bull2out == true) {
-
+			//printf("bull1 State %d\n", bull1out);
+		if (bulletNo[0] == 1) {
 			if (bullA == true) {
-				bullet2.move(-10.0f, 0.0f);
+				bullet1.move(-20.0f, 0.0f);
+				//printf("1");
 			}
-			if (KeyD == true) {
-				bullet2.move(10.0f, 0.0f);
+			else if (bullD == true) {
+				bullet1.move(20.0f, 0.0f);
+				//printf("1");
 			}
-		}*/
+			else if (bullW == true) {
+				bullet1.move(0.0f, -20.0f);
+				//printf("1");
+			}
+			else if (bullS == true) {
+				bullet1.move(0.0f, 20.0f);
+				//printf("1");
+			}
+		}
+		
 
+		//--------------------------------------Bullet 2------------------------------------------//
+
+		
+		if (bull2State == true) {
+			if (bull2Col == false) {
+				bull2Col = true;
+				bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 60);
+				bull2out = true;
+
+				//printf("bull1 State %d", bull1out);
+				bull2State = false;
+				bulletNo[1] = 1;
+			}
+		}
+			//printf("bull1 State %d\n", bull1out);
+		if (bulletNo[1] == 1) {
+			if (bullA == true) {
+				bullet2.move(-20.0f, 0.0f);
+				//printf("1");
+			}
+			if (bullD == true) {
+				bullet2.move(20.0f, 0.0f);
+				//printf("1");
+			}
+			if (bullW == true) {
+				bullet2.move(0.0f, -20.0f);
+				//printf("1");
+			}
+			if (bullS == true) {
+				bullet2.move(0.0f, 20.0f);
+				//printf("1");
+			}
+		}
+
+		//--------------------------------------Bullet 3------------------------------------------//
+
+		
+		if (bull3State == true) {
+			if (bull3Col == false) {
+				bull3Col = true;
+				bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 60);
+				bull3out = true;
+
+				//printf("bull1 State %d", bull1out);
+				bull3State = false;
+				bulletNo[2] = 1;
+			}
+		}
+			//printf("bull1 State %d\n", bull1out);
+		if (bulletNo[2] == 1) {
+			if (bullA == true) {
+				bullet3.move(-20.0f, 0.0f);
+				//printf("1");
+			}
+			if (bullD == true) {
+				bullet3.move(20.0f, 0.0f);
+				//printf("1");
+			}
+			if (bullW == true) {
+				bullet3.move(0.0f, -20.0f);
+				//printf("1");
+			}
+			if (bullS == true) {
+				bullet3.move(0.0f, 20.0f);
+				//printf("1");
+			}
+		}
+		
+
+		
+		printf("Bulleet Col1 %d\nBulleet Col2 %d\nBulleet Col3 %d\n", bull1Col, bull2Col, bull3Col);
 		//--------------------------------------Democrac LEVEL1------------------------------------------//
 
 		DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * animateDemocracFrame, democracSizeY * 0, democracSizeX, democracSizeY));
@@ -1930,11 +2159,14 @@ int main() {
 		}
 
 		//Rendeer::Bullet//
-		if (bull1Render == true) {
+		if (bull1out == true) {
 			window.draw(bullet1);
 		}
 		if (bull2out == true) {
 			window.draw(bullet2);
+		}
+		if (bull3out == true) {
+			window.draw(bullet3);
 		}
 		window.display();
 	}
@@ -1943,4 +2175,5 @@ int main() {
 	--------------------------------------------- Loop END -----------------------------------------------------
 
 	----------------------------------------------------------------------------------------------------------*/
+}
 }
