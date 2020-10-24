@@ -96,6 +96,23 @@ int main() {
 	bullet1.setOrigin(10, 10);
 	bool bull1out =false, bull1Col = false;
 
+	sf::Texture bullet1_tx;
+	bullet1_tx.loadFromFile("bullet.png");
+	printf("Loading. . .\n");
+	if (!bullet1_tx.loadFromFile("bullet.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading bullet Done!\n");
+	}
+	sf::RectangleShape bullet1(sf::Vector2f(100.0f, 100.0f));
+	bullet1.setTexture(&playerTexture);
+	sf::Vector2u textureSize = bullet1_tx.getSize();
+	int bulletSizeX = textureSize.x / 13;
+	int bulletSizeY = textureSize.y / 21;
+	bullet1.setTextureRect(sf::IntRect(bulletSizeX * 2, bulletSizeY * 2, bulletSizeX, bulletSizeY));
+	int bulletAnimationFrame = 0;
+
 
 	//Bullet > > 2//
 	
@@ -723,7 +740,7 @@ int main() {
 	DemocracLV4.setPosition(900, 350);
 	float animateDemocracLV4Frame = 0;
 
-	scanf_s("%d", &n);
+	//scanf_s("%d", &n);
 
 
 
@@ -1034,7 +1051,7 @@ int main() {
 					bullet3.setPosition(0, 0);
 				}
 			}
-
+		}
 			
 
 		//LEVEL 2//
@@ -1097,6 +1114,8 @@ int main() {
 
 			// bullet collision //
 
+			//bullet 1//
+
 			if ((bullet1.getGlobalBounds().intersects(wallLV201.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV202.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
@@ -1106,6 +1125,26 @@ int main() {
 				bullet1.setPosition(0, 0);
 			}
 
+			//bullet 2//
+
+			if ((bullet2.getGlobalBounds().intersects(wallLV201.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wallLV202.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV201.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV202.getGlobalBounds()))) {
+				bull2out = false;
+				bullet2.setPosition(0, 0);
+			}
+			//bullet 3//
+
+			if ((bullet3.getGlobalBounds().intersects(wallLV201.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wallLV202.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV201.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV202.getGlobalBounds()))) {
+				bull3out = false;
+				bullet3.setPosition(0, 0);
+			}
 
 		}
 
@@ -1156,6 +1195,8 @@ int main() {
 
 			// bullet collision //
 
+			//bullet 1//
+
 			if ((bullet1.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(enemyLV203.getGlobalBounds()))) {
 				bull1out = false;
@@ -1165,6 +1206,34 @@ int main() {
 				if ((bullet1.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
 					bull1out = false;
 					bullet1.setPosition(0, 0);
+				}
+			}
+
+			//bullet 2//
+
+			if ((bullet2.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV203.getGlobalBounds()))) {
+				bull2out = false;
+				bullet2.setPosition(0, 0);
+			}
+			if (DoorLV2Check == false) {
+				if ((bullet2.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
+					bull2out = false;
+					bullet2.setPosition(0, 0);
+				}
+			}
+
+			//bullet 3//
+
+			if ((bullet3.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV203.getGlobalBounds()))) {
+				bull3out = false;
+				bullet3.setPosition(0, 0);
+			}
+			if (DoorLV2Check == false) {
+				if ((bullet3.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
+					bull3out = false;
+					bullet3.setPosition(0, 0);
 				}
 			}
 		}
@@ -1227,6 +1296,8 @@ int main() {
 
 			// bullet collision //
 
+			//bullet 1//
+
 			if ((bullet1.getGlobalBounds().intersects(wallLV301.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV302.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
@@ -1234,6 +1305,28 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(enemyLV302.getGlobalBounds()))) {
 				bull1out = false;
 				bullet1.setPosition(0, 0);
+			}
+
+			//bullet 2//
+
+			if ((bullet2.getGlobalBounds().intersects(wallLV301.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wallLV302.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV301.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV302.getGlobalBounds()))) {
+				bull2out = false;
+				bullet2.setPosition(0, 0);
+			}
+
+			//bullet 3//
+
+			if ((bullet3.getGlobalBounds().intersects(wallLV301.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wallLV302.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV301.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV302.getGlobalBounds()))) {
+				bull3out = false;
+				bullet3.setPosition(0, 0);
 			}
 		}
 
@@ -1280,6 +1373,8 @@ int main() {
 
 			// bullet collision //
 
+			//bullet 1//
+
 			if ((bullet1.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(enemyLV401.getGlobalBounds()))
@@ -1287,14 +1382,52 @@ int main() {
 				bull1out = false;
 				bullet1.setPosition(0, 0);
 			}
+
+			//bullet 2//
+
+			if ((bullet2.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV401.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV402.getGlobalBounds()))) {
+				bull2out = false;
+				bullet2.setPosition(0, 0);
+			}
+
+			//bullet 3//
+
+			if ((bullet3.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV401.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV402.getGlobalBounds()))) {
+				bull3out = false;
+				bullet3.setPosition(0, 0);
+			}
 		}
 		if (n == 6) {
 			// bullet collision //
+
+			//bullet 1//
 
 			if ((bullet1.getGlobalBounds().intersects(enemyLV403.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds()))) {
 				bull1out = false;
 				bullet1.setPosition(0, 0);
+			}
+
+			//bullet 2//
+
+			if ((bullet2.getGlobalBounds().intersects(enemyLV403.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(enemyLV404.getGlobalBounds()))) {
+				bull2out = false;
+				bullet2.setPosition(0, 0);
+			}
+
+			//bullet 3//
+
+			if ((bullet3.getGlobalBounds().intersects(enemyLV403.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(enemyLV404.getGlobalBounds()))) {
+				bull3out = false;
+				bullet3.setPosition(0, 0);
 			}
 		}
 
@@ -1536,7 +1669,7 @@ int main() {
 		
 
 		
-		printf("Bulleet Col1 %d\nBulleet Col2 %d\nBulleet Col3 %d\n", bull1Col, bull2Col, bull3Col);
+		//printf("Bulleet Col1 %d\nBulleet Col2 %d\nBulleet Col3 %d\n", bull1Col, bull2Col, bull3Col);
 		//--------------------------------------Democrac LEVEL1------------------------------------------//
 
 		DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * animateDemocracFrame, democracSizeY * 0, democracSizeX, democracSizeY));
@@ -2158,7 +2291,8 @@ int main() {
 			window.draw(DemocracLV4);
 		}
 
-		//Rendeer::Bullet//
+		//Render::Bullet//
+
 		if (bull1out == true) {
 			window.draw(bullet1);
 		}
@@ -2168,6 +2302,7 @@ int main() {
 		if (bull3out == true) {
 			window.draw(bullet3);
 		}
+		
 		window.display();
 	}
 	/*----------------------------------------------------------------------------------------------------------
@@ -2175,5 +2310,4 @@ int main() {
 	--------------------------------------------- Loop END -----------------------------------------------------
 
 	----------------------------------------------------------------------------------------------------------*/
-}
 }
