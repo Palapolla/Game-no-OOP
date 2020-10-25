@@ -370,6 +370,8 @@ int main() {
 	enemyLV201.setPosition(1000, 600);
 	int  enemyLV201MaxX = 0;
 	float enemyLV201PosX = 0, enemyLV201FrameX = 0, enemyLV201FrameY = 9;
+	bool enemyLV201SetState = true;
+	int enemyLV201Life = 3;
 
 	//**********Enemy02**********//
 
@@ -390,6 +392,8 @@ int main() {
 	enemyLV202.setPosition(1000, 260);
 	int  enemyLV202MaxX = 0;
 	float enemyLV202PosX = 0, enemyLV202FrameX = 0, enemyLV202FrameY = 9;
+	bool enemyLV202SetState = true;
+	int enemyLV202Life = 3;
 
 	//**********Gate2**********//
 
@@ -865,7 +869,7 @@ int main() {
 
 
 		sf::Time timer = clock.getElapsedTime();
-		printf("timer %f\n", timer.asSeconds());
+		//printf("timer %f\n", timer.asSeconds());
 		char timetext[100];
 		if (timer.asSeconds() > 10) {
 			_gcvt_s(timetext, 100, timer.asSeconds(), 6);
@@ -888,6 +892,16 @@ int main() {
 			if (enemy2SetState == true) {
 				enemy2Life = 3;
 				enemy2SetState = false;
+			}
+		}
+		if (n == 2) {
+			if (enemyLV201SetState == true) {
+				enemyLV201Life = 3;
+				enemyLV201SetState = false;
+			}
+			if (enemyLV201SetState == true) {
+				enemyLV202Life = 3;
+				enemyLV202SetState = false;
 			}
 		}
 
@@ -1115,51 +1129,53 @@ int main() {
 			}
 
 			//Level 1 > > bullet > > Enemy1//
-
-			if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
-				bull1out = false;
-				bull1Col = false;
-				bullet1.setPosition(0, 0);
-				enemy1Life -= 1;
-				printf("hit - enemyLife = %d\n",enemy1Life);
-			}
-			if (bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
-				bull2out = false;
-				bull2Col = false;
-				bullet2.setPosition(0, 0);
-				enemy1Life -= 1;
-				printf("hit - enemyLife = %d\n", enemy1Life);
-			}
-			if (bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
-				bull3out = false;
-				bull3Col = false;
-				bullet3.setPosition(0, 0);
-				enemy1Life -= 1;
-				printf("hit - enemyLife = %d\n", enemy1Life);
+			if (enemy1Life > 0) {
+				if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bullet1.setPosition(0, 0);
+					enemy1Life -= 1;
+					printf("hit - enemyLife = %d\n", enemy1Life);
+				}
+				if (bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bullet2.setPosition(0, 0);
+					enemy1Life -= 1;
+					printf("hit - enemyLife = %d\n", enemy1Life);
+				}
+				if (bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bullet3.setPosition(0, 0);
+					enemy1Life -= 1;
+					printf("hit - enemyLife = %d\n", enemy1Life);
+				}
 			}
 
 			//Level 1 > > bullet > > Enemy2//
-
-			if (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
-				bull1out = false;
-				bull1Col = false;
-				bullet1.setPosition(0, 0);
-				enemy2Life -= 1;
-				printf("hit - enemyLife = %d\n", enemy2Life);
-			}
-			if (bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
-				bull2out = false;
-				bull2Col = false;
-				bullet2.setPosition(0, 0);
-				enemy2Life -= 1;
-				printf("hit - enemyLife = %d\n", enemy2Life);
-			}
-			if (bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
-				bull3out = false;
-				bull3Col = false;
-				bullet3.setPosition(0, 0);
-				enemy2Life -= 1;
-				printf("hit - enemyLife = %d\n", enemy2Life);
+			if (enemy2Life > 0) {
+				if (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bullet1.setPosition(0, 0);
+					enemy2Life -= 1;
+					printf("hit - enemyLife = %d\n", enemy2Life);
+				}
+				if (bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bullet2.setPosition(0, 0);
+					enemy2Life -= 1;
+					printf("hit - enemyLife = %d\n", enemy2Life);
+				}
+				if (bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bullet3.setPosition(0, 0);
+					enemy2Life -= 1;
+					printf("hit - enemyLife = %d\n", enemy2Life);
+				}
 			}
 		}
 			
@@ -1229,8 +1245,7 @@ int main() {
 			if ((bullet1.getGlobalBounds().intersects(wallLV201.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV202.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(enemyLV201.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(enemyLV202.getGlobalBounds()))) {
+				) {
 				bull1out = false;
 				bullet1.setPosition(0, 0);
 			}
@@ -1240,8 +1255,7 @@ int main() {
 			if ((bullet2.getGlobalBounds().intersects(wallLV201.getGlobalBounds()))
 				|| (bullet2.getGlobalBounds().intersects(wallLV202.getGlobalBounds()))
 				|| (bullet2.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(enemyLV201.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(enemyLV202.getGlobalBounds()))) {
+				) {
 				bull2out = false;
 				bullet2.setPosition(0, 0);
 			}
@@ -1250,10 +1264,60 @@ int main() {
 			if ((bullet3.getGlobalBounds().intersects(wallLV201.getGlobalBounds()))
 				|| (bullet3.getGlobalBounds().intersects(wallLV202.getGlobalBounds()))
 				|| (bullet3.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(enemyLV201.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(enemyLV202.getGlobalBounds()))) {
+				) {
 				bull3out = false;
 				bullet3.setPosition(0, 0);
+			}
+			//Level 2 > > bullet > > Enemy1//
+
+			if (enemyLV201Life > 0) {
+				if (bullet1.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bullet1.setPosition(0, 0);
+					enemyLV201Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV201Life);
+				}
+				if (bullet2.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bullet2.setPosition(0, 0);
+					enemyLV201Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV201Life);
+				}
+				if (bullet3.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bullet3.setPosition(0, 0);
+					enemyLV201Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV201Life);
+				}
+			}
+
+			//Level 2 > > bullet > > Enemy2//
+
+			if (enemyLV202Life > 0) {
+				if (bullet1.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bullet1.setPosition(0, 0);
+					enemyLV202Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV202Life);
+				}
+				if (bullet2.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bullet2.setPosition(0, 0);
+					enemyLV202Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV202Life);
+				}
+				if (bullet3.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bullet3.setPosition(0, 0);
+					enemyLV202Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV202Life);
+				}
 			}
 
 		}
@@ -2264,29 +2328,45 @@ int main() {
 			window.draw(GateLV2);
 			if (playerPosition.y <= 350 && playerPosition.y > 250) {
 				window.draw(wallLV202);
-				window.draw(enemyLV202);
+				if (enemyLV202Life > 0) {
+					window.draw(enemyLV202);
+				}
 				window.draw(player);
-				window.draw(enemyLV201);
+				if (enemyLV201Life > 0) {
+					window.draw(enemyLV201);
+				}
 				window.draw(wallLV201);
 			}
 			else if (playerPosition.y <= 250 && playerPosition.y > 100) {
 				window.draw(wallLV202);
 				window.draw(player);
-				window.draw(enemyLV202);
-				window.draw(enemyLV201);
+				if (enemyLV202Life > 0) {
+					window.draw(enemyLV202);
+				}
+				if (enemyLV201Life > 0) {
+					window.draw(enemyLV201);
+				}
 				window.draw(wallLV201);
 			}
 			else if (playerPosition.y <= 100) {
 				window.draw(player);
 				window.draw(wallLV202);
-				window.draw(enemyLV202);
-				window.draw(enemyLV201);
+				if (enemyLV202Life > 0) {
+					window.draw(enemyLV202);
+				}
+				if (enemyLV201Life > 0) {
+					window.draw(enemyLV201);
+				}
 				window.draw(wallLV201);
 			}
 			else if (playerPosition.y >= 600) {
 				window.draw(wallLV202);
-				window.draw(enemyLV202);
-				window.draw(enemyLV201);
+				if (enemyLV202Life > 0) {
+					window.draw(enemyLV202);
+				}
+				if (enemyLV201Life > 0) {
+					window.draw(enemyLV201);
+				}
 				window.draw(player);
 				window.draw(wallLV201);
 			}
@@ -2294,8 +2374,12 @@ int main() {
 				window.draw(wallLV201);
 				window.draw(wallLV202);
 				window.draw(player);
-				window.draw(enemyLV202);
-				window.draw(enemyLV201);
+				if (enemyLV202Life > 0) {
+					window.draw(enemyLV202);
+				}
+				if (enemyLV201Life > 0) {
+					window.draw(enemyLV201);
+				}
 			}
 			
 			window.draw(wallLV203);
