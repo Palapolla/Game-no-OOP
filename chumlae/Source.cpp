@@ -231,6 +231,8 @@ int main() {
 	sf::Vector2f enemyLV101Position = enemy01.getPosition();
 	int  enemyMaxX = 0;
 	float enemyPosX = 0, enemy01FrameX = 0, enemy01FrameY = 9;
+	bool enemy1SetState = true;
+	int enemy1Life = 3;
 
 	//**********Enemy02**********//
 
@@ -251,6 +253,8 @@ int main() {
 	enemy02.setPosition(900, 600);
 	int  enemy02MaxY = 0;
 	float enemy02PosY = 0, enemy02FrameX = 0, enemy02FrameY = 8;
+	bool enemy2SetState = true;
+	int enemy2Life = 3;
 
 	//**********Democrac Level 1**********//
 
@@ -834,6 +838,19 @@ int main() {
 			KeyLV1Check = false;
 		}
 
+		//Set Status//
+
+		if (n == 1) {
+			if (enemy1SetState == true) {
+				enemy1Life = 3;
+				enemy1SetState = false;
+			}
+			if (enemy2SetState == true) {
+				enemy2Life = 3;
+				enemy2SetState = false;
+			}
+		}
+
 		/*------------------------------------------------------------------------------------------------------------------------
 
 		-------------------------------------------- //Collision Check Zone// ----------------------------------------------------
@@ -990,9 +1007,9 @@ int main() {
 			}
 
 			//Level1 > > Enemy 1//
-			if ((playerPosition.y + 100 >= enemyLV101Position.y || playerPosition.y <= enemyLV101Position.y + 100) && (playerPosition.x + 70 >= enemyLV101Position.x + 30 || playerPosition.x + 30 <= enemyLV101Position.y + 70)) {
+			/*if ((playerPosition.y + 100 >= enemyLV101Position.y || playerPosition.y <= enemyLV101Position.y + 100) && (playerPosition.x + 70 >= enemyLV101Position.x + 30 || playerPosition.x + 30 <= enemyLV101Position.y + 70)) {
 				//printf("chonlaew");
-			}
+			}*/
 
 			// bullet collision //
 
@@ -1003,8 +1020,7 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(wall3.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wall4.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wall5.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds()))
+
 				) {
 				bull1out = false;
 				bull1Col = false;
@@ -1025,8 +1041,6 @@ int main() {
 				|| (bullet2.getGlobalBounds().intersects(wall3.getGlobalBounds()))
 				|| (bullet2.getGlobalBounds().intersects(wall4.getGlobalBounds()))
 				|| (bullet2.getGlobalBounds().intersects(wall5.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds()))
 				) {
 				bull2out = false;
 				bull2Col = false;
@@ -1047,8 +1061,6 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wall3.getGlobalBounds()))
 				|| (bullet3.getGlobalBounds().intersects(wall4.getGlobalBounds()))
 				|| (bullet3.getGlobalBounds().intersects(wall5.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds()))
 				) {
 				bull3out = false;
 				bull3Col = false;
@@ -1060,6 +1072,54 @@ int main() {
 					bull3Col = false;
 					bullet3.setPosition(0, 0);
 				}
+			}
+
+			//Level 1 > > bullet > > Enemy1//
+
+			if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+				bull1out = false;
+				bull1Col = false;
+				bullet1.setPosition(0, 0);
+				enemy1Life -= 1;
+				printf("hit - enemyLife = %d\n",enemy1Life);
+			}
+			if (bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+				bull2out = false;
+				bull2Col = false;
+				bullet2.setPosition(0, 0);
+				enemy1Life -= 1;
+				printf("hit - enemyLife = %d\n", enemy1Life);
+			}
+			if (bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+				bull3out = false;
+				bull3Col = false;
+				bullet3.setPosition(0, 0);
+				enemy1Life -= 1;
+				printf("hit - enemyLife = %d\n", enemy1Life);
+			}
+
+			//Level 1 > > bullet > > Enemy2//
+
+			if (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+				bull1out = false;
+				bull1Col = false;
+				bullet1.setPosition(0, 0);
+				enemy2Life -= 1;
+				printf("hit - enemyLife = %d\n", enemy2Life);
+			}
+			if (bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+				bull2out = false;
+				bull2Col = false;
+				bullet2.setPosition(0, 0);
+				enemy2Life -= 1;
+				printf("hit - enemyLife = %d\n", enemy2Life);
+			}
+			if (bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+				bull3out = false;
+				bull3Col = false;
+				bullet3.setPosition(0, 0);
+				enemy2Life -= 1;
+				printf("hit - enemyLife = %d\n", enemy2Life);
 			}
 		}
 			
@@ -2111,31 +2171,47 @@ int main() {
 			window.draw(wall1);
 			window.draw(wall2);
 			window.draw(player);
-			window.draw(enemy01);
-			window.draw(enemy02);
+			if (enemy1Life > 0) {
+				window.draw(enemy01);
+			}
+			if (enemy2Life > 0) {
+				window.draw(enemy02);
+			}
 			window.draw(DemocracLV1);
 			
 			if (playerPosition.y < 300&&playerPosition.y > 200) {
-				window.draw(enemy01);
+				if (enemy1Life > 0) {
+					window.draw(enemy01);
+				}
 				window.draw(player);
 				window.draw(wall1);
 				window.draw(wall2);
-				window.draw(enemy02);
+				if (enemy2Life > 0) {
+					window.draw(enemy02);
+				}
 			}
 			if (!playerPosition.y < 300 && !playerPosition.y > 200) {
-				window.draw(enemy01);
+				if (enemy1Life > 0) {
+					window.draw(enemy01);
+				}
 				window.draw(player);
 				window.draw(wall1);
 				window.draw(wall2);
-				window.draw(enemy02);
+				if (enemy2Life > 0) {
+					window.draw(enemy02);
+				}
 			}
 			if (enemy02Position.y < playerPosition.y) {
-				window.draw(enemy02);
+				if (enemy2Life > 0) {
+					window.draw(enemy02);
+				}
 				window.draw(player);
 			}
 			if (!enemy02Position.y < !playerPosition.y) {
 				window.draw(player);
-				window.draw(enemy02);
+				if (enemy2Life > 0) {
+					window.draw(enemy02);
+				}
 			}
 			
 			window.draw(wall3);
