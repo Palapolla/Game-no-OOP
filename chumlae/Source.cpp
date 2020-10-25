@@ -818,7 +818,6 @@ int main() {
 	sf::Text timerClock;
 	font.loadFromFile("arial.ttf");
 	timerClock.setFont(font);
-	//timerClock.setString(font);
 	timerClock.setCharacterSize(40);
 	timerClock.setFillColor(sf::Color::White);
 	sf::Text time;
@@ -864,11 +863,7 @@ int main() {
 
 		//###########################################Clock###################################################//
 
-		/*sf::Time elapsed1 = clock.getElapsedTime();
-		std::cout << elapsed1.asSeconds() << std::endl;
-		//clock.restart();*/
 
-		//sf::Clock clock;
 		sf::Time timer = clock.getElapsedTime();
 		printf("timer %f\n", timer.asSeconds());
 		char timetext[100];
@@ -880,7 +875,8 @@ int main() {
 		}
 		timerClock.setString(timetext);
 		timerClock.setPosition(900, 0);
-		//clock.restart();
+
+
 		//Set Status//
 
 
