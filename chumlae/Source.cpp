@@ -8,7 +8,6 @@ Level 3
 Level 4
 LOOP Zone
 */
-
 #include <SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include <stdlib.h>
@@ -811,6 +810,31 @@ int main() {
 	heart3.setPosition(90, 10);
 	bool heart3Check = true;
 
+	//####################################Timer##############################################//
+
+
+	sf::Clock clock;
+	sf::Font font;
+	sf::Text timerClock;
+	font.loadFromFile("arial.ttf");
+	timerClock.setFont(font);
+	//timerClock.setString(font);
+	timerClock.setCharacterSize(40);
+	timerClock.setFillColor(sf::Color::White);
+	sf::Text time;
+	time.setFont(font);
+	time.setCharacterSize(40);
+	time.setFillColor(sf::Color::White);
+	time.setString("Time : ");
+	time.setPosition(750, 0);
+	sf::Text unit;
+	unit.setFont(font);
+	unit.setCharacterSize(40);
+	unit.setFillColor(sf::Color::White);
+	unit.setString("sec");
+	unit.setPosition(1100, 0);
+
+
 
 	/**********************************************************************************************************
 
@@ -838,7 +862,27 @@ int main() {
 			KeyLV1Check = false;
 		}
 
+		//###########################################Clock###################################################//
+
+		/*sf::Time elapsed1 = clock.getElapsedTime();
+		std::cout << elapsed1.asSeconds() << std::endl;
+		//clock.restart();*/
+
+		//sf::Clock clock;
+		sf::Time timer = clock.getElapsedTime();
+		printf("timer %f\n", timer.asSeconds());
+		char timetext[100];
+		if (timer.asSeconds() > 10) {
+			_gcvt_s(timetext, 100, timer.asSeconds(), 6);
+		}
+		else {
+			_gcvt_s(timetext, 100, timer.asSeconds(), 4);
+		}
+		timerClock.setString(timetext);
+		timerClock.setPosition(900, 0);
+		//clock.restart();
 		//Set Status//
+
 
 		if (n == 1) {
 			if (enemy1SetState == true) {
@@ -2387,7 +2431,9 @@ int main() {
 		if (bull3out == true) {
 			window.draw(bullet3);
 		}
-		
+		window.draw(timerClock);
+		window.draw(time);
+		window.draw(unit);
 		window.display();
 	}
 	/*----------------------------------------------------------------------------------------------------------
