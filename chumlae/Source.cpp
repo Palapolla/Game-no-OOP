@@ -23,8 +23,7 @@ void delay(int number_of_seconds)
 	clock_t start_time = clock();
 
 	// looping till required time is not achieved 
-	while (clock() < start_time + milli_seconds)
-		;
+	while (clock() < start_time + milli_seconds);
 }
 
 int main() {
@@ -141,7 +140,6 @@ int main() {
 	//---------------------------------------level 1----------------------------------------------//
 
 
-
 	//**********wall1**********//
 
 	sf::Texture wall1_tx;
@@ -232,6 +230,18 @@ int main() {
 	float enemyPosX = 0, enemy01FrameX = 0, enemy01FrameY = 9;
 	bool enemy1SetState = true;
 	int enemy1Life = 3;
+	
+	sf::Texture enemy01Heart1_tx;
+	enemy01Heart1_tx.loadFromFile("EnemyHeart1.png");
+	sf::RectangleShape enemy01Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy01Heart1.setOrigin(10, 10);
+	enemy01Heart1.setTexture(&enemy01Heart1_tx);
+	sf::RectangleShape enemy01Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy01Heart2.setOrigin(10, 10);
+	enemy01Heart2.setTexture(&enemy01Heart1_tx);
+	sf::RectangleShape enemy01Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy01Heart3.setOrigin(10, 10);
+	enemy01Heart3.setTexture(&enemy01Heart1_tx);
 
 	//**********Enemy02**********//
 
@@ -254,6 +264,16 @@ int main() {
 	float enemy02PosY = 0, enemy02FrameX = 0, enemy02FrameY = 8;
 	bool enemy2SetState = true;
 	int enemy2Life = 3;
+	
+	sf::RectangleShape enemy02Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy02Heart1.setOrigin(10, 10);
+	enemy02Heart1.setTexture(&enemy01Heart1_tx);
+	sf::RectangleShape enemy02Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy02Heart2.setOrigin(10, 10);
+	enemy02Heart2.setTexture(&enemy01Heart1_tx);
+	sf::RectangleShape enemy02Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy02Heart3.setOrigin(10, 10);
+	enemy02Heart3.setTexture(&enemy01Heart1_tx);
 
 	//**********Democrac Level 1**********//
 
@@ -305,6 +325,19 @@ int main() {
 	bool KeyLV1Check = false;
 	float animateKeyLV1Frame = 0;
 
+	//**********Shield Level 1**********//
+
+	sf::Texture shield_tx;
+	shield_tx.loadFromFile("SHIELD.png");
+	sf::RectangleShape shield(sf::Vector2f(70.0f, 70.0f));
+	shield.setTexture(&shield_tx);
+	sf::Vector2u shieldTextureSize = shield_tx.getSize();
+	int shieldSizeX = shieldTextureSize.x / 16;
+	int shieldSizeY = shieldTextureSize.y / 1;
+	shield.setTextureRect(sf::IntRect(shieldSizeX * 0, shieldSizeY * 0, shieldSizeX, shieldSizeY));
+	shield.setPosition(1100, 600);
+	int shieldAnimateFrame = 0;
+	bool shieldCheck = false;
 
 	//---------------------------------------level 2----------------------------------------------//
 
@@ -373,6 +406,18 @@ int main() {
 	bool enemyLV201SetState = true;
 	int enemyLV201Life = 3;
 
+	sf::Texture enemyHeart2_tx;
+	enemyHeart2_tx.loadFromFile("EnemyHeart2.png");
+	sf::RectangleShape enemy201Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy201Heart1.setOrigin(10, 10);
+	enemy201Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy201Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy201Heart2.setOrigin(10, 10);
+	enemy201Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy201Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy201Heart3.setOrigin(10, 10);
+	enemy201Heart3.setTexture(&enemyHeart2_tx);
+
 	//**********Enemy02**********//
 
 	sf::Texture enemyLV202_tx;
@@ -394,6 +439,15 @@ int main() {
 	float enemyLV202PosX = 0, enemyLV202FrameX = 0, enemyLV202FrameY = 9;
 	bool enemyLV202SetState = true;
 	int enemyLV202Life = 3;
+	sf::RectangleShape enemy202Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy202Heart1.setOrigin(10, 10);
+	enemy202Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy202Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy202Heart2.setOrigin(10, 10);
+	enemy202Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy202Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy202Heart3.setOrigin(10, 10);
+	enemy202Heart3.setTexture(&enemyHeart2_tx);
 
 	//**********Gate2**********//
 
@@ -822,7 +876,7 @@ int main() {
 
 	/*#########################################################################################################
 
-													Heart
+												Heart Status
 
 	###########################################################################################################*/
 
@@ -872,6 +926,18 @@ int main() {
 	heart3.setPosition(90, 10);
 	bool heart3Check = true;
 
+	/*#########################################################################################################
+
+											Shield Status
+
+	###########################################################################################################*/
+
+	sf::Texture shieldStatus_tx;
+	shieldStatus_tx.loadFromFile("ShieldStatus.png");
+	sf::RectangleShape shieldStatus(sf::Vector2f(35.0f, 35.0f));
+	shieldStatus.setTexture(&shieldStatus_tx);
+	shieldStatus.setPosition(150, 5);
+	bool shieldStatusCheck = false;
 
 	//####################################Timer##############################################//
 
@@ -1119,6 +1185,12 @@ int main() {
 				if (player.getGlobalBounds().intersects(KeyLV1.getGlobalBounds())) {
 					KeyLV1Check = true;
 					DoorLV1Check = true;
+				}
+			}
+			if (shieldStatusCheck == false) {
+				if (player.getGlobalBounds().intersects(shield.getGlobalBounds())) {
+					shieldStatusCheck = true;
+					shieldCheck = true;
 				}
 			}
 
@@ -2163,6 +2235,15 @@ int main() {
 		}
 		KeyLV2.rotate(10.0f);
 
+		//--------------------------------------Shield LEVEL1------------------------------------------//
+
+		shield.setTextureRect(sf::IntRect(shieldSizeX* shieldAnimateFrame, shieldSizeY * 0, shieldSizeX, shieldSizeY));
+		shieldAnimateFrame++;
+
+		if (shieldAnimateFrame >= 15) {
+			shieldAnimateFrame = 0;
+		}
+		//shield.rotate(10.0f);
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
 
 
@@ -2192,8 +2273,12 @@ int main() {
 			enemyPosX = 0;
 			enemy01FrameY = 9;
 		}
+		sf::Vector2f enemy01Position = enemy01.getPosition();
+		enemy01Heart1.setPosition(enemy01Position.x + 25, enemy01Position.y-10);
+		enemy01Heart2.setPosition(enemy01Position.x + 50, enemy01Position.y-10);
+		enemy01Heart3.setPosition(enemy01Position.x + 75, enemy01Position.y-10);
 
-		//**********enemy01 animation**********//
+		//**********enemy02 animation**********//
 
 		enemy02.move(0.0f, enemy02PosY);
 		enemy02.setTextureRect(sf::IntRect(enemy02SizeX * enemy02FrameX, enemy02SizeY * enemy02FrameY, enemy02SizeX, enemy02SizeY));
@@ -2219,7 +2304,9 @@ int main() {
 			enemy02FrameY = 8;
 		}
 		sf::Vector2f enemy02Position = enemy02.getPosition();
-
+		enemy02Heart1.setPosition(enemy02Position.x + 25, enemy02Position.y - 10);
+		enemy02Heart2.setPosition(enemy02Position.x + 50, enemy02Position.y - 10);
+		enemy02Heart3.setPosition(enemy02Position.x + 75, enemy02Position.y - 10);
 
 
 		//--------------------------------------ENEMY LEVEL2------------------------------------------//
@@ -2251,6 +2338,10 @@ int main() {
 			enemyLV201PosX = 0;
 			enemyLV201FrameY = 9;
 		}
+		sf::Vector2f enemyLV201Position = enemyLV201.getPosition();
+		enemy201Heart1.setPosition(enemyLV201Position.x + 25, enemyLV201Position.y - 10);
+		enemy201Heart2.setPosition(enemyLV201Position.x + 50, enemyLV201Position.y - 10);
+		enemy201Heart3.setPosition(enemyLV201Position.x + 75, enemyLV201Position.y - 10);
 
 		//**********enemy02 animation**********//
 
@@ -2277,6 +2368,10 @@ int main() {
 			enemyLV202PosX = 0;
 			enemyLV202FrameY = 9;
 		}
+		sf::Vector2f enemyLV202Position = enemyLV202.getPosition();
+		enemy202Heart1.setPosition(enemyLV201Position.x + 25, enemyLV201Position.y - 10);
+		enemy202Heart2.setPosition(enemyLV201Position.x + 50, enemyLV201Position.y - 10);
+		enemy202Heart3.setPosition(enemyLV201Position.x + 75, enemyLV201Position.y - 10);
 
 		//**********enemy03 animation**********//
 
@@ -2615,7 +2710,40 @@ int main() {
 					window.draw(enemy02);
 				}
 			}
-			
+			if (enemy1Life > 0) {
+				if (enemy1Life == 3) {
+					window.draw(enemy01Heart3);
+					window.draw(enemy01Heart2);
+					window.draw(enemy01Heart1);
+				}
+				if(enemy1Life == 2) {
+					window.draw(enemy01Heart2);
+					window.draw(enemy01Heart1);
+				}
+				if (enemy1Life == 1) {
+					window.draw(enemy01Heart1);
+				}
+			}
+			if (enemy2Life > 0) {
+				if (enemy2Life == 3) {
+					window.draw(enemy02Heart3);
+					window.draw(enemy02Heart2);
+					window.draw(enemy02Heart1);
+				}
+				if (enemy2Life == 2) {
+					window.draw(enemy02Heart2);
+					window.draw(enemy02Heart1);
+				}
+				if (enemy2Life == 1) {
+					window.draw(enemy02Heart1);
+				}
+			}
+			if (shieldStatusCheck == true) {
+				window.draw(shieldStatus);
+			}
+			if (shieldCheck == false) {
+				window.draw(shield);
+			}
 			window.draw(wall3);
 			
 		}
@@ -2681,7 +2809,20 @@ int main() {
 			}
 			
 			window.draw(wallLV203);
-			
+			if (enemyLV201Life > 0) {
+				if (enemyLV201Life == 3) {
+					window.draw(enemy201Heart3);
+					window.draw(enemy201Heart2);
+					window.draw(enemy201Heart1);
+				}
+				if (enemyLV201Life == 2) {
+					window.draw(enemy201Heart3);
+					window.draw(enemy201Heart2);
+				}
+				if (enemyLV201Life == 1) {
+					window.draw(enemy201Heart3);
+				}
+			}
 		}
 
 		else if (n == 3) {
