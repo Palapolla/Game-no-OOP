@@ -2369,9 +2369,9 @@ int main() {
 			enemyLV202FrameY = 9;
 		}
 		sf::Vector2f enemyLV202Position = enemyLV202.getPosition();
-		enemy202Heart1.setPosition(enemyLV201Position.x + 25, enemyLV201Position.y - 10);
-		enemy202Heart2.setPosition(enemyLV201Position.x + 50, enemyLV201Position.y - 10);
-		enemy202Heart3.setPosition(enemyLV201Position.x + 75, enemyLV201Position.y - 10);
+		enemy202Heart1.setPosition(enemyLV202Position.x + 25, enemyLV202Position.y - 10);
+		enemy202Heart2.setPosition(enemyLV202Position.x + 50, enemyLV202Position.y - 10);
+		enemy202Heart3.setPosition(enemyLV202Position.x + 75, enemyLV202Position.y - 10);
 
 		//**********enemy03 animation**********//
 
@@ -2821,6 +2821,20 @@ int main() {
 				}
 				if (enemyLV201Life == 1) {
 					window.draw(enemy201Heart3);
+				}
+			}
+			if (enemyLV202Life > 0) {
+				if (enemyLV202Life == 3) {
+					window.draw(enemy202Heart3);
+					window.draw(enemy202Heart2);
+					window.draw(enemy202Heart1);
+				}
+				if (enemyLV202Life == 2) {
+					window.draw(enemy202Heart3);
+					window.draw(enemy202Heart2);
+				}
+				if (enemyLV202Life == 1) {
+					window.draw(enemy202Heart3);
 				}
 			}
 		}
