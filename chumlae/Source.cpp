@@ -83,10 +83,10 @@ int main() {
 
 	//BullKeyState//
 
-	bool bullW = false, bullA = false, bullS = false, bullD = false;
-	int  bulletNo[3] = { 0, 0, 0}, bullOrder = 0;
+	int bullW[3] = { 0,0,0 }, bullA[3] = { 0,0,0 }, bullS[3] = { 0,0,0 }, bullD[3] = { 0,0,0 };
+	int  bulletNo[3] = { 0, 0, 0 }, bullOrder = 0;
 	bool bull1State = false, bull2State = false, bull3State = false;
-	
+
 	//Bullet > > 1//
 
 	sf::Texture bullet1_tx;
@@ -1061,17 +1061,32 @@ int main() {
 		if (bull1Pos.x <= -20 || bull1Pos.x > 1240 || bull1Pos.y >= 720 || bull1Pos.y < 0) {
 			bull1out = false;
 			bull1Col = false;
+			bullA[0] = 0;
+			bullW[0] = 0;
+			bullS[0] = 0;
+			bullD[0] = 0;
+			bulletNo[0] = 0;
 			bullet1.setPosition(0, 0);
 		}
 
 		if (bull2Pos.x <= -20 || bull2Pos.x > 1240 || bull2Pos.y >= 720 || bull2Pos.y < 0) {
 			bull2out = false;
+			bulletNo[1] = 0;
 			bull2Col = false;
+			bullA[1] = 0;
+			bullW[1] = 0;
+			bullS[1] = 0;
+			bullD[1] = 0;
 			bullet2.setPosition(0, 0);
 		}
 
 		if (bull3Pos.x <= -20 || bull3Pos.x > 1240 || bull3Pos.y >= 720 || bull3Pos.y < 0) {
 			bull3out = false;
+			bulletNo[2] = 0;
+			bullA[2] = 0;
+			bullW[2] = 0;
+			bullS[2] = 0;
+			bullD[2] = 0;
 			bull3Col = false;
 			bullet3.setPosition(0, 0);
 		}
@@ -1212,12 +1227,15 @@ int main() {
 				) {
 				bull1out = false;
 				bull1Col = false;
+				bulletNo[0] = 0;
+				
 				bullet1.setPosition(0, 0);
 			}
 			if (DoorLV1Check == false) {
 				if (bullet1.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bullet1.setPosition(0, 0);
 				}
 			}
@@ -1232,12 +1250,14 @@ int main() {
 				) {
 				bull2out = false;
 				bull2Col = false;
+				bulletNo[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
 			if (DoorLV1Check == false) {
 				if (bullet2.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bullet2.setPosition(0, 0);
 				}
 			}
@@ -1251,12 +1271,14 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wall5.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bulletNo[2] = 0;
 				bull3Col = false;
 				bullet3.setPosition(0, 0);
 			}
 			if (DoorLV1Check == false) {
 				if (bullet3.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
 					bull3out = false;
+					bulletNo[2] = 0;
 					bull3Col = false;
 					bullet3.setPosition(0, 0);
 				}
@@ -1267,6 +1289,7 @@ int main() {
 			if (enemy1Life > 0) {
 				if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
 					bull1out = false;
+					bulletNo[0] = 0;
 					bull1Col = false;
 					bullet1.setPosition(0, 0);
 					enemy1Life -= 1;
@@ -1274,6 +1297,7 @@ int main() {
 				}
 				if (bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
 					bull2out = false;
+					bulletNo[1] = 0;
 					bull2Col = false;
 					bullet2.setPosition(0, 0);
 					enemy1Life -= 1;
@@ -1281,6 +1305,7 @@ int main() {
 				}
 				if (bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
 					bull3out = false;
+					bulletNo[2] = 0;
 					bull3Col = false;
 					bullet3.setPosition(0, 0);
 					enemy1Life -= 1;
@@ -1293,6 +1318,7 @@ int main() {
 			if (enemy2Life > 0) {
 				if (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
 					bull1out = false;
+					bulletNo[0] = 0;
 					bull1Col = false;
 					bullet1.setPosition(0, 0);
 					enemy2Life -= 1;
@@ -1300,6 +1326,7 @@ int main() {
 				}
 				if (bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
 					bull2out = false;
+					bulletNo[1] = 0;
 					bull2Col = false;
 					bullet2.setPosition(0, 0);
 					enemy2Life -= 1;
@@ -1307,6 +1334,7 @@ int main() {
 				}
 				if (bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
 					bull3out = false;
+					bulletNo[2] = 0;
 					bull3Col = false;
 					bullet3.setPosition(0, 0);
 					enemy2Life -= 1;
@@ -2002,39 +2030,40 @@ int main() {
 			skillFrame++;
 			player.setTextureRect(sf::IntRect(playerSizeX * skillFrame, playerSizeY * 2, playerSizeX, playerSizeY));
 			delay(50);
-			if (KeyA == true) {
-				bullA = true;
-				bullW = false;
-				bullS = false;
-				bullD = false;
-			}
-			if (KeyW == true) {
-				bullA = false;
-				bullW = true;
-				bullS = false;
-				bullD = false;
-			}
-			if (KeyD == true) {
-				bullA = false;
-				bullW = false;
-				bullS = false;
-				bullD = true;
-			}
-			if (KeyS == true) {
-				bullA = false;
-				bullW = false;
-				bullS = true;
-				bullD = false;
-			}
+			
 			if (skillFrame >= 6) {
 				skillFrame = 0;
 				spaceCheck = false;
-				if (bull1Col == false || bull2Col == false || bull3Col == false) {
+				if ((bull1Col == false && bulletNo[0] == 0) || (bull2Col == false&&bulletNo[1] == 0) || (bull3Col == false&&bulletNo[2] == 0)) {
 					bulletNo[bullOrder] = 1;
 					switch (bullOrder) {
 					case 0: {bull1State = true; break; }
 					case 1: {bull2State = true; break; }
 					case 2: {bull3State = true; break; }
+					}
+					if (KeyA == true) {
+						bullA[bullOrder] = 1;
+						bullW[bullOrder] = 0;
+						bullS[bullOrder] = 0;
+						bullD[bullOrder] = 0;
+					}
+					if (KeyW == true) {
+						bullA[bullOrder] = 0;
+						bullW[bullOrder] = 1;
+						bullS[bullOrder] = 0;
+						bullD[bullOrder] = 0;
+					}
+					if (KeyD == true) {
+						bullA[bullOrder] = 0;
+						bullW[bullOrder] = 0;
+						bullS[bullOrder] = 0;
+						bullD[bullOrder] = 1;
+					}
+					if (KeyS == true) {
+						bullA[bullOrder] = 0;
+						bullW[bullOrder] = 0;
+						bullS[bullOrder] = 1;
+						bullD[bullOrder] = 0;
 					}
 					bullOrder++;
 					if (bullOrder > 2) {
@@ -2072,24 +2101,24 @@ int main() {
 		}
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[0] == 1) {
-			if (bullA == true) {
+			if (bullA[0] == 1) {
 				bullet1.move(-25.0f, 0.0f);
 				//printf("1");
 			}
-			else if (bullD == true) {
+			else if (bullD[0] == 1) {
 				bullet1.move(25.0f, 0.0f);
 				//printf("1");
 			}
-			else if (bullW == true) {
+			else if (bullW[0] == 1) {
 				bullet1.move(0.0f, -25.0f);
 				//printf("1");
 			}
-			else if (bullS == true) {
+			else if (bullS[0] == 1) {
 				bullet1.move(0.0f, 25.0f);
 				//printf("1");
 			}
 		}
-		
+		printf("bulletNO[0] = %d\n", bulletNo[0]);
 
 		//--------------------------------------Bullet 2------------------------------------------//
 
@@ -2107,19 +2136,19 @@ int main() {
 		}
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[1] == 1) {
-			if (bullA == true) {
+			if (bullA[1] == 1) {
 				bullet2.move(-25.0f, 0.0f);
 				//printf("1");
 			}
-			if (bullD == true) {
+			if (bullD[1] == 1) {
 				bullet2.move(25.0f, 0.0f);
 				//printf("1");
 			}
-			if (bullW == true) {
+			if (bullW[1] == 1) {
 				bullet2.move(0.0f, -25.0f);
 				//printf("1");
 			}
-			if (bullS == true) {
+			if (bullS[1] == 1) {
 				bullet2.move(0.0f, 25.0f);
 				//printf("1");
 			}
@@ -2141,19 +2170,19 @@ int main() {
 		}
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[2] == 1) {
-			if (bullA == true) {
+			if (bullA[2] == 1) {
 				bullet3.move(-25.0f, 0.0f);
 				//printf("1");
 			}
-			if (bullD == true) {
+			if (bullD[2] == 1) {
 				bullet3.move(25.0f, 0.0f);
 				//printf("1");
 			}
-			if (bullW == true) {
+			if (bullW[2] == 1) {
 				bullet3.move(0.0f, -25.0f);
 				//printf("1");
 			}
-			if (bullS == true) {
+			if (bullS[2] == 1) {
 				bullet3.move(0.0f, 25.0f);
 				//printf("1");
 			}
