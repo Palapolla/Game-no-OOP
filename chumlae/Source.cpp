@@ -85,6 +85,7 @@ int main() {
 	int bullW[3] = { 0,0,0 }, bullA[3] = { 0,0,0 }, bullS[3] = { 0,0,0 }, bullD[3] = { 0,0,0 };
 	int  bulletNo[3] = { 0, 0, 0 }, bullOrder = 0;
 	bool bull1State = false, bull2State = false, bull3State = false;
+	int bulletTimeOut[3] = { 0,0,0 };
 
 	//Bullet > > 1//
 
@@ -153,6 +154,8 @@ int main() {
 	wall1.setPosition(0, 310);
 	wall1.setTexture(&wall1_tx);
 	sf::Vector2f wall1Pos = wall1.getPosition();
+	sf::RectangleShape wall1forbull(sf::Vector2f(600, 50));
+	wall1forbull.setPosition(wall1Pos);
 
 	//**********wall2**********//
 
@@ -168,6 +171,8 @@ int main() {
 	wall2.setPosition(900, 310);
 	wall2.setTexture(&wall2_tx);
 	sf::Vector2f wall2Pos = wall2.getPosition();
+	sf::RectangleShape wall2forbull(sf::Vector2f(400, 50));
+	wall2forbull.setPosition(wall2Pos);
 	
 	//**********wall3**********//
 
@@ -175,6 +180,8 @@ int main() {
 	wall3.setPosition(700, 500);
 	wall3.setFillColor(sf::Color(0, 0, 0));
 	sf::Vector2f wall3Pos = wall3.getPosition();
+	sf::RectangleShape wall3forbull(sf::Vector2f(100, 350));
+	wall3forbull.setPosition(wall3Pos);
 
 	//**********wall4**********//
 
@@ -190,6 +197,8 @@ int main() {
 	wall4.setTexture(&wall4_tx);
 	wall4.setPosition(800, 0);
 	sf::Vector2f wall4Pos = wall4.getPosition();
+	sf::RectangleShape wall4forbull(sf::Vector2f(100, 150));
+	wall4forbull.setPosition(wall4Pos);
 
 	//**********wall5**********//
 
@@ -205,6 +214,8 @@ int main() {
 	wall5.setTexture(&wall5_tx);
 	wall5.setPosition(200, 0);
 	sf::Vector2f wall5Pos = wall5.getPosition();
+	sf::RectangleShape wall5forbull(sf::Vector2f(100, 150));
+	wall5forbull.setPosition(wall5Pos);
 
 
 	//**********Enemy01**********//
@@ -1083,6 +1094,7 @@ int main() {
 			bullD[0] = 0;
 			bulletNo[0] = 0;
 			bullet1.setPosition(0, 0);
+			bulletTimeOut[0] = 0;
 		}
 
 		if (bull2Pos.x <= -20 || bull2Pos.x > 1240 || bull2Pos.y >= 720 || bull2Pos.y < 0) {
@@ -1094,6 +1106,7 @@ int main() {
 			bullS[1] = 0;
 			bullD[1] = 0;
 			bullet2.setPosition(0, 0);
+			bulletTimeOut[1] = 0;
 		}
 
 		if (bull3Pos.x <= -20 || bull3Pos.x > 1240 || bull3Pos.y >= 720 || bull3Pos.y < 0) {
@@ -1105,6 +1118,7 @@ int main() {
 			bullD[2] = 0;
 			bull3Col = false;
 			bullet3.setPosition(0, 0);
+			bulletTimeOut[2] = 0;
 		}
 
 		//collision with walls check//
@@ -1234,16 +1248,16 @@ int main() {
 
 			//bullet 1//
 
-			if ((bullet1.getGlobalBounds().intersects(wall1.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(wall2.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(wall3.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(wall4.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(wall5.getGlobalBounds()))
+			if ((bullet1.getGlobalBounds().intersects(wall1forbull.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall2forbull.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall3forbull.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall4forbull.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wall5forbull.getGlobalBounds()))
 				) {
 				bull1out = false;
 				bull1Col = false;
 				bulletNo[0] = 0;
-				
+				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
 			if (DoorLV1Check == false) {
@@ -1251,21 +1265,23 @@ int main() {
 					bull1out = false;
 					bull1Col = false;
 					bulletNo[0] = 0;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 				}
 			}
 
 			//bullet 2//
 
-			if ((bullet2.getGlobalBounds().intersects(wall1.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(wall2.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(wall3.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(wall4.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(wall5.getGlobalBounds()))
+			if ((bullet2.getGlobalBounds().intersects(wall1forbull.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall2forbull.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall3forbull.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall4forbull.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wall5forbull.getGlobalBounds()))
 				) {
 				bull2out = false;
 				bull2Col = false;
 				bulletNo[1] = 0;
+				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
 			if (DoorLV1Check == false) {
@@ -1273,21 +1289,23 @@ int main() {
 					bull2out = false;
 					bull2Col = false;
 					bulletNo[1] = 0;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 				}
 			}
 
 			//bullet 3//
 
-			if ((bullet3.getGlobalBounds().intersects(wall1.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(wall2.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(wall3.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(wall4.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(wall5.getGlobalBounds()))
+			if ((bullet3.getGlobalBounds().intersects(wall1forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall2forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall3forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall4forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wall5forbull.getGlobalBounds()))
 				) {
 				bull3out = false;
 				bulletNo[2] = 0;
 				bull3Col = false;
+				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
 			if (DoorLV1Check == false) {
@@ -1295,6 +1313,7 @@ int main() {
 					bull3out = false;
 					bulletNo[2] = 0;
 					bull3Col = false;
+					bulletTimeOut[1] = 0;
 					bullet3.setPosition(0, 0);
 				}
 			}
@@ -1302,25 +1321,28 @@ int main() {
 			//Level 1 > > bullet > > Enemy1 > > player > > enemy1Area//
 
 			if (enemy1Life > 0) {
+				//DetectionZone
 				if (player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds())) {
-					printf("Chonlaew NAAAAA 1\n");
+					printf("Chonlaew NAAAAA 2\n");
 					enemy01AreaCheck = true;
+					enemy01AreaTimeCount = 0;
 				}
-				else if (!(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
-					if (enemy01AreaCheck == true) {
-						enemy01AreaTimeCount++;
-						if (enemy01AreaTimeCount >= 200) {
-							enemy01AreaCheck = false;
-							enemy01AreaTimeCount = 0;
-							printf("maichonlaew\n");
-						}
+				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
+					printf("%d\n", enemy02AreaTimeCount);
+					if (enemy01AreaTimeCount > 100) {
+						enemy01AreaCheck = false;
+						enemy01AreaTimeCount = 0;
+						printf("maichonlaew 2\n");
 					}
+					enemy01AreaTimeCount += 1;
 				}
+
 				if(enemy01AreaCheck == true)
 				if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
 					bull1out = false;
 					bulletNo[0] = 0;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemy1Life -= 1;
 					printf("hit - enemyLife = %d\n", enemy1Life);
@@ -1329,6 +1351,7 @@ int main() {
 					bull2out = false;
 					bulletNo[1] = 0;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemy1Life -= 1;
 					printf("hit - enemyLife = %d\n", enemy1Life);
@@ -1337,6 +1360,7 @@ int main() {
 					bull3out = false;
 					bulletNo[2] = 0;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemy1Life -= 1;
 					printf("hit - enemyLife = %d\n", enemy1Life);
@@ -1344,28 +1368,30 @@ int main() {
 			}
 
 			//Level 1 > > bullet > > Enemy2 > > player > > enemy2Area//
-			// > >
+
 			if (enemy2Life > 0) {
+
 				if (player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds())) {
 					printf("Chonlaew NAAAAA 2\n");
 					enemy02AreaCheck = true;
+					enemy02AreaTimeCount = 0;
 				}
 				if (enemy02AreaCheck == true && !(player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds()))) {
-					//printf("%d\n", enemy02AreaTimeCount);
-					if (enemy02AreaTimeCount > 200){
+					printf("%d\n", enemy02AreaTimeCount);
+					if (enemy02AreaTimeCount > 100){
 						enemy02AreaCheck = false;
-						//enemy02AreaTimeCount = 0;
+						enemy02AreaTimeCount = 0;
 						printf("maichonlaew 2\n");
 					}
 					enemy02AreaTimeCount += 1;
 				}
-				if(enemy02AreaCheck == true){
-				}
+			
 				// < <
 				if (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
 					bull1out = false;
 					bulletNo[0] = 0;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemy2Life -= 1;
 					printf("hit - enemyLife = %d\n", enemy2Life);
@@ -1374,6 +1400,7 @@ int main() {
 					bull2out = false;
 					bulletNo[1] = 0;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemy2Life -= 1;
 					printf("hit - enemyLife = %d\n", enemy2Life);
@@ -1382,6 +1409,7 @@ int main() {
 					bull3out = false;
 					bulletNo[2] = 0;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemy2Life -= 1;
 					printf("hit - enemyLife = %d\n", enemy2Life);
@@ -1457,6 +1485,7 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
 
@@ -1467,6 +1496,7 @@ int main() {
 				|| (bullet2.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
 			//bullet 3//
@@ -1476,6 +1506,7 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
 
@@ -1485,6 +1516,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV201Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV201Life);
@@ -1492,6 +1524,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV201Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV201Life);
@@ -1499,6 +1532,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV201Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV201Life);
@@ -1511,6 +1545,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV202Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV202Life);
@@ -1518,6 +1553,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV202Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV202Life);
@@ -1525,6 +1561,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV202Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV202Life);
@@ -1585,6 +1622,7 @@ int main() {
 			if ((bullet1.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
 			if (DoorLV2Check == false) {
@@ -1599,11 +1637,13 @@ int main() {
 			if ((bullet2.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
 			if (DoorLV2Check == false) {
 				if ((bullet2.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
 					bull2out = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 				}
 			}
@@ -1613,11 +1653,13 @@ int main() {
 			if ((bullet3.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
 			if (DoorLV2Check == false) {
 				if ((bullet3.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
 					bull3out = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 				}
 			}
@@ -1628,6 +1670,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV203.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV203Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV203Life);
@@ -1635,6 +1678,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV203.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV203Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV203Life);
@@ -1642,6 +1686,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV203.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV203Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV203Life);
@@ -1654,6 +1699,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV204.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV204Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV204Life);
@@ -1661,6 +1707,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV204.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV204Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV204Life);
@@ -1668,6 +1715,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV204.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV204Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV204Life);
@@ -1741,6 +1789,7 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
 
@@ -1751,6 +1800,7 @@ int main() {
 				|| (bullet2.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
 
@@ -1761,6 +1811,7 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
 
@@ -1770,6 +1821,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV301.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV301Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV301Life);
@@ -1777,6 +1829,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV301.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV301Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV301Life);
@@ -1784,6 +1837,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV301.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV301Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV301Life);
@@ -1796,6 +1850,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV302.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV302Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV302Life);
@@ -1803,6 +1858,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV302.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV302Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV302Life);
@@ -1810,6 +1866,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV302.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV302Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV302Life);
@@ -1822,6 +1879,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV303.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV303Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV303Life);
@@ -1829,6 +1887,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV303.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV303Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV303Life);
@@ -1836,6 +1895,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV303.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV303Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV303Life);
@@ -1892,6 +1952,7 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
 
@@ -1901,6 +1962,7 @@ int main() {
 				|| (bullet2.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
 
@@ -1910,6 +1972,7 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
 
@@ -1920,6 +1983,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV401.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV401Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV401Life);
@@ -1927,6 +1991,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV401.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV401Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV401Life);
@@ -1934,6 +1999,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV401.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV401Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV401Life);
@@ -1946,6 +2012,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV402.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV402Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV402Life);
@@ -1953,6 +2020,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV402.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV402Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV402Life);
@@ -1960,6 +2028,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV402.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV402Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV402Life);
@@ -1976,6 +2045,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV403Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV403Life);
@@ -1983,6 +2053,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV403Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV403Life);
@@ -1990,6 +2061,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV403Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV403Life);
@@ -2061,19 +2133,44 @@ int main() {
 				KeyD = false;
 			}
 		}
-		if (bulletNo[0] == 0 && bulletNo[1] == 0 && bulletNo[2] == 0) {
-			if (bullOrder > 2) {
-				bullOrder = 0;
-				spaceEnable = 0;
-			}
+
+		if (bullOrder > 2) {
+			bullOrder = 0;
+			//if (spaceEnable >= 30) {
+			spaceEnable = 0;
+			//}
 		}
-		if (spaceEnable <=30) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-				spaceEnable += 1;
-				spaceCheck = true;
-				printf("Keypress : Space %d\n",spaceEnable);
-			}
+		
+		if (bulletTimeOut[0] >= 30) {
+			bulletTimeOut[0] = 0;
+			bull1out = false;
+			bull1Col = false;
+			bulletNo[0] = 0;
+
+			bullet1.setPosition(0, 0);
 		}
+		if (bulletTimeOut[1] >= 30) {
+			bulletTimeOut[1] = 0;
+			bull2out = false;
+			bull2Col = false;
+			bulletNo[1] = 0;
+
+			bullet1.setPosition(0, 0);
+		}
+		if (bulletTimeOut[2] >= 30) {
+			bulletTimeOut[2] = 0;
+			bull3out = false;
+			bull3Col = false;
+			bulletNo[2] = 0;
+
+			bullet1.setPosition(0, 0);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+			spaceEnable += 1;
+			spaceCheck = true;
+			//printf("Keypress : Space %d\n", spaceEnable);
+		}
+		
 		
 		/*if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::A)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::W)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 			player.setTextureRect(sf::IntRect(playerSizeX* animationFrame, playerSizeY * 2, playerSizeX, playerSizeY));
@@ -2091,31 +2188,31 @@ int main() {
 				skillFrame = 0;
 				spaceCheck = false;
 				if ((bull1Col == false && bulletNo[0] == 0) || (bull2Col == false&&bulletNo[1] == 0) || (bull3Col == false&&bulletNo[2] == 0)) {
-					bulletNo[bullOrder] = 1;
+					//bulletNo[bullOrder] = 1;
 					switch (bullOrder) {
 					case 0: {bull1State = true; break; }
 					case 1: {bull2State = true; break; }
 					case 2: {bull3State = true; break; }
 					}
-					if (KeyA == true) {
+					if (KeyA == true && bulletNo[bullOrder] == 0) {
 						bullA[bullOrder] = 1;
 						bullW[bullOrder] = 0;
 						bullS[bullOrder] = 0;
 						bullD[bullOrder] = 0;
 					}
-					if (KeyW == true) {
+					if (KeyW == true && bulletNo[bullOrder] == 0) {
 						bullA[bullOrder] = 0;
 						bullW[bullOrder] = 1;
 						bullS[bullOrder] = 0;
 						bullD[bullOrder] = 0;
 					}
-					if (KeyD == true) {
+					if (KeyD == true && bulletNo[bullOrder] == 0) {
 						bullA[bullOrder] = 0;
 						bullW[bullOrder] = 0;
 						bullS[bullOrder] = 0;
 						bullD[bullOrder] = 1;
 					}
-					if (KeyS == true) {
+					if (KeyS == true && bulletNo[bullOrder] == 0) {
 						bullA[bullOrder] = 0;
 						bullW[bullOrder] = 0;
 						bullS[bullOrder] = 1;
@@ -2155,6 +2252,7 @@ int main() {
 		}
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[0] == 1) {
+			bulletTimeOut[0]++;
 			if (bullA[0] == 1) {
 				bullet1.move(-25.0f, 0.0f);
 				//printf("1");
@@ -2189,7 +2287,9 @@ int main() {
 			}
 		}
 			//printf("bull1 State %d\n", bull1out);
+
 		if (bulletNo[1] == 1) {
+			bulletTimeOut[1]++;
 			if (bullA[1] == 1) {
 				bullet2.move(-25.0f, 0.0f);
 				//printf("1");
@@ -2224,6 +2324,7 @@ int main() {
 		}
 			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[2] == 1) {
+			bulletTimeOut[2]++;
 			if (bullA[2] == 1) {
 				bullet3.move(-25.0f, 0.0f);
 				//printf("1");
@@ -2808,7 +2909,7 @@ int main() {
 					window.draw(enemy01Heart1);
 				}
 			}
-			if (enemy2Life > 0) {
+			if (enemy2Life > 0 && enemy02AreaCheck == true) {
 				if (enemy2Life == 3) {
 					window.draw(enemy02Heart3);
 					window.draw(enemy02Heart2);
