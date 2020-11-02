@@ -253,11 +253,32 @@ int main() {
 	enemy01Heart3.setOrigin(10, 10);
 	enemy01Heart3.setTexture(&enemy01Heart1_tx);
 	
+	//enemyATK//
+
+	float spBullE1Y = 0,spBullE1X = 0;
 	int enemy01AreaTimeCount = 0;
-	bool enemy01AreaCheck = false;
+	bool enemy01AreaCheck = false,AtkE1 = false;
 	sf::CircleShape enemy01Area;
-	enemy01Area.setRadius(180);
-	enemy01Area.setOrigin(180,180);
+	enemy01Area.setRadius(250);
+	enemy01Area.setOrigin(125,125);
+
+
+	//BulletE1 > > 1//
+
+	sf::Texture bulletE1_tx;
+	bulletE1_tx.loadFromFile("bullet.png");
+	printf("Loading. . .\n");
+	if (!bulletE1_tx.loadFromFile("bullet.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading bullet Done!\n");
+	}
+	sf::RectangleShape bulletE1(sf::Vector2f(20.0f, 20.0f));
+	bulletE1.setTexture(&bulletE1_tx);
+	bulletE1.setOrigin(15, 15);
+	bool bullE1out = false, bullE1Col = false ,E1GetDes = false;
+
 
 	//**********Enemy02**********//
 
@@ -294,8 +315,8 @@ int main() {
 	int enemy02AreaTimeCount = 0;
 	bool enemy02AreaCheck = false;
 	sf::CircleShape enemy02Area;
-	enemy02Area.setRadius(180);
-	enemy02Area.setOrigin(180, 180);
+	enemy02Area.setRadius(250);
+	enemy02Area.setOrigin(125, 125);
 
 	//**********Democrac Level 1**********//
 
@@ -894,7 +915,7 @@ int main() {
 	DemocracLV4.setPosition(900, 350);
 	float animateDemocracLV4Frame = 0;
 
-	scanf_s("%d", &n);
+	//scanf_s("%d", &n);
 
 	/*#########################################################################################################
 
@@ -1321,21 +1342,68 @@ int main() {
 			//Level 1 > > bullet > > Enemy1 > > player > > enemy1Area//
 
 			if (enemy1Life > 0) {
-				//DetectionZone
+
+				//DetectionZone&Attack//
+
 				if (player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds())) {
-					printf("Chonlaew NAAAAA 2\n");
+					//printf("Chonlaew NAAAAA 2\n");
 					enemy01AreaCheck = true;
 					enemy01AreaTimeCount = 0;
+					if (bullE1out == false) {
+						AtkE1 = true;
+					}
 				}
 				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
-					printf("%d\n", enemy02AreaTimeCount);
-					if (enemy01AreaTimeCount > 100) {
+					//printf("%d\n", enemy01AreaTimeCount);
+					if (enemy01AreaTimeCount > 50) {
 						enemy01AreaCheck = false;
 						enemy01AreaTimeCount = 0;
-						printf("maichonlaew 2\n");
+						//printf("maichonlaew 2\n");
 					}
 					enemy01AreaTimeCount += 1;
 				}
+			
+				if (AtkE1 == true) {
+					//Q1
+					if (playerPosition.x > enemy01Position.x && playerPosition.y < enemy01Position.y) {
+						float dxE1 = playerPosition.x - enemy01Position.x, dyE1 = (playerPosition.y - enemy01Position.y);
+						printf("1");
+						spBullE1X = abs(dxE1 / dyE1);
+						spBullE1Y = abs(dyE1 / dxE1)*-1;
+					}
+					//Q2
+					else if (playerPosition.x < enemy01Position.x && playerPosition.y < enemy01Position.y) {
+						float dxE1 = (playerPosition.x - enemy01Position.x), dyE1 = (playerPosition.y - enemy01Position.y);
+						printf("2");
+						spBullE1X = abs(dxE1 / dyE1)*-1;
+						spBullE1Y = abs(dyE1 / dxE1)*-1;
+					}
+					//Q3
+					else if (playerPosition.x < enemy01Position.x && playerPosition.y > enemy01Position.y) {
+						float dxE1 = (playerPosition.x - enemy01Position.x), dyE1 = (playerPosition.y - enemy01Position.y);
+						printf("3");
+						spBullE1X = abs(dxE1 / dyE1)*-1;
+						spBullE1Y = abs(dyE1 / dxE1);
+					}
+					//Q4
+					else if (playerPosition.x > enemy01Position.x && playerPosition.y > enemy01Position.y) {
+						float dxE1 = (playerPosition.x - enemy01Position.x), dyE1 = (playerPosition.y - enemy01Position.y);
+						printf("4");
+						spBullE1X = abs(dxE1 / dyE1);
+						spBullE1Y = abs(dyE1 / dxE1);
+					}
+					AtkE1 = false;
+					bullE1out = true;
+					bulletE1.setPosition(enemy01Position.x + 50, enemy01Position.y + 50);
+				}
+
+				printf("x %f y %f\n", spBullE1X, spBullE1Y);
+				if (bullE1out == true) {
+					bulletE1.move(spBullE1X*10, spBullE1Y*10);
+				}
+
+
+				//bulletWithEnemy//
 
 				if(enemy01AreaCheck == true)
 				if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
@@ -1372,16 +1440,16 @@ int main() {
 			if (enemy2Life > 0) {
 
 				if (player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds())) {
-					printf("Chonlaew NAAAAA 2\n");
+					//printf("Chonlaew NAAAAA 2\n");
 					enemy02AreaCheck = true;
 					enemy02AreaTimeCount = 0;
 				}
 				if (enemy02AreaCheck == true && !(player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds()))) {
 					printf("%d\n", enemy02AreaTimeCount);
-					if (enemy02AreaTimeCount > 100){
+					if (enemy02AreaTimeCount > 50){
 						enemy02AreaCheck = false;
 						enemy02AreaTimeCount = 0;
-						printf("maichonlaew 2\n");
+						//printf("maichonlaew 2\n");
 					}
 					enemy02AreaTimeCount += 1;
 				}
@@ -2895,7 +2963,7 @@ int main() {
 					window.draw(enemy02);
 				}
 			}
-			if (enemy1Life > 0) {
+			if (enemy1Life > 0 && enemy01AreaCheck == true) {
 				if (enemy1Life == 3) {
 					window.draw(enemy01Heart3);
 					window.draw(enemy01Heart2);
@@ -2930,6 +2998,9 @@ int main() {
 				window.draw(shield);
 			}
 			window.draw(wall3);
+			if (enemy1Life > 0 && bullE1out==true) {
+				window.draw(bulletE1);
+			}
 			//window.draw(enemy01Area);
 			//window.draw(enemy02Area);
 		}
@@ -3258,20 +3329,22 @@ int main() {
 
 		//Render::Bullet//
 
-		if (bull1out == true) {
+		if (bulletNo[0] == 1) {
 			window.draw(bullet1);
 		}
-		if (bull2out == true) {
+		if (bulletNo[1] == 1) {
 			window.draw(bullet2);
 		}
-		if (bull3out == true) {
+		if (bulletNo[2] == 1) {
 			window.draw(bullet3);
 		}
+		//window.draw(enemy01Area);
 		window.draw(timerClock);
 		window.draw(time);
 		window.draw(unit);
 		window.display();
 	}
+	return 0;
 	/*----------------------------------------------------------------------------------------------------------
 
 	--------------------------------------------- Loop END -----------------------------------------------------
