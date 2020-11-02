@@ -321,8 +321,8 @@ int main() {
 	//**********Democrac Level 1**********//
 
 	sf::Texture democrac_tx;
-	democrac_tx.loadFromFile("Democrac mk2.png");
-	if (!democrac_tx.loadFromFile("Democrac mk2.png")) {
+	democrac_tx.loadFromFile("Democrac 1.png");
+	if (!democrac_tx.loadFromFile("Democrac 1.png")) {
 		printf("Loading. . .\n");
 	}
 	else {
@@ -332,7 +332,7 @@ int main() {
 	sf::RectangleShape DemocracLV1(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV1.setTexture(&democrac_tx);
 	sf::Vector2u DemocracLV1TextureSize = democrac_tx.getSize();
-	int democracSizeX = DemocracLV1TextureSize.x / 10;
+	int democracSizeX = DemocracLV1TextureSize.x / 12;
 	int democracSizeY = DemocracLV1TextureSize.y / 1;
 	DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * 0, democracSizeY * 0, democracSizeX, democracSizeY));
 	DemocracLV1.setPosition(50, 150);
@@ -482,6 +482,7 @@ int main() {
 	float enemyLV202PosX = 0, enemyLV202FrameX = 0, enemyLV202FrameY = 9;
 	bool enemyLV202SetState = true;
 	int enemyLV202Life = 3;
+
 	sf::RectangleShape enemy202Heart1(sf::Vector2f(20.0f, 20.0f));
 	enemy202Heart1.setOrigin(10, 10);
 	enemy202Heart1.setTexture(&enemyHeart2_tx);
@@ -552,6 +553,17 @@ int main() {
 	float enemyLV203PosY = 0, enemyLV203FrameX = 0, enemyLV203FrameY = 8;
 	bool enemyLV203SetState = true;
 	int enemyLV203Life = 3;
+	
+	sf::RectangleShape enemy203Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy203Heart1.setOrigin(10, 10);
+	enemy203Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy203Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy203Heart2.setOrigin(10, 10);
+	enemy203Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy203Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy203Heart3.setOrigin(10, 10);
+	enemy203Heart3.setTexture(&enemyHeart2_tx);
+
 
 	//**********Enemy04**********//
 
@@ -574,6 +586,17 @@ int main() {
 	float enemyLV204PosY = 0, enemyLV204FrameX = 0, enemyLV204FrameY = 8;
 	bool enemyLV204SetState = true;
 	int enemyLV204Life = 3;
+
+	sf::RectangleShape enemy204Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy204Heart1.setOrigin(10, 10);
+	enemy204Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy204Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy204Heart2.setOrigin(10, 10);
+	enemy204Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy204Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy204Heart3.setOrigin(10, 10);
+	enemy204Heart3.setTexture(&enemyHeart2_tx);
+
 
 	//**********DemocracLevel 2**********//
 
@@ -682,6 +705,16 @@ int main() {
 	bool enemyLV301SetState = true;
 	int enemyLV301Life = 3;
 
+	sf::RectangleShape enemy301Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy301Heart1.setOrigin(10, 10);
+	enemy301Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy301Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy301Heart2.setOrigin(10, 10);
+	enemy301Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy301Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy301Heart3.setOrigin(10, 10);
+	enemy301Heart3.setTexture(&enemyHeart2_tx);
+
 	//**********Enemy02**********//
 
 	sf::Texture enemyLV302_tx;
@@ -703,6 +736,16 @@ int main() {
 	float enemyLV302PosY = 0, enemyLV302FrameX = 0, enemyLV302FrameY = 8;
 	bool enemyLV302SetState = true;
 	int enemyLV302Life = 3;
+
+	sf::RectangleShape enemy302Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy302Heart1.setOrigin(10, 10);
+	enemy302Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy302Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy302Heart2.setOrigin(10, 10);
+	enemy302Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy302Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy302Heart3.setOrigin(10, 10);
+	enemy302Heart3.setTexture(&enemyHeart2_tx);
 
 
 	//**********Enemy03**********//
@@ -726,6 +769,16 @@ int main() {
 	float enemyLV303PosY = 0, enemyLV303FrameX = 0, enemyLV303FrameY = 8;
 	bool enemyLV303SetState = true;
 	int enemyLV303Life = 3;
+
+	sf::RectangleShape enemy303Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy303Heart1.setOrigin(10, 10);
+	enemy303Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy303Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy303Heart2.setOrigin(10, 10);
+	enemy303Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy303Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy303Heart3.setOrigin(10, 10);
+	enemy303Heart3.setTexture(&enemyHeart2_tx);
 
 	//**********Democrac Level 3**********//
 
@@ -915,7 +968,7 @@ int main() {
 	DemocracLV4.setPosition(900, 350);
 	float animateDemocracLV4Frame = 0;
 
-	//scanf_s("%d", &n);
+	scanf_s("%d", &n);
 
 	/*#########################################################################################################
 
@@ -1087,6 +1140,10 @@ int main() {
 		sf::Vector2f enemyLV201Position = enemyLV201.getPosition();
 		sf::Vector2f enemyLV202Position = enemyLV202.getPosition();
 		sf::Vector2f enemyLV203Position = enemyLV203.getPosition();
+		sf::Vector2f enemyLV204Position = enemyLV204.getPosition();
+		sf::Vector2f enemyLV301Position = enemyLV301.getPosition();
+		sf::Vector2f enemyLV302Position = enemyLV302.getPosition();
+		sf::Vector2f enemyLV303Position = enemyLV303.getPosition();
 		sf::Vector2f bull1Pos = bullet1.getPosition();
 		sf::Vector2f bull2Pos = bullet2.getPosition();
 		sf::Vector2f bull3Pos = bullet3.getPosition();
@@ -1399,7 +1456,7 @@ int main() {
 
 				printf("x %f y %f\n", spBullE1X, spBullE1Y);
 				if (bullE1out == true) {
-					bulletE1.move(spBullE1X*10, spBullE1Y*10);
+					bulletE1.move(spBullE1X*2, spBullE1Y*2);
 				}
 
 
@@ -1553,6 +1610,8 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bulletNo[0] = 0;
+				bull1Col = false;
 				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
@@ -1564,6 +1623,8 @@ int main() {
 				|| (bullet2.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bulletNo[1] = 0;
+				bull2Col = false;
 				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
@@ -1574,6 +1635,8 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wallLV203.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bulletNo[2] = 0;
+				bull3Col = false;
 				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
@@ -1584,6 +1647,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV201Life -= 1;
@@ -1592,6 +1656,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV201Life -= 1;
@@ -1600,6 +1665,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV201Life -= 1;
@@ -1612,6 +1678,7 @@ int main() {
 			if (enemyLV202Life > 0) {
 				if (bullet1.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
 					bull1out = false;
+					bulletNo[0] = 0;
 					bull1Col = false;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
@@ -1621,6 +1688,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV202Life -= 1;
@@ -1629,6 +1697,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV202.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV202Life -= 1;
@@ -1690,12 +1759,16 @@ int main() {
 			if ((bullet1.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bull1Col = false;
+				bulletNo[0] = 0;
 				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
 			if (DoorLV2Check == false) {
 				if ((bullet1.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
 					bull1out = false;
+					bull1Col = false;
+					bulletNo[0] = 0;
 					bullet1.setPosition(0, 0);
 				}
 			}
@@ -1705,12 +1778,16 @@ int main() {
 			if ((bullet2.getGlobalBounds().intersects(wallLV204.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bulletNo[1] = 0;
+				bull2Col = false;
 				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
 			if (DoorLV2Check == false) {
 				if ((bullet2.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
 					bull2out = false;
+					bulletNo[1] = 0;
+					bull2Col = false;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 				}
@@ -1722,11 +1799,15 @@ int main() {
 				) {
 				bull3out = false;
 				bulletTimeOut[2] = 0;
+				bull3Col = false;
+				bulletNo[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
 			if (DoorLV2Check == false) {
 				if ((bullet3.getGlobalBounds().intersects(DoorLV2.getGlobalBounds()))) {
 					bull3out = false;
+					bulletNo[2] = 0;
+					bull3Col = false;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 				}
@@ -1738,6 +1819,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV203.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV203Life -= 1;
@@ -1746,6 +1828,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV203.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV203Life -= 1;
@@ -1754,6 +1837,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV203.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV203Life -= 1;
@@ -1767,6 +1851,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV204.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV204Life -= 1;
@@ -1775,6 +1860,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV204.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV204Life -= 1;
@@ -1783,6 +1869,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV204.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV204Life -= 1;
@@ -1857,6 +1944,8 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bull1Col = false;
+				bulletNo[0] = 0;
 				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
@@ -1868,6 +1957,8 @@ int main() {
 				|| (bullet2.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bull2Col = false;
+				bulletNo[1] = 0;
 				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
@@ -1879,6 +1970,8 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wallLV303.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bull3Col = false;
+				bulletNo[2] = 0;
 				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
@@ -1889,6 +1982,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV301.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV301Life -= 1;
@@ -1897,6 +1991,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV301.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV301Life -= 1;
@@ -1905,6 +2000,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV301.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV301Life -= 1;
@@ -1918,6 +2014,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV302.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV302Life -= 1;
@@ -1926,6 +2023,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV302.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV302Life -= 1;
@@ -1934,6 +2032,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV302.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV302Life -= 1;
@@ -1947,6 +2046,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV303.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV303Life -= 1;
@@ -1955,6 +2055,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV303.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV303Life -= 1;
@@ -1963,6 +2064,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV303.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV303Life -= 1;
@@ -2020,6 +2122,8 @@ int main() {
 				|| (bullet1.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
 				) {
 				bull1out = false;
+				bull1Col = false;
+				bulletNo[0] = 0;
 				bulletTimeOut[0] = 0;
 				bullet1.setPosition(0, 0);
 			}
@@ -2030,6 +2134,8 @@ int main() {
 				|| (bullet2.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
 				) {
 				bull2out = false;
+				bull2Col = false;
+				bulletNo[1] = 0;
 				bulletTimeOut[1] = 0;
 				bullet2.setPosition(0, 0);
 			}
@@ -2040,6 +2146,8 @@ int main() {
 				|| (bullet3.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
 				) {
 				bull3out = false;
+				bulletNo[2] = 0;
+				bull3Col = false;
 				bulletTimeOut[2] = 0;
 				bullet3.setPosition(0, 0);
 			}
@@ -2051,6 +2159,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV401.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV401Life -= 1;
@@ -2059,6 +2168,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV401.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV401Life -= 1;
@@ -2067,6 +2177,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV401.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV401Life -= 1;
@@ -2080,6 +2191,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV402.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV402Life -= 1;
@@ -2088,6 +2200,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV402.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV402Life -= 1;
@@ -2096,6 +2209,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV402.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV402Life -= 1;
@@ -2113,6 +2227,7 @@ int main() {
 				if (bullet1.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
+					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
 					enemyLV403Life -= 1;
@@ -2121,6 +2236,7 @@ int main() {
 				if (bullet2.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
+					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
 					enemyLV403Life -= 1;
@@ -2129,6 +2245,7 @@ int main() {
 				if (bullet3.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
+					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
 					enemyLV403Life -= 1;
@@ -2233,10 +2350,12 @@ int main() {
 
 			bullet1.setPosition(0, 0);
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			spaceEnable += 1;
-			spaceCheck = true;
-			//printf("Keypress : Space %d\n", spaceEnable);
+		if (spaceCheck == false) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+				spaceEnable += 1;
+				spaceCheck = true;
+				//printf("Keypress : Space %d\n", spaceEnable);
+			}
 		}
 		
 		
@@ -2250,7 +2369,7 @@ int main() {
 		if (spaceCheck == true) {
 			skillFrame++;
 			player.setTextureRect(sf::IntRect(playerSizeX * skillFrame, playerSizeY * 2, playerSizeX, playerSizeY));
-			delay(50);
+			delay(40);
 			
 			if (skillFrame >= 6) {
 				skillFrame = 0;
@@ -2258,9 +2377,9 @@ int main() {
 				if ((bull1Col == false && bulletNo[0] == 0) || (bull2Col == false&&bulletNo[1] == 0) || (bull3Col == false&&bulletNo[2] == 0)) {
 					//bulletNo[bullOrder] = 1;
 					switch (bullOrder) {
-					case 0: {bull1State = true; break; }
-					case 1: {bull2State = true; break; }
-					case 2: {bull3State = true; break; }
+					case 0: {bull1State = true; bullet1.setPosition(playerPosition.x + 50, playerPosition.y + 60); break; }
+					case 1: {bull2State = true; bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 60); break; }
+					case 2: {bull3State = true; bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 60); break; }
 					}
 					if (KeyA == true && bulletNo[bullOrder] == 0) {
 						bullA[bullOrder] = 1;
@@ -2307,10 +2426,10 @@ int main() {
 
 		//--------------------------------------Bullet 1------------------------------------------//
 		
-		if (bull1State == true) {
+		if (bull1State == true && bulletNo[0] == 0) {
 			if (bull1Col == false) {
 				bull1Col = true;
-				bullet1.setPosition(playerPosition.x + 50, playerPosition.y + 60);
+				//bullet1.setPosition(playerPosition.x + 50, playerPosition.y + 60);
 				bull1out = true;
 
 				//printf("bull1 State %d", bull1out);
@@ -2343,10 +2462,10 @@ int main() {
 		//--------------------------------------Bullet 2------------------------------------------//
 
 		
-		if (bull2State == true) {
+		if (bull2State == true && bulletNo[1] == 0) {
 			if (bull2Col == false) {
 				bull2Col = true;
-				bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 60);
+				//bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 60);
 				bull2out = true;
 
 				//printf("bull1 State %d", bull1out);
@@ -2379,10 +2498,10 @@ int main() {
 		//--------------------------------------Bullet 3------------------------------------------//
 
 		
-		if (bull3State == true) {
+		if (bull3State == true && bulletNo[2] == 0) {
 			if (bull3Col == false) {
 				bull3Col = true;
-				bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 60);
+				//bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 60);
 				bull3out = true;
 
 				//printf("bull1 State %d", bull1out);
@@ -2419,7 +2538,7 @@ int main() {
 		DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * animateDemocracFrame, democracSizeY * 0, democracSizeX, democracSizeY));
 		animateDemocracFrame++;
 
-		if (animateDemocracFrame > 9) {
+		if (animateDemocracFrame > 11) {
 			animateDemocracFrame=0;
 		}
 
@@ -2651,7 +2770,10 @@ int main() {
 			enemyLV203PosY = 0;
 			enemyLV203FrameY = 8;
 		}
-		
+
+		enemy203Heart1.setPosition(enemyLV203Position.x + 25, enemyLV203Position.y - 10);
+		enemy203Heart2.setPosition(enemyLV203Position.x + 50, enemyLV203Position.y - 10);
+		enemy203Heart3.setPosition(enemyLV203Position.x + 75, enemyLV203Position.y - 10);
 
 		//**********enemy04 animation**********//
 
@@ -2678,8 +2800,10 @@ int main() {
 			enemyLV204PosY = 0;
 			enemyLV204FrameY = 10;
 		}
-		sf::Vector2f enemyLV204Position = enemyLV204.getPosition();
-
+		
+		enemy204Heart1.setPosition(enemyLV204Position.x + 25, enemyLV204Position.y - 10);
+		enemy204Heart2.setPosition(enemyLV204Position.x + 50, enemyLV204Position.y - 10);
+		enemy204Heart3.setPosition(enemyLV204Position.x + 75, enemyLV204Position.y - 10);
 
 		//--------------------------------------ENEMY LEVEL3------------------------------------------//
 
@@ -2710,6 +2834,9 @@ int main() {
 			enemyLV301PosX = 0;
 			enemyLV301FrameY = 9;
 		}
+		enemy301Heart1.setPosition(enemyLV301Position.x + 25, enemyLV301Position.y - 10);
+		enemy301Heart2.setPosition(enemyLV301Position.x + 50, enemyLV301Position.y - 10);
+		enemy301Heart3.setPosition(enemyLV301Position.x + 75, enemyLV301Position.y - 10);
 
 		//**********enemy02 animation**********//
 
@@ -2736,7 +2863,11 @@ int main() {
 			enemyLV302PosY = 0;
 			enemyLV302FrameY = 8;
 		}
-		sf::Vector2f enemyLV302Position = enemyLV302.getPosition();
+		
+		enemy302Heart1.setPosition(enemyLV302Position.x + 25, enemyLV302Position.y - 10);
+		enemy302Heart2.setPosition(enemyLV302Position.x + 50, enemyLV302Position.y - 10);
+		enemy302Heart3.setPosition(enemyLV302Position.x + 75, enemyLV302Position.y - 10);
+
 
 		//**********enemy03 animation**********//
 
@@ -2763,7 +2894,11 @@ int main() {
 			enemyLV303PosY = 0;
 			enemyLV303FrameY = 8;
 		}
-		sf::Vector2f enemyLV303Position = enemyLV303.getPosition();
+		
+
+		enemy303Heart1.setPosition(enemyLV303Position.x + 25, enemyLV303Position.y - 10);
+		enemy303Heart2.setPosition(enemyLV303Position.x + 50, enemyLV303Position.y - 10);
+		enemy303Heart3.setPosition(enemyLV303Position.x + 75, enemyLV303Position.y - 10);
 
 		//--------------------------------------ENEMY LEVEL4------------------------------------------//
 
@@ -3124,6 +3259,34 @@ int main() {
 				window.draw(DoorLV2);
 			}
 			window.draw(DemocracLV2);
+			if (enemyLV203Life > 0) {
+				if (enemyLV203Life == 3) {
+					window.draw(enemy203Heart3);
+					window.draw(enemy203Heart2);
+					window.draw(enemy203Heart1);
+				}
+				if (enemyLV203Life == 2) {
+					window.draw(enemy203Heart3);
+					window.draw(enemy203Heart2);
+				}
+				if (enemyLV203Life == 1) {
+					window.draw(enemy203Heart3);
+				}
+			}
+			if (enemyLV204Life > 0) {
+				if (enemyLV204Life == 3) {
+					window.draw(enemy204Heart3);
+					window.draw(enemy204Heart2);
+					window.draw(enemy204Heart1);
+				}
+				if (enemyLV204Life == 2) {
+					window.draw(enemy204Heart3);
+					window.draw(enemy204Heart2);
+				}
+				if (enemyLV204Life == 1) {
+					window.draw(enemy204Heart3);
+				}
+			}
 		}
 
 		//RENDER:LEVEL3//
@@ -3214,6 +3377,49 @@ int main() {
 			}
 			window.draw(DemocracLV3);
 			window.draw(wallLV301);
+
+			if (enemyLV301Life > 0) {
+				if (enemyLV301Life == 3) {
+					window.draw(enemy301Heart3);
+					window.draw(enemy301Heart2);
+					window.draw(enemy301Heart1);
+				}
+				if (enemyLV301Life == 2) {
+					window.draw(enemy301Heart3);
+					window.draw(enemy301Heart2);
+				}
+				if (enemyLV301Life == 1) {
+					window.draw(enemy301Heart3);
+				}
+			}
+			if (enemyLV302Life > 0) {
+				if (enemyLV302Life == 3) {
+					window.draw(enemy302Heart3);
+					window.draw(enemy302Heart2);
+					window.draw(enemy302Heart1);
+				}
+				if (enemyLV302Life == 2) {
+					window.draw(enemy302Heart3);
+					window.draw(enemy302Heart2);
+				}
+				if (enemyLV302Life == 1) {
+					window.draw(enemy302Heart3);
+				}
+			}
+			if (enemyLV303Life > 0) {
+				if (enemyLV303Life == 3) {
+					window.draw(enemy303Heart3);
+					window.draw(enemy303Heart2);
+					window.draw(enemy303Heart1);
+				}
+				if (enemyLV303Life == 2) {
+					window.draw(enemy303Heart3);
+					window.draw(enemy303Heart2);
+				}
+				if (enemyLV303Life == 1) {
+					window.draw(enemy303Heart3);
+				}
+			}
 		
 		}
 
