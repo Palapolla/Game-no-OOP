@@ -313,11 +313,33 @@ int main() {
 	enemy02Heart3.setOrigin(10, 10);
 	enemy02Heart3.setTexture(&enemy01Heart1_tx);
 
+	//enemyATK//
+
+	float spBullE2Y = 0, spBullE2X = 0;
 	int enemy02AreaTimeCount = 0;
-	bool enemy02AreaCheck = false;
+	bool enemy02AreaCheck = false, AtkE2 = false;
 	sf::CircleShape enemy02Area;
 	enemy02Area.setRadius(250);
 	enemy02Area.setOrigin(125, 125);
+
+
+	//BulletE1 > > 1//
+
+	sf::Texture bulletE2_tx;
+	bulletE2_tx.loadFromFile("bullet.png");
+	printf("Loading. . .\n");
+	if (!bulletE2_tx.loadFromFile("bullet.png")) {
+		printf("Loading. . .\n");
+	}
+	else {
+		printf("Loading bullet Done!\n");
+	}
+	sf::RectangleShape bulletE2(sf::Vector2f(20.0f, 20.0f));
+	bulletE2.setTexture(&bulletE2_tx);
+	bulletE2.setOrigin(15, 15);
+	bool bullE2out = false, bullE2Col = false, E2GetDes = false;
+	int bullE2TimeCount = 0;
+
 
 	//**********Democrac Level 1**********//
 
@@ -1481,7 +1503,7 @@ int main() {
 					enemy01AreaTimeCount = 0;
 					if (bullE1out == false) {
 						bullE1TimeCount++;
-						printf("%d", bullE1TimeCount);
+						//printf("%d", bullE1TimeCount);
 						if (bullE1TimeCount >= 25) {
 							AtkE1 = true;
 						}
@@ -1501,27 +1523,27 @@ int main() {
 					float dxE1 = playerPosition.x - enemy01Position.x, dyE1 = (playerPosition.y - enemy01Position.y);
 					//Q1
 					if (playerPosition.x > enemy01Position.x && playerPosition.y < enemy01Position.y) {
-						printf("1\n");
+						//printf("1\n");
 						spBullE1X = abs(dxE1 / dyE1);
 						spBullE1Y = abs(dyE1 / dxE1) * -1;
 					}
 					//Q2
 					else if (playerPosition.x < enemy01Position.x && playerPosition.y < enemy01Position.y) {
-						printf("2\n");
+						//printf("2\n");
 						spBullE1X = abs(dxE1 / dyE1) * -1;
 						spBullE1Y = abs(dyE1 / dxE1) * -1;
 					}
 					//Q3
 					else if (playerPosition.x < enemy01Position.x && playerPosition.y > enemy01Position.y) {
 						 
-						printf("3\n");
+						//printf("3\n");
 						spBullE1X = abs(dxE1 / dyE1) * -1;
 						spBullE1Y = abs(dyE1 / dxE1);
 					}
 					//Q4
 					else if (playerPosition.x > enemy01Position.x && playerPosition.y > enemy01Position.y) {
 						float dxE1 = (playerPosition.x - enemy01Position.x), dyE1 = (playerPosition.y - enemy01Position.y);
-						printf("4\n");
+						//printf("4\n");
 						spBullE1X = abs(dxE1 / dyE1);
 						spBullE1Y = abs(dyE1 / dxE1);
 					}
@@ -1532,21 +1554,21 @@ int main() {
 
 				if (bullE1out == true) {
 					if ((spBullE1X < 5 || spBullE1X > -5) && (spBullE1Y < 5 || spBullE1Y > -5)) {
-						printf("case 1");
+						//printf("case 1");
 						bulletE1.move(spBullE1X*3 , spBullE1Y*3 );
-						printf("x %f y %f\n", spBullE1X, spBullE1Y);
+						//printf("x %f y %f\n", spBullE1X, spBullE1Y);
 					}
 					else {
-						printf("case 2");
+						//printf("case 2");
 						bulletE1.move(spBullE1X, spBullE1Y);
-						printf("x %f y %f\n", spBullE1X, spBullE1Y);
+						//printf("x %f y %f\n", spBullE1X, spBullE1Y);
 					}
 				}
 
 
 				//bulletWithEnemy//
 
-				if(enemy01AreaCheck == true)
+
 				if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
 					bull1out = false;
 					bulletNo[0] = 0;
@@ -1580,21 +1602,76 @@ int main() {
 
 			if (enemy2Life > 0) {
 
+				//DetectionZone&Attack//
+
 				if (player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds())) {
 					//printf("Chonlaew NAAAAA 2\n");
 					enemy02AreaCheck = true;
 					enemy02AreaTimeCount = 0;
+					if (bullE2out == false) {
+						bullE2TimeCount++;
+						//printf("%d", bullE1TimeCount);
+						if (bullE2TimeCount >= 25) {
+							AtkE2 = true;
+						}
+					}
 				}
 				if (enemy02AreaCheck == true && !(player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds()))) {
-					printf("%d\n", enemy02AreaTimeCount);
-					if (enemy02AreaTimeCount > 50){
+					//printf("%d\n", enemy01AreaTimeCount);
+					if (enemy02AreaTimeCount > 50) {
 						enemy02AreaCheck = false;
 						enemy02AreaTimeCount = 0;
 						//printf("maichonlaew 2\n");
 					}
 					enemy02AreaTimeCount += 1;
 				}
-			
+
+				if (AtkE2 == true) {
+					float dxE2 = playerPosition.x - enemy02Position.x, dyE2 = (playerPosition.y - enemy02Position.y);
+					//Q1
+					if (playerPosition.x > enemy02Position.x && playerPosition.y < enemy02Position.y) {
+						//printf("1\n");
+						spBullE2X = abs(dxE2 / dyE2);
+						spBullE2Y = abs(dyE2 / dxE2) * -1;
+					}
+					//Q2
+					else if (playerPosition.x < enemy02Position.x && playerPosition.y < enemy02Position.y) {
+						//printf("2\n");
+						spBullE2X = abs(dxE2 / dyE2) * -1;
+						spBullE2Y = abs(dyE2 / dxE2) * -1;
+					}
+					//Q3
+					else if (playerPosition.x < enemy02Position.x && playerPosition.y > enemy02Position.y) {
+
+						//printf("3\n");
+						spBullE2X = abs(dxE2 / dyE2) * -1;
+						spBullE2Y = abs(dyE2 / dxE2);
+					}
+					//Q4
+					else if (playerPosition.x > enemy02Position.x && playerPosition.y > enemy02Position.y) {
+						float dxE2 = (playerPosition.x - enemy02Position.x), dyE1 = (playerPosition.y - enemy02Position.y);
+						//printf("4\n");
+						spBullE2X = abs(dxE2 / dyE2);
+						spBullE2Y = abs(dyE2 / dxE2);
+					}
+					AtkE2 = false;
+					bullE2out = true;
+					bulletE2.setPosition(enemy02Position.x + 50, enemy02Position.y + 50);
+				}
+
+				if (bullE2out == true) {
+					if ((spBullE2X < 5 || spBullE2X > -5) && (spBullE2Y < 5 || spBullE2Y > -5)) {
+						//printf("case 1");
+						bulletE2.move(spBullE2X * 3, spBullE2Y * 3);
+						//printf("x %f y %f\n", spBullE1X, spBullE1Y);
+					}
+					else {
+						//printf("case 2");
+						bulletE2.move(spBullE2X, spBullE2Y);
+						//printf("x %f y %f\n", spBullE1X, spBullE1Y);
+					}
+				}
+
 				// < <
 				if (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
 					bull1out = false;
@@ -3232,6 +3309,9 @@ int main() {
 			window.draw(wall3);
 			if (enemy1Life > 0 && bullE1out==true) {
 				window.draw(bulletE1);
+			}
+			if (enemy2Life > 0 && bullE2out == true) {
+				window.draw(bulletE2);
 			}
 			//window.draw(enemy01Area);
 			//window.draw(enemy02Area);
