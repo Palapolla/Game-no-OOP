@@ -1,4 +1,4 @@
-/*
+﻿/*
 background
 wall top
 player & texture
@@ -857,6 +857,16 @@ int main() {
 	bool enemyLV401SetState = true;
 	int enemyLV401Life = 3;
 
+	sf::RectangleShape enemy401Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy401Heart1.setOrigin(10, 10);
+	enemy401Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy401Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy401Heart2.setOrigin(10, 10);
+	enemy401Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy401Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy401Heart3.setOrigin(10, 10);
+	enemy401Heart3.setTexture(&enemyHeart2_tx);
+
 	//**********Enemy02**********//
 
 	sf::Texture enemyLV402_tx;
@@ -878,6 +888,16 @@ int main() {
 	float enemyLV402PosY = 0, enemyLV402FrameX = 0, enemyLV402FrameY = 8;
 	bool enemyLV402SetState = true;
 	int enemyLV402Life = 3;
+
+	sf::RectangleShape enemy402Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy402Heart1.setOrigin(10, 10);
+	enemy402Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy402Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy402Heart2.setOrigin(10, 10);
+	enemy402Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy402Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy402Heart3.setOrigin(10, 10);
+	enemy402Heart3.setTexture(&enemyHeart2_tx);
 
 	//**********Gate4**********//
 
@@ -924,6 +944,16 @@ int main() {
 	bool enemyLV403SetState = true;
 	int enemyLV403Life = 3;
 
+	sf::RectangleShape enemy403Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy403Heart1.setOrigin(10, 10);
+	enemy403Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy403Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy403Heart2.setOrigin(10, 10);
+	enemy403Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy403Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy403Heart3.setOrigin(10, 10);
+	enemy403Heart3.setTexture(&enemyHeart2_tx);
+
 
 	//**********Enemy04**********//
 
@@ -947,6 +977,17 @@ int main() {
 	float enemyLV404PosY = 0, enemyLV404FrameX = 0, enemyLV404FrameY = 10;
 	bool enemyLV404SetState = true;
 	int enemyLV404Life = 3;
+
+	sf::RectangleShape enemy404Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy404Heart1.setOrigin(10, 10);
+	enemy404Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy404Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy404Heart2.setOrigin(10, 10);
+	enemy404Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy404Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy404Heart3.setOrigin(10, 10);
+	enemy404Heart3.setTexture(&enemyHeart2_tx);
+
 
 
 	//**********Democrac Level 4**********//
@@ -1144,6 +1185,10 @@ int main() {
 		sf::Vector2f enemyLV301Position = enemyLV301.getPosition();
 		sf::Vector2f enemyLV302Position = enemyLV302.getPosition();
 		sf::Vector2f enemyLV303Position = enemyLV303.getPosition();
+		sf::Vector2f enemyLV401Position = enemyLV401.getPosition();
+		sf::Vector2f enemyLV402Position = enemyLV402.getPosition();
+		sf::Vector2f enemyLV403Position = enemyLV403.getPosition();
+		sf::Vector2f enemyLV404Position = enemyLV404.getPosition();
 		sf::Vector2f bull1Pos = bullet1.getPosition();
 		sf::Vector2f bull2Pos = bullet2.getPosition();
 		sf::Vector2f bull3Pos = bullet3.getPosition();
@@ -1393,6 +1438,21 @@ int main() {
 					bull3Col = false;
 					bulletTimeOut[1] = 0;
 					bullet3.setPosition(0, 0);
+				}
+			}
+
+			if ((bulletE1.getGlobalBounds().intersects(wall1forbull.getGlobalBounds()))
+				|| (bulletE1.getGlobalBounds().intersects(wall2forbull.getGlobalBounds()))
+				|| (bulletE1.getGlobalBounds().intersects(wall3forbull.getGlobalBounds()))
+				|| (bulletE1.getGlobalBounds().intersects(wall4forbull.getGlobalBounds()))
+				|| (bulletE1.getGlobalBounds().intersects(wall5forbull.getGlobalBounds()))
+				) {
+				bullE1out = false;
+			}
+			if (DoorLV1Check == false) {
+				if (bulletE1.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
+					bullE1out = false;
+					//bullet3.setPosition(0, 0);
 				}
 			}
 
@@ -2629,8 +2689,8 @@ int main() {
 		}
 
 		//Check Enemy 01 Position//
-
-		if (enemyMaxX < 100) {
+		//ประกาศนอก loop enemyMaxX = 0, enemyPosX = 0
+		if (enemyMaxX < 100) {  //เดินไปทางซ้ายโดยให้ enemyPosX = -4.5 ใช้ในบรรทัด2669 แล้วเพิ่มค่า enemyMaxX ทีละ 15ถ้าถึง 100 แล้วไปทำ else if ต่อ
 			enemyPosX = -4.5;
 			enemyMaxX++;
 		}
@@ -2928,7 +2988,11 @@ int main() {
 			enemyLV401PosX = 0;
 			enemyLV401FrameY = 9;
 		}
-		sf::Vector2f enemyLV401Position = enemyLV401.getPosition();
+		
+
+		enemy401Heart1.setPosition(enemyLV401Position.x + 25, enemyLV401Position.y - 10);
+		enemy401Heart2.setPosition(enemyLV401Position.x + 50, enemyLV401Position.y - 10);
+		enemy401Heart3.setPosition(enemyLV401Position.x + 75, enemyLV401Position.y - 10);
 
 		//**********enemy02 animation**********//
 
@@ -2955,7 +3019,11 @@ int main() {
 			enemyLV402PosY = 0;
 			enemyLV402FrameY = 8;
 		}
-		sf::Vector2f enemyLV402Position = enemyLV402.getPosition();
+
+		enemy402Heart1.setPosition(enemyLV402Position.x + 25, enemyLV402Position.y - 10);
+		enemy402Heart2.setPosition(enemyLV402Position.x + 50, enemyLV402Position.y - 10);
+		enemy402Heart3.setPosition(enemyLV402Position.x + 75, enemyLV402Position.y - 10);
+		
 
 		//**********enemy03 animation**********//
 
@@ -2982,7 +3050,11 @@ int main() {
 			enemyLV403PosY = 0;
 			enemyLV403FrameY = 8;
 		}
-		sf::Vector2f enemyLV403Position = enemyLV403.getPosition();
+
+		enemy403Heart1.setPosition(enemyLV403Position.x + 25, enemyLV403Position.y - 10);
+		enemy403Heart2.setPosition(enemyLV403Position.x + 50, enemyLV403Position.y - 10);
+		enemy403Heart3.setPosition(enemyLV403Position.x + 75, enemyLV403Position.y - 10);
+		
 
 		//**********enemy04 animation**********//
 
@@ -3009,8 +3081,9 @@ int main() {
 			enemyLV404PosY = 0;
 			enemyLV404FrameY = 10;
 		}
-		sf::Vector2f enemyLV404Position = enemyLV404.getPosition();
-
+		enemy404Heart1.setPosition(enemyLV404Position.x + 25, enemyLV404Position.y - 10);
+		enemy404Heart2.setPosition(enemyLV404Position.x + 50, enemyLV404Position.y - 10);
+		enemy404Heart3.setPosition(enemyLV404Position.x + 75, enemyLV404Position.y - 10);
 
 
 		
@@ -3481,7 +3554,34 @@ int main() {
 				}
 			}
 			window.draw(GateLV4);
-		
+			if (enemyLV401Life > 0) {
+				if (enemyLV401Life == 3) {
+					window.draw(enemy401Heart3);
+					window.draw(enemy401Heart2);
+					window.draw(enemy401Heart1);
+				}
+				if (enemyLV401Life == 2) {
+					window.draw(enemy401Heart3);
+					window.draw(enemy401Heart2);
+				}
+				if (enemyLV401Life == 1) {
+					window.draw(enemy401Heart3);
+				}
+			}
+			if (enemyLV402Life > 0) {
+				if (enemyLV402Life == 3) {
+					window.draw(enemy402Heart3);
+					window.draw(enemy402Heart2);
+					window.draw(enemy402Heart1);
+				}
+				if (enemyLV402Life == 2) {
+					window.draw(enemy402Heart3);
+					window.draw(enemy402Heart2);
+				}
+				if (enemyLV402Life == 1) {
+					window.draw(enemy402Heart3);
+				}
+			}
 
 		}
 		else if (n == 6) {
@@ -3528,9 +3628,35 @@ int main() {
 					window.draw(player);
 				}
 			}
-			
-			
 			window.draw(DemocracLV4);
+			if (enemyLV403Life > 0) {
+				if (enemyLV403Life == 3) {
+					window.draw(enemy403Heart3);
+					window.draw(enemy403Heart2);
+					window.draw(enemy403Heart1);
+				}
+				if (enemyLV403Life == 2) {
+					window.draw(enemy403Heart3);
+					window.draw(enemy403Heart2);
+				}
+				if (enemyLV403Life == 1) {
+					window.draw(enemy403Heart3);
+				}
+			}
+			if (enemyLV404Life > 0) {
+				if (enemyLV404Life == 3) {
+					window.draw(enemy404Heart3);
+					window.draw(enemy404Heart2);
+					window.draw(enemy404Heart1);
+				}
+				if (enemyLV404Life == 2) {
+					window.draw(enemy404Heart3);
+					window.draw(enemy404Heart2);
+				}
+				if (enemyLV404Life == 1) {
+					window.draw(enemy404Heart3);
+				}
+			}
 		}
 
 		//Render::Bullet//
