@@ -278,6 +278,7 @@ int main() {
 	bulletE1.setTexture(&bulletE1_tx);
 	bulletE1.setOrigin(15, 15);
 	bool bullE1out = false, bullE1Col = false ,E1GetDes = false;
+	int bullE1TimeCount = 0;
 
 
 	//**********Enemy02**********//
@@ -1192,6 +1193,7 @@ int main() {
 		sf::Vector2f bull1Pos = bullet1.getPosition();
 		sf::Vector2f bull2Pos = bullet2.getPosition();
 		sf::Vector2f bull3Pos = bullet3.getPosition();
+		sf::Vector2f bullE1LV1Pos = bulletE1.getPosition();
 		bool w = true, a = true, s = true, d = true;
 
 
@@ -1243,7 +1245,13 @@ int main() {
 			bullet3.setPosition(0, 0);
 			bulletTimeOut[2] = 0;
 		}
-
+		
+		//bulletE1 Level 1
+		if (bullE1LV1Pos.x <= -20 || bullE1LV1Pos.x > 1240 || bullE1LV1Pos.y >= 720 || bullE1LV1Pos.y < 0) {
+			bullE1out = false;
+			bullE1TimeCount = 0;
+			bulletE1.setPosition(enemy01Position);
+		}
 		//collision with walls check//
 
 
@@ -1441,6 +1449,7 @@ int main() {
 				}
 			}
 
+			//bullet E1 
 			if ((bulletE1.getGlobalBounds().intersects(wall1forbull.getGlobalBounds()))
 				|| (bulletE1.getGlobalBounds().intersects(wall2forbull.getGlobalBounds()))
 				|| (bulletE1.getGlobalBounds().intersects(wall3forbull.getGlobalBounds()))
@@ -1448,10 +1457,14 @@ int main() {
 				|| (bulletE1.getGlobalBounds().intersects(wall5forbull.getGlobalBounds()))
 				) {
 				bullE1out = false;
+				bullE1TimeCount = 0;
+				bulletE1.setPosition(enemy01Position);
 			}
 			if (DoorLV1Check == false) {
 				if (bulletE1.getGlobalBounds().intersects(DoorLV1.getGlobalBounds())) {
 					bullE1out = false;
+					bullE1TimeCount = 0;
+					bulletE1.setPosition(enemy01Position);
 					//bullet3.setPosition(0, 0);
 				}
 			}
@@ -1467,7 +1480,11 @@ int main() {
 					enemy01AreaCheck = true;
 					enemy01AreaTimeCount = 0;
 					if (bullE1out == false) {
-						AtkE1 = true;
+						bullE1TimeCount++;
+						printf("%d", bullE1TimeCount);
+						if (bullE1TimeCount >= 25) {
+							AtkE1 = true;
+						}
 					}
 				}
 				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
@@ -1481,31 +1498,30 @@ int main() {
 				}
 			
 				if (AtkE1 == true) {
+					float dxE1 = playerPosition.x - enemy01Position.x, dyE1 = (playerPosition.y - enemy01Position.y);
 					//Q1
 					if (playerPosition.x > enemy01Position.x && playerPosition.y < enemy01Position.y) {
-						float dxE1 = playerPosition.x - enemy01Position.x, dyE1 = (playerPosition.y - enemy01Position.y);
-						printf("1");
+						printf("1\n");
 						spBullE1X = abs(dxE1 / dyE1);
-						spBullE1Y = abs(dyE1 / dxE1)*-1;
+						spBullE1Y = abs(dyE1 / dxE1) * -1;
 					}
 					//Q2
 					else if (playerPosition.x < enemy01Position.x && playerPosition.y < enemy01Position.y) {
-						float dxE1 = (playerPosition.x - enemy01Position.x), dyE1 = (playerPosition.y - enemy01Position.y);
-						printf("2");
-						spBullE1X = abs(dxE1 / dyE1)*-1;
-						spBullE1Y = abs(dyE1 / dxE1)*-1;
+						printf("2\n");
+						spBullE1X = abs(dxE1 / dyE1) * -1;
+						spBullE1Y = abs(dyE1 / dxE1) * -1;
 					}
 					//Q3
 					else if (playerPosition.x < enemy01Position.x && playerPosition.y > enemy01Position.y) {
-						float dxE1 = (playerPosition.x - enemy01Position.x), dyE1 = (playerPosition.y - enemy01Position.y);
-						printf("3");
-						spBullE1X = abs(dxE1 / dyE1)*-1;
+						 
+						printf("3\n");
+						spBullE1X = abs(dxE1 / dyE1) * -1;
 						spBullE1Y = abs(dyE1 / dxE1);
 					}
 					//Q4
 					else if (playerPosition.x > enemy01Position.x && playerPosition.y > enemy01Position.y) {
 						float dxE1 = (playerPosition.x - enemy01Position.x), dyE1 = (playerPosition.y - enemy01Position.y);
-						printf("4");
+						printf("4\n");
 						spBullE1X = abs(dxE1 / dyE1);
 						spBullE1Y = abs(dyE1 / dxE1);
 					}
@@ -1514,9 +1530,17 @@ int main() {
 					bulletE1.setPosition(enemy01Position.x + 50, enemy01Position.y + 50);
 				}
 
-				printf("x %f y %f\n", spBullE1X, spBullE1Y);
 				if (bullE1out == true) {
-					bulletE1.move(spBullE1X*2, spBullE1Y*2);
+					if ((spBullE1X < 5 || spBullE1X > -5) && (spBullE1Y < 5 || spBullE1Y > -5)) {
+						printf("case 1");
+						bulletE1.move(spBullE1X*3 , spBullE1Y*3 );
+						printf("x %f y %f\n", spBullE1X, spBullE1Y);
+					}
+					else {
+						printf("case 2");
+						bulletE1.move(spBullE1X, spBullE1Y);
+						printf("x %f y %f\n", spBullE1X, spBullE1Y);
+					}
 				}
 
 
