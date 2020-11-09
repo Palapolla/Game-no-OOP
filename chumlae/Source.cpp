@@ -495,11 +495,18 @@ int main() {
 	//speed item//
 
 	sf::Texture speed_tx;
-	speed_tx.loadFromFile("SHIELD.png");
-	sf::RectangleShape speed(sf::Vector2f(70.0f, 70.0f));
+	speed_tx.loadFromFile("speed.png");
+	sf::RectangleShape speed(sf::Vector2f(70.0f, 80.0f));
+	speed.setTexture(&speed_tx);
+	sf::Vector2u speedTextureSize = speed_tx.getSize();
+	int speedSizeX = speedTextureSize.x / 6;
+	int speedSizeY = speedTextureSize.y / 1;
+	speed.setTextureRect(sf::IntRect(speedSizeX * 0, speedSizeY * 0, speedSizeX, speedSizeY));
+	
 	speed.setPosition(1100, 600);
-	bool speedCheck = false,speedStatus = false;
+	bool speedCheck = false, speedStatus = false;
 	int speedTimeCount = 0;
+	int speedanimateFrame = 0, speedanimateTimeCount = 0;
 
 	//**********Stage2**********//
 
@@ -1646,6 +1653,7 @@ int main() {
 						}
 					}
 				}
+				
 				if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())
 					|| bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds())
 					|| bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
@@ -1890,7 +1898,11 @@ int main() {
 
 			//Level2 > > SpeedItem//
 
-		
+			if (player.getGlobalBounds().intersects(speed.getGlobalBounds())) {
+				speedCheck = true;
+				speedStatus = true;
+			}
+			
 		
 
 			//Level2 > > Gate//
@@ -3559,6 +3571,22 @@ int main() {
 			shieldAnimateFrame = 0;
 		}
 		//shield.rotate(10.0f);
+
+			//--------------------------------------Speed LEVEL2------------------------------------------//
+
+		speed.setTextureRect(sf::IntRect(speedSizeX* speedanimateFrame, speedSizeY * 0, speedSizeX, speedSizeY));
+		if (speedanimateTimeCount >= 20) {
+			speedanimateFrame++;
+			speedanimateTimeCount = 0;
+		}
+		else {
+			speedanimateTimeCount++;
+		}
+		if (speedanimateFrame >= 4) {
+			speedanimateFrame = 0;
+		}
+
+
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
 
 
