@@ -627,6 +627,13 @@ int main() {
 	KeyLV2.setOrigin(25, 25);
 	float animateKeyLV2Frame = 0;
 	
+	//life item//
+
+	sf::Texture life_tx;
+	life_tx.loadFromFile("SHIELD.png");
+	sf::RectangleShape life(sf::Vector2f(70.0f, 70.0f));
+	life.setPosition(1100, 600);
+	bool lifeCheck = false, lifeStatus = false;
 
 
 	//---------------------------------------level 3----------------------------------------------//
@@ -1883,17 +1890,8 @@ int main() {
 
 			//Level2 > > SpeedItem//
 
-			if (player.getGlobalBounds().intersects(speed.getGlobalBounds())) {
-				speedCheck = true;
-				speedStatus = true;
-			}
-			if (speedStatus == true) {
-				speedTimeCount++;
-				printf("speedTimeCount : %d ", speedTimeCount);
-			}
-			if (speedTimeCount > 100) {
-				speedStatus = false;
-			}
+		
+		
 
 			//Level2 > > Gate//
 
@@ -2210,6 +2208,18 @@ int main() {
 				}
 			}
 
+			//Level 2 >> life//
+
+			if (player.getGlobalBounds().intersects(life.getGlobalBounds())) {
+				lifeCheck = true;
+				lifeStatus = true;
+			}
+			if (lifeStatus == true) {
+				playerLife = 3;
+				lifeStatus = false;
+			}
+
+			//level
 			// bullet collision //
 
 			//bullet 1//
@@ -3145,6 +3155,14 @@ int main() {
 		// ---------------------------------KeyboardInput------------------------------------// 
 
 		int initialFrame = 0;
+
+		if (speedStatus == true) {
+			speedTimeCount++;
+			printf("speedTimeCount : %d \n", speedTimeCount);
+		}
+		if (speedTimeCount > 250) {
+			speedStatus = false;
+		}
 
 		if (KeyD == true) {
 
@@ -4255,7 +4273,9 @@ int main() {
 			if (enemyLV204Life > 0 && bullE2out == true) {
 				window.draw(bulletE2);
 			}
-			
+			if (lifeCheck == false) {
+				window.draw(life);
+			}
 		}
 
 		//RENDER:LEVEL3//
