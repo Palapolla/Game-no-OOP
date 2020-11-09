@@ -491,7 +491,15 @@ int main() {
 	GateLV2.setTextureRect(sf::IntRect(GateLV2SizeX * 0, GateLV2SizeY * 0, GateLV2SizeX, GateLV2SizeY));
 	GateLV2.setPosition(1100, 80);
 	float animateGateLV2Frame = 0;
+	
+	//speed item//
 
+	sf::Texture speed_tx;
+	speed_tx.loadFromFile("SHIELD.png");
+	sf::RectangleShape speed(sf::Vector2f(70.0f, 70.0f));
+	speed.setPosition(1100, 600);
+	bool speedCheck = false,speedStatus = false;
+	int speedTimeCount = 0;
 
 	//**********Stage2**********//
 
@@ -1627,8 +1635,15 @@ int main() {
 						//printf("%d", bullE1TimeCount);
 						if (bullE1TimeCount >= 25) {
 							AtkE1 = true;
+							
 						}
 					}
+				}
+				if (bullet1.getGlobalBounds().intersects(enemy01.getGlobalBounds())
+					|| bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds())
+					|| bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
+					enemy01AreaCheck = true;
+					AtkE1 = true;
 				}
 				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
 					//printf("%d\n", enemy01AreaTimeCount);
@@ -1730,6 +1745,12 @@ int main() {
 						}
 					}
 				} 
+				if (bullet1.getGlobalBounds().intersects(enemy02.getGlobalBounds())
+					|| bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds())
+					|| bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
+					enemy02AreaCheck = true;
+					AtkE2 = true;
+				}
 				if (enemy02AreaCheck == true && !(player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds()))) {
 					//printf("%d\n", enemy01AreaTimeCount);
 					if (enemy02AreaTimeCount > 50) {
@@ -1860,6 +1881,20 @@ int main() {
 				//printf("a2\n");
 			}
 
+			//Level2 > > SpeedItem//
+
+			if (player.getGlobalBounds().intersects(speed.getGlobalBounds())) {
+				speedCheck = true;
+				speedStatus = true;
+			}
+			if (speedStatus == true) {
+				speedTimeCount++;
+				printf("speedTimeCount : %d ", speedTimeCount);
+			}
+			if (speedTimeCount > 100) {
+				speedStatus = false;
+			}
+
 			//Level2 > > Gate//
 
 			if (player.getGlobalBounds().intersects(GateLV2.getGlobalBounds())) {
@@ -1946,6 +1981,12 @@ int main() {
 							AtkE1 = true;
 						}
 					}
+				}
+				if (bullet1.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())
+					|| bullet2.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())
+					|| bullet3.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
+					enemy01AreaCheck = true;
+					AtkE1 = true;
 				}
 				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
 					//printf("%d\n", enemy01AreaTimeCount);
@@ -3122,7 +3163,12 @@ int main() {
 
 		if (d == true) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				player.move(4.5f, 0.0f);
+				if (speedStatus == false) {
+					player.move(4.5f, 0.0f);
+				}
+				else{
+					player.move(10.0f, 0.0f);
+				}
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 11, playerSizeX, playerSizeY));
 				//printf("Keypress : D\n");
 				KeyW = false;
@@ -3134,7 +3180,12 @@ int main() {
 		}
 		if (a == true) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-				player.move(-4.5f, 0.0f);
+				if (speedStatus == false) {
+					player.move(-4.5f, 0.0f);
+				}
+				else {
+					player.move(-10.0f, 0.0f);
+				}
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 9, playerSizeX, playerSizeY));
 				//printf("Keypress : A\n");
 				KeyW = false;
@@ -3145,7 +3196,12 @@ int main() {
 		}
 		if (w == true) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-				player.move(0.0f, -4.5f);
+				if (speedStatus == false) {
+					player.move(0.0f, -4.5f);
+				}
+				else {
+					player.move(0.0f, -10.0f);
+				}
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 8, playerSizeX, playerSizeY));
 				//printf("Keypress : W\n");
 				KeyW = true;
@@ -3156,7 +3212,12 @@ int main() {
 		}
 		if (s == true) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-				player.move(0.0f, 4.5f);
+				if (speedStatus == false) {
+					player.move(0.0f, 4.5f);
+				}
+				else {
+					player.move(0.0f, 10.0f);
+				}
 				player.setTextureRect(sf::IntRect(playerSizeX * animationFrame, playerSizeY * 10, playerSizeX, playerSizeY));
 				//printf("Keypress : S\n");
 				KeyW = false;
@@ -4126,6 +4187,9 @@ int main() {
 			if (enemyLV202Life > 0 && bullE2out == true) {
 				window.draw(bulletE2);
 			}
+			if (speedCheck == false) {
+				window.draw(speed);
+			}
 		}
 
 		else if (n == 3) {
@@ -4191,6 +4255,7 @@ int main() {
 			if (enemyLV204Life > 0 && bullE2out == true) {
 				window.draw(bulletE2);
 			}
+			
 		}
 
 		//RENDER:LEVEL3//
