@@ -42,12 +42,6 @@ int main() {
 
 	sf::Texture walltop_tx;
 	walltop_tx.loadFromFile("walltop.jpg");
-	if (!walltop_tx.loadFromFile("walltop.jpg")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading wall 01 done!\n");
-	}
 	sf::RectangleShape walltop(sf::Vector2f(1240, 100));
 	walltop.setPosition(0, 0);
 	walltop.setTexture(&walltop_tx);
@@ -57,13 +51,6 @@ int main() {
 
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("player texture the real one for sure dont need to fix anynmore.png");
-	printf("Loading. . .\n");
-	if (!playerTexture.loadFromFile("player texture the real one for sure dont need to fix anynmore.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Player Done!\n");
-	}
 	sf::RectangleShape player(sf::Vector2f(100.0f, 100.0f));
 	player.setTexture(&playerTexture);
 	sf::Vector2u textureSize = playerTexture.getSize();
@@ -94,13 +81,6 @@ int main() {
 
 	sf::Texture bullet1_tx;
 	bullet1_tx.loadFromFile("bullet.png");
-	printf("Loading. . .\n");
-	if (!bullet1_tx.loadFromFile("bullet.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading bullet Done!\n");
-	}
 	sf::RectangleShape bullet1(sf::Vector2f(20.0f, 20.0f));
 	bullet1.setTexture(&bullet1_tx);
 	bullet1.setOrigin(15, 15);
@@ -111,13 +91,6 @@ int main() {
 	
 	sf::Texture bullet2_tx;
 	bullet2_tx.loadFromFile("bullet2.png");
-	printf("Loading. . .\n");
-	if (!bullet2_tx.loadFromFile("bullet2.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading bullet Done!\n");
-	}
 	sf::RectangleShape bullet2(sf::Vector2f(20.0f, 20.0f));
 	bullet2.setTexture(&bullet2_tx);
 	bullet2.setOrigin(15, 15);
@@ -127,13 +100,6 @@ int main() {
 
 	sf::Texture bullet3_tx;
 	bullet3_tx.loadFromFile("bullet3.png");
-	printf("Loading. . .\n");
-	if (!bullet3_tx.loadFromFile("bullet3.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading bullet Done!\n");
-	}
 	sf::RectangleShape bullet3(sf::Vector2f(20.0f, 20.0f));
 	bullet3.setTexture(&bullet3_tx);
 	bullet3.setOrigin(15, 15);
@@ -147,12 +113,6 @@ int main() {
 
 	sf::Texture wall1_tx;
 	wall1_tx.loadFromFile("wall01.jpg");
-	if (!wall1_tx.loadFromFile("wall01.jpg")){
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading wall 01 done!\n");
-	}
 	sf::RectangleShape wall1(sf::Vector2f(600,150));
 	wall1.setPosition(0, 310);
 	wall1.setTexture(&wall1_tx);
@@ -164,12 +124,6 @@ int main() {
 
 	sf::Texture wall2_tx;
 	wall2_tx.loadFromFile("wall02.jpg");
-	if (!wall2_tx.loadFromFile("wall02.jpg")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading wall 02 done!\n");
-	}
 	sf::RectangleShape wall2(sf::Vector2f(400, 150));
 	wall2.setPosition(900, 310);
 	wall2.setTexture(&wall2_tx);
@@ -190,12 +144,6 @@ int main() {
 
 	sf::Texture wall4_tx;
 	wall4_tx.loadFromFile("wall04.jpg");
-	if (!wall4_tx.loadFromFile("wall04.jpg")) {
-		printf("loading. . .\n");
-	}
-	else {
-		printf("Loading wall04 done!\n");
-	}
 	sf::RectangleShape wall4(sf::Vector2f(100, 200));
 	wall4.setTexture(&wall4_tx);
 	wall4.setPosition(800, 0);
@@ -206,13 +154,7 @@ int main() {
 	//**********wall5**********//
 
 	sf::Texture wall5_tx;
-	wall4_tx.loadFromFile("wall05.jpg");
-	if (!wall5_tx.loadFromFile("wall05.jpg")) {
-		printf("loading. . .\n");
-	}
-	else {
-		printf("Loading wall04 done!\n");
-	}
+	wall5_tx.loadFromFile("wall05.jpg");
 	sf::RectangleShape wall5(sf::Vector2f(100, 200));
 	wall5.setTexture(&wall5_tx);
 	wall5.setPosition(200, 0);
@@ -225,12 +167,6 @@ int main() {
 
 	sf::Texture enemy01_tx;
 	enemy01_tx.loadFromFile("Enemy.png");
-	if (!enemy01_tx.loadFromFile("Enemy.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Enemy01 Done!\n");
-	}
 	sf::RectangleShape enemy01(sf::Vector2f(100.0f, 100.0f));
 	enemy01.setTexture(&enemy01_tx);
 	sf::Vector2u enemy01TextureSize = enemy01_tx.getSize();
@@ -263,12 +199,6 @@ int main() {
 
 	sf::Texture enemy02_tx;
 	enemy02_tx.loadFromFile("Enemy2.png");
-	if (!enemy02_tx.loadFromFile("Enemy2.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Enemy02 Done!\n");
-	}
 	sf::RectangleShape enemy02(sf::Vector2f(100.0f, 100.0f));
 	enemy02.setTexture(&enemy02_tx);
 	sf::Vector2u enemy02TextureSize = enemy02_tx.getSize();
@@ -298,12 +228,6 @@ int main() {
 
 	sf::Texture democrac_tx;
 	democrac_tx.loadFromFile("Democrac 1.png");
-	if (!democrac_tx.loadFromFile("Democrac 1.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Democrac Done!\n");
-	}
 	sf::Texture DemocracLV1_tx;
 	sf::RectangleShape DemocracLV1(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV1.setTexture(&democrac_tx);
@@ -326,13 +250,6 @@ int main() {
 
 	sf::Texture KeyLV1_tx;
 	KeyLV1_tx.loadFromFile("Key LV1.png");
-	if (!KeyLV1_tx.loadFromFile("Key LV1.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Key LV1 Done!\n");
-	}
-	
 	sf::RectangleShape KeyLV1(sf::Vector2f(50.0f, 50.0f));
 	KeyLV1.setTexture(&KeyLV1_tx);
 	sf::Vector2u KeyLV1TextureSize = KeyLV1_tx.getSize();
@@ -369,12 +286,6 @@ int main() {
 
 	sf::Texture wallLV201_tx;
 	wallLV201_tx.loadFromFile("wallLV201.jpg");
-	if (!wallLV201_tx.loadFromFile("wallLV201.jpg")) {
-		printf("Loading. . .\n ");
-	}
-	else {
-		printf("Loading wallLV201 Done!\n");
-	}
 	sf::RectangleShape wallLV201(sf::Vector2f(1000, 150));
 	wallLV201.setPosition(0, 400);
 	wallLV201.setTexture(&wallLV201_tx);
@@ -387,12 +298,6 @@ int main() {
 
 	sf::Texture wallLV202_tx;
 	wallLV202_tx.loadFromFile("wallLV202.jpg");
-	if (!wallLV202_tx.loadFromFile("wallLV202.jpg")) {
-		printf("Loading. . .\n ");
-	}
-	else {
-		printf("Loading wallLV201 Done!\n");
-	}
 	sf::RectangleShape wallLV202(sf::Vector2f(1000, 150));
 	wallLV202.setPosition(240, 150);
 	wallLV202.setTexture(&wallLV202_tx);
@@ -411,12 +316,6 @@ int main() {
 
 	sf::Texture enemyLV201_tx;
 	enemyLV201_tx.loadFromFile("EnemyLV201.png");
-	if (!enemyLV201_tx.loadFromFile("EnemyLV201.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV201 Done!\n");
-	}
 	sf::RectangleShape enemyLV201(sf::Vector2f(100.0f, 100.0f));
 	enemyLV201.setTexture(&enemyLV201_tx);
 	sf::Vector2u enemyLV201TextureSize = enemyLV201_tx.getSize();
@@ -445,12 +344,6 @@ int main() {
 
 	sf::Texture enemyLV202_tx;
 	enemyLV202_tx.loadFromFile("EnemyLV202.png");
-	if (!enemyLV202_tx.loadFromFile("EnemyLV202.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV202 Done!\n");
-	}
 	sf::RectangleShape enemyLV202(sf::Vector2f(100.0f, 100.0f));
 	enemyLV202.setTexture(&enemyLV201_tx);
 	sf::Vector2u enemyLV202TextureSize = enemyLV202_tx.getSize();
@@ -477,12 +370,6 @@ int main() {
 
 	sf::Texture GateLV2_tx;
 	GateLV2_tx.loadFromFile("gate.png");
-	if (!GateLV2_tx.loadFromFile("gate.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Gate Done!\n");
-	}
 	sf::RectangleShape GateLV2(sf::Vector2f(100.0f, 80.0f));
 	GateLV2.setTexture(&GateLV2_tx);
 	sf::Vector2u GateLV2TextureSize = GateLV2_tx.getSize();
@@ -531,12 +418,6 @@ int main() {
 
 	sf::Texture enemyLV203_tx;
 	enemyLV203_tx.loadFromFile("EnemyLV203.png");
-	if (!enemyLV203_tx.loadFromFile("EnemyLV203.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV203 Done!\n");
-	}
 	sf::RectangleShape enemyLV203(sf::Vector2f(100.0f, 100.0f));
 	enemyLV203.setTexture(&enemyLV203_tx);
 	sf::Vector2u enemyLV203TextureSize = enemyLV203_tx.getSize();
@@ -564,12 +445,6 @@ int main() {
 
 	sf::Texture enemyLV204_tx;
 	enemyLV204_tx.loadFromFile("EnemyLV204.png");
-	if (!enemyLV204_tx.loadFromFile("EnemyLV204.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV204 Done!\n");
-	}
 	sf::RectangleShape enemyLV204(sf::Vector2f(100.0f, 100.0f));
 	enemyLV204.setTexture(&enemyLV204_tx);
 	sf::Vector2u enemyLV204TextureSize = enemyLV204_tx.getSize();
@@ -597,12 +472,6 @@ int main() {
 
 	sf::Texture DemocracLV2_tx;
 	DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png");
-	if (!DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Democrac Done!\n");
-	}
 	sf::RectangleShape DemocracLV2(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV2.setTexture(&DemocracLV2_tx);
 	sf::Vector2u DemocracLV2TextureSize = DemocracLV2_tx.getSize();
@@ -616,12 +485,6 @@ int main() {
 
 	sf::Texture enemyLV205_tx;
 	enemyLV205_tx.loadFromFile("Enemy.png");
-	if (!enemyLV205_tx.loadFromFile("Enemy.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Enemy205 Done!\n");
-	}
 	sf::RectangleShape enemyLV205(sf::Vector2f(100.0f, 100.0f));
 	enemyLV205.setTexture(&enemyLV205_tx);
 	sf::Vector2u enemyLV205TextureSize = enemyLV205_tx.getSize();
@@ -653,13 +516,6 @@ int main() {
 	
 	sf::Texture KeyLV2_tx;
 	KeyLV2_tx.loadFromFile("Key LV2.png");
-	if (!KeyLV2_tx.loadFromFile("Key LV2.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Key LV2 Done!\n");
-	}
-
 	sf::RectangleShape KeyLV2(sf::Vector2f(50.0f, 50.0f));
 	KeyLV2.setTexture(&KeyLV2_tx);
 	sf::Vector2u KeyLV2TextureSize = KeyLV2_tx.getSize();
@@ -697,12 +553,6 @@ int main() {
 
 	sf::Texture wallLV302_tx;
 	wallLV302_tx.loadFromFile("wallLV302.jpg");
-	if (!wallLV302_tx.loadFromFile("wallLV302.jpg")) {
-		printf("loading. . .\n");
-	}
-	else {
-		printf("Loading wallLV302 done!\n");
-	}
 	sf::RectangleShape wallLV302(sf::Vector2f(100, 200));
 	wallLV302.setTexture(&wallLV302_tx);
 	wallLV302.setPosition(300, 0);
@@ -715,12 +565,6 @@ int main() {
 
 	sf::Texture wallLV303_tx;
 	wallLV303_tx.loadFromFile("wallLV303.jpg");
-	if (!wallLV303_tx.loadFromFile("wallLV303.jpg")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading wallLV303 done!\n");
-	}
 	sf::RectangleShape wallLV303(sf::Vector2f(500, 150));
 	wallLV303.setPosition(400, 300);
 	wallLV303.setTexture(&wallLV303_tx);
@@ -732,12 +576,6 @@ int main() {
 
 	sf::Texture enemyLV301_tx;
 	enemyLV301_tx.loadFromFile("EnemyLV301.png");
-	if (!enemyLV301_tx.loadFromFile("EnemyLV301.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV301 Done!\n");
-	}
 	sf::RectangleShape enemyLV301(sf::Vector2f(100.0f, 100.0f));
 	enemyLV301.setTexture(&enemyLV301_tx);
 	sf::Vector2u enemyLV301TextureSize = enemyLV301_tx.getSize();
@@ -764,12 +602,6 @@ int main() {
 
 	sf::Texture enemyLV302_tx;
 	enemyLV302_tx.loadFromFile("EnemyLV302.png");
-	if (!enemyLV302_tx.loadFromFile("EnemyLV302.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV302 Done!\n");
-	}
 	sf::RectangleShape enemyLV302(sf::Vector2f(100.0f, 100.0f));
 	enemyLV302.setTexture(&enemyLV302_tx);
 	sf::Vector2u enemyLV302TextureSize = enemyLV302_tx.getSize();
@@ -797,12 +629,6 @@ int main() {
 
 	sf::Texture enemyLV303_tx;
 	enemyLV303_tx.loadFromFile("EnemyLV303.png");
-	if (!enemyLV303_tx.loadFromFile("EnemyLV303.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV303 Done!\n");
-	}
 	sf::RectangleShape enemyLV303(sf::Vector2f(100.0f, 100.0f));
 	enemyLV303.setTexture(&enemyLV303_tx);
 	sf::Vector2u enemyLV303TextureSize = enemyLV303_tx.getSize();
@@ -829,12 +655,6 @@ int main() {
 
 	sf::Texture DemocracLV3_tx;
 	DemocracLV3_tx.loadFromFile("Democrac mk2 LV3.png");
-	if (!DemocracLV3_tx.loadFromFile("Democrac mk2 LV3.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Democrac Done!\n");
-	}
 	sf::RectangleShape DemocracLV3(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV3.setTexture(&DemocracLV3_tx);
 	sf::Vector2u DemocracLV3TextureSize = DemocracLV3_tx.getSize();
@@ -854,12 +674,6 @@ int main() {
 
 	sf::Texture wallLV401_tx;
 	wallLV401_tx.loadFromFile("wallLV401.jpg");
-	if (!wallLV401_tx.loadFromFile("wallLV401.jpg")) {
-		printf("loading. . .\n");
-	}
-	else {
-		printf("Loading wallLV401 done!\n");
-	}
 	sf::RectangleShape wallLV401(sf::Vector2f(900, 150));
 	wallLV401.setTexture(&wallLV401_tx);
 	wallLV401.setPosition(0, 400);
@@ -869,12 +683,6 @@ int main() {
 
 	sf::Texture wallLV402_tx;
 	wallLV402_tx.loadFromFile("wallLV402.jpg");
-	if (!wallLV402_tx.loadFromFile("wallLV402.jpg")) {
-		printf("loading. . .\n");
-	}
-	else {
-		printf("Loading wallLV402 done!\n");
-	}
 	sf::RectangleShape wallLV402(sf::Vector2f(100, 200));
 	wallLV402.setTexture(&wallLV402_tx);
 	wallLV402.setPosition(300, 0);
@@ -884,12 +692,6 @@ int main() {
 
 	sf::Texture enemyLV401_tx;
 	enemyLV401_tx.loadFromFile("EnemyLV401.png");
-	if (!enemyLV401_tx.loadFromFile("EnemyLV401.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV401 Done!\n");
-	}
 	sf::RectangleShape enemyLV401(sf::Vector2f(100.0f, 100.0f));
 	enemyLV401.setTexture(&enemyLV401_tx);
 	sf::Vector2u enemyLV401TextureSize = enemyLV401_tx.getSize();
@@ -916,12 +718,6 @@ int main() {
 
 	sf::Texture enemyLV402_tx;
 	enemyLV402_tx.loadFromFile("EnemyLV402.png");
-	if (!enemyLV402_tx.loadFromFile("EnemyLV402.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV402 Done!\n");
-	}
 	sf::RectangleShape enemyLV402(sf::Vector2f(100.0f, 100.0f));
 	enemyLV402.setTexture(&enemyLV402_tx);
 	sf::Vector2u enemyLV402TextureSize = enemyLV402_tx.getSize();
@@ -948,12 +744,6 @@ int main() {
 
 	sf::Texture GateLV4_tx;
 	GateLV4_tx.loadFromFile("gate4.png");
-	if (!GateLV4_tx.loadFromFile("gate4.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Gate Done!\n");
-	}
 	sf::RectangleShape GateLV4(sf::Vector2f(100.0f, 80.0f));
 	GateLV4.setTexture(&GateLV4_tx);
 	sf::Vector2u GateLV4TextureSize = GateLV4_tx.getSize();
@@ -963,6 +753,19 @@ int main() {
 	GateLV4.setPosition(100, 150);
 	float animateGateLV4Frame = 0;
 
+	//**********ImortalPotion**********//
+
+	sf::Texture ImorPot_tx;
+	ImorPot_tx.loadFromFile("imortalpotion.png");
+	sf::RectangleShape ImortalPot(sf::Vector2f(100.0f, 80.0f));
+	ImortalPot.setTexture(&ImorPot_tx);
+	sf::Vector2u ImortalPotTextureSize = ImorPot_tx.getSize();
+	int ImortalSizeX = ImortalPotTextureSize.x / 8;
+	int ImortalSizeY = ImortalPotTextureSize.y / 1;
+	ImortalPot.setTextureRect(sf::IntRect(ImortalSizeX * 0, ImortalSizeY * 0, ImortalSizeX, ImortalSizeY));
+	ImortalPot.setPosition(100, 150);
+	float animateImortalFrame = 0;
+
 	//**********Stage2**********//
 
 
@@ -971,12 +774,6 @@ int main() {
 
 	sf::Texture enemyLV403_tx;
 	enemyLV403_tx.loadFromFile("EnemyLV403.png");
-	if (!enemyLV403_tx.loadFromFile("EnemyLV403.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV403 Done!\n");
-	}
 	sf::RectangleShape enemyLV403(sf::Vector2f(100.0f, 100.0f));
 	enemyLV403.setTexture(&enemyLV403_tx);
 	sf::Vector2u enemyLV403TextureSize = enemyLV403_tx.getSize();
@@ -1005,12 +802,6 @@ int main() {
 
 	sf::Texture enemyLV404_tx;
 	enemyLV404_tx.loadFromFile("EnemyLV404.png");
-	if (!enemyLV404_tx.loadFromFile("EnemyLV404.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading EnemyLV404 Done!\n");
-	}
 	sf::RectangleShape enemyLV404(sf::Vector2f(100.0f, 100.0f));
 	enemyLV404.setTexture(&enemyLV404_tx);
 	sf::Vector2u enemyLV404TextureSize = enemyLV404_tx.getSize();
@@ -1033,18 +824,18 @@ int main() {
 	enemy404Heart3.setOrigin(10, 10);
 	enemy404Heart3.setTexture(&enemyHeart2_tx);
 
+	//**********Door Level 4**********//
 
+	sf::RectangleShape DoorLV4(sf::Vector2f(50.0f, 300.0f));
+	DoorLV4.setPosition(325, 125);
+	DoorLV4.setFillColor(sf::Color(0, 0, 0));
+	sf::Vector2f DoorLV4Pos = DoorLV4.getPosition();
+	bool DoorLV4Check = false;
 
 	//**********Democrac Level 4**********//
 
 	sf::Texture DemocracLV4_tx;
 	DemocracLV4_tx.loadFromFile("Democrac mk2 LV4.png");
-	if (!DemocracLV4_tx.loadFromFile("Democrac mk2 LV4.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Democrac Done!\n");
-	}
 	sf::RectangleShape DemocracLV4(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV4.setTexture(&DemocracLV4_tx);
 	sf::Vector2u DemocracLV4TextureSize = DemocracLV4_tx.getSize();
@@ -1067,12 +858,6 @@ int main() {
 
 	sf::Texture heart1_tx;
 	heart1_tx.loadFromFile("Heart 1.png");
-	if (!heart1_tx.loadFromFile("Heart 1.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Heart 1 Done!\n");
-	}
 	sf::RectangleShape heart1(sf::Vector2f(25.0f, 25.0f));
 	heart1.setTexture(&heart1_tx);
 	heart1.setPosition(10, 10);
@@ -1082,12 +867,6 @@ int main() {
 
 	sf::Texture heart2_tx;
 	heart2_tx.loadFromFile("Heart 2.png");
-	if (!heart2_tx.loadFromFile("Heart 2.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Heart 2 Done!\n");
-	}
 	sf::RectangleShape heart2(sf::Vector2f(25.0f, 25.0f));
 	heart2.setTexture(&heart2_tx);
 	heart2.setPosition(50, 10);
@@ -1097,12 +876,6 @@ int main() {
 
 	sf::Texture heart3_tx;
 	heart3_tx.loadFromFile("Heart 3.png");
-	if (!heart3_tx.loadFromFile("Heart 3.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading Heart 3 Done!\n");
-	}
 	sf::RectangleShape heart3(sf::Vector2f(25.0f, 25.0f));
 	heart3.setTexture(&heart3_tx);
 	heart3.setPosition(90, 10);
@@ -1165,13 +938,6 @@ int main() {
 
 	sf::Texture bulletE1_tx;
 	bulletE1_tx.loadFromFile("bullet.png");
-	printf("Loading. . .\n");
-	if (!bulletE1_tx.loadFromFile("bullet.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading bullet Done!\n");
-	}
 	sf::RectangleShape bulletE1(sf::Vector2f(20.0f, 20.0f));
 	bulletE1.setTexture(&bulletE1_tx);
 	bulletE1.setOrigin(15, 15);
@@ -1191,13 +957,6 @@ int main() {
 
 	sf::Texture bulletE2_tx;
 	bulletE2_tx.loadFromFile("bullet.png");
-	printf("Loading. . .\n");
-	if (!bulletE2_tx.loadFromFile("bullet.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading bullet Done!\n");
-	}
 	sf::RectangleShape bulletE2(sf::Vector2f(20.0f, 20.0f));
 	bulletE2.setTexture(&bulletE2_tx);
 	bulletE2.setOrigin(15, 15);
@@ -1217,13 +976,6 @@ int main() {
 
 	sf::Texture bulletE3_tx;
 	bulletE3_tx.loadFromFile("bullet.png");
-	printf("Loading. . .\n");
-	if (!bulletE3_tx.loadFromFile("bullet.png")) {
-		printf("Loading. . .\n");
-	}
-	else {
-		printf("Loading bullet Done!\n");
-	}
 	sf::RectangleShape bulletE3(sf::Vector2f(20.0f, 20.0f));
 	bulletE3.setTexture(&bulletE3_tx);
 	bulletE3.setOrigin(15, 15);
@@ -3156,6 +2908,16 @@ int main() {
 				//printf("a\n");
 			}
 
+			//Level4 > > Door//
+
+			if (DoorLV4Check == false) {
+				if ((playerPosition.y < DoorLV4Pos.y + 150) && (playerPosition.x < DoorLV4Pos.x + 40 && playerPosition.x > DoorLV4Pos.x + 30)) {
+					a = false;
+					//printf("d2\n");
+				}
+			}
+
+
 			//Level4 > > Gate//
 
 			if (player.getGlobalBounds().intersects(GateLV4.getGlobalBounds())) {
@@ -3169,7 +2931,8 @@ int main() {
 
 			if ((bullet1.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
-				) {
+				|| (bullet1.getGlobalBounds().intersects(DoorLV4.getGlobalBounds())))
+				 {
 				bull1out = false;
 				bull1Col = false;
 				bulletNo[0] = 0;
@@ -3180,7 +2943,8 @@ int main() {
 			//bullet 2//
 
 			if ((bullet2.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wallLV402.getGlobalBounds())
+				|| (bullet2.getGlobalBounds().intersects(DoorLV4.getGlobalBounds())))
 				) {
 				bull2out = false;
 				bull2Col = false;
@@ -3192,7 +2956,8 @@ int main() {
 			//bullet 3//
 
 			if ((bullet3.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wallLV402.getGlobalBounds())
+				|| (bullet3.getGlobalBounds().intersects(DoorLV4.getGlobalBounds())))
 				) {
 				bull3out = false;
 				bulletNo[2] = 0;
@@ -4816,6 +4581,7 @@ int main() {
 		//RENDER:LEVEL4//
 
 		else if (n == 5) {
+		
 			if (enemyLV402Life > 0) {
 				window.draw(enemyLV402);
 			}
@@ -4905,11 +4671,13 @@ int main() {
 			if (bullE2out == true) {
 				window.draw(bulletE2);
 			}
+			window.draw(DoorLV4);
 		}
 		else if (n == 6) {
 			window.draw(player);
 			window.draw(enemyLV403);
 			window.draw(enemyLV404);
+			
 			if (player.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 				if (enemyLV403Position.y > playerPosition.y) {
 					window.draw(player);
