@@ -678,6 +678,8 @@ int main() {
 	wallLV401.setTexture(&wallLV401_tx);
 	wallLV401.setPosition(0, 400);
 	sf::Vector2f wallLV401Pos= wallLV401.getPosition();
+	sf::RectangleShape wallLV401forbull(sf::Vector2f(900, 50));
+	wallLV401forbull.setPosition(wallLV401Pos);
 	
 	//**********wall2**********//
 
@@ -687,6 +689,8 @@ int main() {
 	wallLV402.setTexture(&wallLV402_tx);
 	wallLV402.setPosition(300, 0);
 	sf::Vector2f wallLV402Pos = wallLV402.getPosition();
+	sf::RectangleShape wallLV402forbull(sf::Vector2f(900, 50));
+	wallLV402forbull.setPosition(wallLV402Pos);
 
 	//**********Enemy01**********//
 
@@ -740,6 +744,35 @@ int main() {
 	enemy402Heart3.setOrigin(10, 10);
 	enemy402Heart3.setTexture(&enemyHeart2_tx);
 
+	//**********Enemy05**********//
+
+	sf::Texture enemyLV405_tx;
+	enemyLV405_tx.loadFromFile("Enemy.png");
+	sf::RectangleShape enemyLV405(sf::Vector2f(100.0f, 100.0f));
+	enemyLV405.setTexture(&enemyLV405_tx);
+	sf::Vector2u enemyLV405TextureSize = enemyLV405_tx.getSize();
+	int enemyLV405SizeX = enemyLV405TextureSize.x / 13;
+	int enemyLV405SizeY = enemyLV405TextureSize.y / 21;
+	enemyLV405.setTextureRect(sf::IntRect(enemyLV405SizeX * 2, enemyLV405SizeY * 2, enemyLV405SizeX, enemyLV405SizeY));
+	enemyLV405.setPosition(1000, 200);
+	sf::Vector2f enemyLV405Position = enemyLV405.getPosition();
+	int  enemyLV405MaxX = 0;
+	float enemyLV405PosX = 0, enemyLV405FrameX = 0, enemyLV405FrameY = 9;
+	bool enemyLV405SetState = true;
+	int enemyLV405Life = 3;
+
+
+	sf::RectangleShape enemy405Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy405Heart1.setOrigin(10, 10);
+	enemy405Heart1.setTexture(&enemy01Heart1_tx);
+	sf::RectangleShape enemy405Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy405Heart2.setOrigin(10, 10);
+	enemy405Heart2.setTexture(&enemy01Heart1_tx);
+	sf::RectangleShape enemy405Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy405Heart3.setOrigin(10, 10);
+	enemy405Heart3.setTexture(&enemy01Heart1_tx);
+
+
 	//**********Gate4**********//
 
 	sf::Texture GateLV4_tx;
@@ -757,14 +790,30 @@ int main() {
 
 	sf::Texture ImorPot_tx;
 	ImorPot_tx.loadFromFile("imortalpotion.png");
-	sf::RectangleShape ImortalPot(sf::Vector2f(100.0f, 80.0f));
+	sf::RectangleShape ImortalPot(sf::Vector2f(60.0f, 60.0f));
 	ImortalPot.setTexture(&ImorPot_tx);
 	sf::Vector2u ImortalPotTextureSize = ImorPot_tx.getSize();
-	int ImortalSizeX = ImortalPotTextureSize.x / 8;
+	int ImortalSizeX = ImortalPotTextureSize.x / 7;
 	int ImortalSizeY = ImortalPotTextureSize.y / 1;
 	ImortalPot.setTextureRect(sf::IntRect(ImortalSizeX * 0, ImortalSizeY * 0, ImortalSizeX, ImortalSizeY));
-	ImortalPot.setPosition(100, 150);
+	ImortalPot.setPosition(500, 100);
 	float animateImortalFrame = 0;
+	int animateImortalTimeCount = 0;
+
+	//**********Key Level 4**********//
+
+	sf::Texture KeyLV4_tx;
+	KeyLV4_tx.loadFromFile("Key LV1.png");
+	sf::RectangleShape KeyLV4(sf::Vector2f(50.0f, 50.0f));
+	KeyLV4.setTexture(&KeyLV4_tx);
+	sf::Vector2u KeyLV4TextureSize = KeyLV4_tx.getSize();
+	int KeyLV4SizeX = KeyLV4TextureSize.x / 14;
+	int KeyLV4SizeY = KeyLV4TextureSize.y / 1;
+	KeyLV4.setTextureRect(sf::IntRect(KeyLV4SizeX * 0, KeyLV4SizeY * 0, KeyLV4SizeX, KeyLV4SizeY));
+	KeyLV4.setPosition(1100, 150);
+	KeyLV4.setOrigin(25, 25);
+	bool KeyLV4Check = false;
+	float animateKeyLV4Frame = 0;
 
 	//**********Stage2**********//
 
@@ -1071,6 +1120,7 @@ int main() {
 		sf::Vector2f enemyLV402Position = enemyLV402.getPosition();
 		sf::Vector2f enemyLV403Position = enemyLV403.getPosition();
 		sf::Vector2f enemyLV404Position = enemyLV404.getPosition();
+		sf::Vector2f enemyLV405Position = enemyLV405.getPosition();
 		sf::Vector2f bull1Pos = bullet1.getPosition();
 		sf::Vector2f bull2Pos = bullet2.getPosition();
 		sf::Vector2f bull3Pos = bullet3.getPosition();
@@ -1300,6 +1350,9 @@ int main() {
 					DoorLV1Check = true;
 				}
 			}
+
+			//Level1 > > Shield//
+
 			if (shieldStatusCheck == false) {
 				if (player.getGlobalBounds().intersects(shield.getGlobalBounds())) {
 					shieldStatusCheck = true;
@@ -2917,6 +2970,15 @@ int main() {
 				}
 			}
 
+			//Level4 > > Key//
+
+			if (KeyLV4Check == false) {
+				if (player.getGlobalBounds().intersects(KeyLV4.getGlobalBounds())) {
+					KeyLV4Check = true;
+					DoorLV4Check = true;
+				}
+			}
+
 
 			//Level4 > > Gate//
 
@@ -2929,8 +2991,8 @@ int main() {
 
 			//bullet 1//
 
-			if ((bullet1.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
-				|| (bullet1.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+			if ((bullet1.getGlobalBounds().intersects(wallLV401forbull.getGlobalBounds()))
+				|| (bullet1.getGlobalBounds().intersects(wallLV402forbull.getGlobalBounds()))
 				|| (bullet1.getGlobalBounds().intersects(DoorLV4.getGlobalBounds())))
 				 {
 				bull1out = false;
@@ -2942,8 +3004,8 @@ int main() {
 
 			//bullet 2//
 
-			if ((bullet2.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
-				|| (bullet2.getGlobalBounds().intersects(wallLV402.getGlobalBounds())
+			if ((bullet2.getGlobalBounds().intersects(wallLV401forbull.getGlobalBounds()))
+				|| (bullet2.getGlobalBounds().intersects(wallLV402forbull.getGlobalBounds())
 				|| (bullet2.getGlobalBounds().intersects(DoorLV4.getGlobalBounds())))
 				) {
 				bull2out = false;
@@ -2955,8 +3017,8 @@ int main() {
 
 			//bullet 3//
 
-			if ((bullet3.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
-				|| (bullet3.getGlobalBounds().intersects(wallLV402.getGlobalBounds())
+			if ((bullet3.getGlobalBounds().intersects(wallLV401forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(wallLV402forbull.getGlobalBounds())
 				|| (bullet3.getGlobalBounds().intersects(DoorLV4.getGlobalBounds())))
 				) {
 				bull3out = false;
@@ -2969,22 +3031,32 @@ int main() {
 
 			//bulletE1//
 
-			if ((bulletE1.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
-				|| (bulletE1.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+			if ((bulletE1.getGlobalBounds().intersects(wallLV401forbull.getGlobalBounds()))
+				|| (bulletE1.getGlobalBounds().intersects(wallLV402forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(DoorLV4.getGlobalBounds()))
 				) {
 				bullE1out = false;
 				bulletE1.setPosition(0, 0);
 			}
 
-			//bullet 3//
+			//bulletE2//
 
-			if ((bulletE2.getGlobalBounds().intersects(wallLV401.getGlobalBounds()))
-				|| (bulletE2.getGlobalBounds().intersects(wallLV402.getGlobalBounds()))
+			if ((bulletE2.getGlobalBounds().intersects(wallLV401forbull.getGlobalBounds()))
+				|| (bulletE2.getGlobalBounds().intersects(wallLV402forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(DoorLV4.getGlobalBounds()))
 				) {
 				bullE2out = false;
 				bulletE2.setPosition(0, 0);
 			}
+			//bulletE3//
 
+			if ((bulletE3.getGlobalBounds().intersects(wallLV401forbull.getGlobalBounds()))
+				|| (bulletE3.getGlobalBounds().intersects(wallLV402forbull.getGlobalBounds()))
+				|| (bullet3.getGlobalBounds().intersects(DoorLV4.getGlobalBounds()))
+				) {
+				bullE3out = false;
+				bulletE3.setPosition(0, 0);
+			}
 
 			//Level 4 > > bullet > > Enemy1//
 
@@ -3185,6 +3257,106 @@ int main() {
 					bullet3.setPosition(0, 0);
 					enemyLV402Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV402Life);
+				}
+			}
+			//Level 4 > > bullet > > Enemy3//
+
+			if (enemyLV405Life > 0) {
+
+				//DetectionZone&Attack//
+				enemy03Area.setPosition(enemyLV405Position.x, enemyLV405Position.y);
+				if (player.getGlobalBounds().intersects(enemy03Area.getGlobalBounds())) {
+					//printf("Chonlaew NAAAAA 2\n");
+					enemy03AreaCheck = true;
+					enemy03AreaTimeCount = 0;
+					if (bullE3out == false) {
+						bullE3TimeCount++;
+						//printf("%d", bullE1TimeCount);
+						if (bullE3TimeCount >= 25) {
+							AtkE3 = true;
+						}
+					}
+				}
+
+				if (bullet1.getGlobalBounds().intersects(enemyLV405.getGlobalBounds())
+					|| bullet2.getGlobalBounds().intersects(enemyLV405.getGlobalBounds())
+					|| bullet3.getGlobalBounds().intersects(enemyLV405.getGlobalBounds())) {
+					enemy03AreaCheck = true;
+				}
+
+				if (enemy03AreaCheck == true && !(player.getGlobalBounds().intersects(enemy03Area.getGlobalBounds()))) {
+					//printf("%d\n", enemy01AreaTimeCount);
+					if (enemy03AreaTimeCount > 50) {
+						enemy03AreaCheck = false;
+						enemy03AreaTimeCount = 0;
+						//printf("maichonlaew 2\n");
+					}
+					enemy03AreaTimeCount += 1;
+				}
+
+				if (AtkE3 == true) {
+					//Q1
+					if (playerPosition.x > enemyLV405Position.x && playerPosition.y < enemyLV405Position.y) {
+						//printf("1\n");
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y)) * spBullE3Y;
+						spBullE3Y = spBullE3Y * -1;
+					}
+					//Q2
+					else if (playerPosition.x < enemyLV405Position.x && playerPosition.y < enemyLV405Position.y) {
+						//printf("2\n");
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y)) * spBullE3Y;
+						spBullE3X = spBullE3X * -1;
+						spBullE3Y = spBullE3Y * -1;
+					}
+					//Q3
+					else if (playerPosition.x < enemyLV405Position.x && playerPosition.y > enemyLV405Position.y) {
+
+						//printf("3\n");
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y)) * spBullE3Y;
+						spBullE3X = spBullE3X * -1;
+
+					}
+					//Q4
+					else if (playerPosition.x > enemyLV405Position.x && playerPosition.y > enemyLV405Position.y) {
+						//printf("4\n");
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV405Position.x - playerPosition.x) / abs(enemyLV405Position.y - playerPosition.y)) * spBullE3Y;
+
+					}
+					AtkE3 = false;
+					bullE3out = true;
+					bulletE3.setPosition(enemyLV405Position.x + 50, enemyLV405Position.y + 50);
+				}
+
+				if (bullet1.getGlobalBounds().intersects(enemyLV405.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bulletNo[0] = 0;
+					bulletTimeOut[0] = 0;
+					bullet1.setPosition(0, 0);
+					enemyLV405Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV405Life);
+				}
+				if (bullet2.getGlobalBounds().intersects(enemyLV405.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bulletNo[1] = 0;
+					bulletTimeOut[1] = 0;
+					bullet2.setPosition(0, 0);
+					enemyLV405Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV405Life);
+				}
+				if (bullet3.getGlobalBounds().intersects(enemyLV405.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bulletNo[2] = 0;
+					bulletTimeOut[2] = 0;
+					bullet3.setPosition(0, 0);
+					enemyLV405Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV405Life);
 				}
 			}
 			
@@ -3622,6 +3794,17 @@ int main() {
 			animateKeyLV2Frame = 0;
 		}
 		KeyLV2.rotate(10.0f);
+		
+		//--------------------------------------Key LEVEL4------------------------------------------//
+
+		KeyLV4.setTextureRect(sf::IntRect(KeyLV4SizeX* animateKeyLV4Frame, KeyLV4SizeY * 0, KeyLV4SizeX, KeyLV4SizeY));
+		animateKeyLV4Frame++;
+
+		if (animateKeyLV4Frame >= 13) {
+			animateKeyLV4Frame = 0;
+		}
+		KeyLV4.rotate(10.0f);
+
 
 		//--------------------------------------Shield LEVEL1------------------------------------------//
 
@@ -3659,6 +3842,25 @@ int main() {
 		if (lifeAnimateTimeDelay > 50) {
 			lifeAnimateTimeDelay = 0;
 		}
+
+		//--------------------------------------Imortal LEVEL4------------------------------------------//
+
+		ImortalPot.setTextureRect(sf::IntRect(ImortalSizeX * animateImortalFrame, ImortalSizeY * 0, ImortalSizeX, ImortalSizeY));
+		animateImortalFrame++;
+		animateImortalTimeCount++;
+		if (animateImortalTimeCount < 25) {
+			ImortalPot.move(0.0f, 1.0f);
+		}
+		if (animateImortalTimeCount >= 25 && animateImortalTimeCount < 50) {
+			ImortalPot.move(0.0f, -1.0f);
+		}
+		if (animateImortalTimeCount > 50) {
+			animateImortalTimeCount = 0;
+		}
+		if (animateImortalFrame >= 7) {
+			animateImortalFrame = 0;
+		}
+
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
 
 
@@ -4098,6 +4300,35 @@ int main() {
 		enemy404Heart2.setPosition(enemyLV404Position.x + 50, enemyLV404Position.y - 10);
 		enemy404Heart3.setPosition(enemyLV404Position.x + 75, enemyLV404Position.y - 10);
 
+		/**********enemy01 animation**********/
+
+		enemyLV405.move(enemyLV405PosX, 0.0f);
+		enemyLV405.setTextureRect(sf::IntRect(enemyLV405SizeX* enemyLV405FrameX, enemyLV405SizeY* enemyLV405FrameY, enemyLV405SizeX, enemyLV405SizeY));
+		enemyLV405FrameX++;
+		if (enemyLV405FrameX >= 9) {
+			enemyLV405FrameX = 0;
+		}
+
+		//Check Enemy 01 Position//
+		
+		if (enemyLV405MaxX < 100) { 
+			enemyLV405PosX = -4.5;
+			enemyLV405MaxX++;
+		}
+		else if (enemyLV405MaxX >= 100 && enemyLV405MaxX < 200) {
+			enemyLV405FrameY = 11;
+			enemyLV405PosX = 4.5;
+			enemyLV405MaxX++;
+		}
+		else {
+			enemyLV405MaxX = 0;
+			enemyLV405PosX = 0;
+			enemyLV405FrameY = 9;
+		}
+
+		enemy405Heart1.setPosition(enemyLV405Position.x + 25, enemyLV405Position.y - 10);
+		enemy405Heart2.setPosition(enemyLV405Position.x + 50, enemyLV405Position.y - 10);
+		enemy405Heart3.setPosition(enemyLV405Position.x + 75, enemyLV405Position.y - 10);
 
 		
 
@@ -4636,6 +4867,16 @@ int main() {
 
 				}
 			}
+			if (enemyLV405Life > 0) {
+				if (enemyLV405Position.y < playerPosition.y) {
+					window.draw(enemyLV405);
+					window.draw(player);
+				}
+				else {
+					window.draw(player);
+					window.draw(enemyLV405);
+				}
+			}
 			window.draw(GateLV4);
 			if (enemyLV401Life > 0 && enemy01AreaCheck == true) {
 				if (enemyLV401Life == 3) {
@@ -4665,14 +4906,36 @@ int main() {
 					window.draw(enemy402Heart3);
 				}
 			}
+			if (enemyLV405Life > 0 && enemy03AreaCheck == true) {
+				if (enemyLV405Life == 3) {
+					window.draw(enemy405Heart3);
+					window.draw(enemy405Heart2);
+					window.draw(enemy405Heart1);
+				}
+				if (enemyLV405Life == 2) {
+					window.draw(enemy405Heart3);
+					window.draw(enemy405Heart2);
+				}
+				if (enemyLV405Life == 1) {
+					window.draw(enemy405Heart3);
+				}
+			}
 			if (bullE1out == true) {
 				window.draw(bulletE1);
 			}
 			if (bullE2out == true) {
 				window.draw(bulletE2);
 			}
-			window.draw(DoorLV4);
+			if (bullE3out == true) {
+				window.draw(bulletE3);
+			}
+			if (KeyLV4Check == false) {
+				window.draw(KeyLV4);
+				window.draw(DoorLV4);
+			}
+			window.draw(ImortalPot);
 		}
+
 		else if (n == 6) {
 			window.draw(player);
 			window.draw(enemyLV403);
