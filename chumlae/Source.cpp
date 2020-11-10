@@ -678,18 +678,20 @@ int main() {
 	wallLV401.setTexture(&wallLV401_tx);
 	wallLV401.setPosition(0, 400);
 	sf::Vector2f wallLV401Pos= wallLV401.getPosition();
+	
 	sf::RectangleShape wallLV401forbull(sf::Vector2f(900, 50));
+	wallLV401forbull.setFillColor(sf::Color(0, 0, 0));
 	wallLV401forbull.setPosition(wallLV401Pos);
 	
 	//**********wall2**********//
-
+	 
 	sf::Texture wallLV402_tx;
 	wallLV402_tx.loadFromFile("wallLV402.jpg");
 	sf::RectangleShape wallLV402(sf::Vector2f(100, 200));
 	wallLV402.setTexture(&wallLV402_tx);
 	wallLV402.setPosition(300, 0);
 	sf::Vector2f wallLV402Pos = wallLV402.getPosition();
-	sf::RectangleShape wallLV402forbull(sf::Vector2f(900, 50));
+	sf::RectangleShape wallLV402forbull(sf::Vector2f(100, 100));
 	wallLV402forbull.setPosition(wallLV402Pos);
 
 	//**********Enemy01**********//
@@ -799,6 +801,8 @@ int main() {
 	ImortalPot.setPosition(500, 100);
 	float animateImortalFrame = 0;
 	int animateImortalTimeCount = 0;
+	bool imortalCheck = false;
+	int imortalTimeCount = 0;
 
 	//**********Key Level 4**********//
 
@@ -1132,48 +1136,58 @@ int main() {
 		playerHitbox.setPosition(playerPosition.x+25,playerPosition.y+20);
 		
 		//enemybullet with player//
+		if (imortalCheck == false) {
+			
+			if (bulletE1.getGlobalBounds().intersects(playerHitbox.getGlobalBounds())) {
+				printf("hit 1\n");
+				bullE1out = false;
+				bulletE1.setPosition(0, 0);
+				if (shieldStatusCheck == true) {
+					shieldLife -= 1;
+				}
+				if (shieldStatusCheck == false) {
+					playerLife -= 1;
+				}
+				if (shieldLife <= 0) {
+					shieldStatusCheck = false;
+				}
+			}
+			if (bulletE2.getGlobalBounds().intersects(playerHitbox.getGlobalBounds())) {
+				printf("hit 2\n");
+				bullE2out = false;
+				bulletE2.setPosition(0, 0);
+				if (shieldStatusCheck == true) {
+					shieldLife -= 1;
+				}
+				if (shieldLife <= 0) {
+					shieldStatusCheck = false;
+					playerLife -= 1;
+				}
+			}
+			if (bulletE3.getGlobalBounds().intersects(playerHitbox.getGlobalBounds())) {
+				printf("hit 2\n");
+				bullE3out = false;
+				bulletE3.setPosition(0, 0);
+				if (shieldStatusCheck == true) {
+					shieldLife -= 1;
+				}
+				if (shieldLife <= 0) {
+					shieldStatusCheck = false;
+					playerLife -= 1;
+				}
+			}
 
-		if (bulletE1.getGlobalBounds().intersects(playerHitbox.getGlobalBounds())) {
-			printf("hit 1\n");
-			bullE1out = false;
-			bulletE1.setPosition(0, 0);
-			if (shieldStatusCheck == true) {
-				shieldLife-=1;
-			}
-			if (shieldStatusCheck == false) {
-				playerLife -= 1;
-			}
-			if (shieldLife <= 0 ) {
-				shieldStatusCheck = false;
+			if (playerLife <= 0) {
+				//printf("GameOver\n");
 			}
 		}
-		if (bulletE2.getGlobalBounds().intersects(playerHitbox.getGlobalBounds())) {
-			printf("hit 2\n");
-			bullE2out = false;
-			bulletE2.setPosition(0, 0);
-			if (shieldStatusCheck == true) {
-				shieldLife-=1;
-			}
-			if (shieldLife <= 0) {
-				shieldStatusCheck = false;
-				playerLife-=1;
-			}
+		if (imortalCheck == true) {
+			imortalTimeCount++;
 		}
-		if (bulletE3.getGlobalBounds().intersects(playerHitbox.getGlobalBounds())) {
-			printf("hit 2\n");
-			bullE3out = false;
-			bulletE3.setPosition(0, 0);
-			if (shieldStatusCheck == true) {
-				shieldLife -= 1;
-			}
-			if (shieldLife <= 0) {
-				shieldStatusCheck = false;
-				playerLife -= 1;
-			}
+		if (imortalTimeCount > 300) {
+			imortalCheck = false;
 		}
-		if (playerLife <= 0) {
-			//printf("GameOver\n");
-		}
+		
 		//collison with edge//
 
 
@@ -2969,6 +2983,13 @@ int main() {
 					//printf("d2\n");
 				}
 			}
+
+			//Level4 > > ImortalPotion//
+
+			if (imortalCheck == false && player.getGlobalBounds().intersects(ImortalPot.getGlobalBounds())) {
+				imortalCheck = true;
+			}
+		
 
 			//Level4 > > Key//
 
@@ -4873,7 +4894,9 @@ int main() {
 					window.draw(player);
 				}
 				else {
+					
 					window.draw(player);
+					window.draw(wallLV401);
 					window.draw(enemyLV405);
 				}
 			}
@@ -4933,7 +4956,10 @@ int main() {
 				window.draw(KeyLV4);
 				window.draw(DoorLV4);
 			}
-			window.draw(ImortalPot);
+			if (imortalCheck == false) {
+				window.draw(ImortalPot);
+			}
+			window.draw(wallLV401forbull);
 		}
 
 		else if (n == 6) {
