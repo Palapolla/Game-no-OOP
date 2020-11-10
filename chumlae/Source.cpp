@@ -634,13 +634,15 @@ int main() {
 	KeyLV2.setOrigin(25, 25);
 	float animateKeyLV2Frame = 0;
 	
-	//life item//
+	//**************life item**************//
 
 	sf::Texture life_tx;
-	life_tx.loadFromFile("SHIELD.png");
+	life_tx.loadFromFile("Heart 1.png");
 	sf::RectangleShape life(sf::Vector2f(70.0f, 70.0f));
+	life.setTexture(&life_tx);
 	life.setPosition(1100, 600);
 	bool lifeCheck = false, lifeStatus = false;
+	int lifeAnimateTimeDelay = 0;
 
 
 	//---------------------------------------level 3----------------------------------------------//
@@ -1658,7 +1660,6 @@ int main() {
 					|| bullet2.getGlobalBounds().intersects(enemy01.getGlobalBounds())
 					|| bullet3.getGlobalBounds().intersects(enemy01.getGlobalBounds())) {
 					enemy01AreaCheck = true;
-					AtkE1 = true;
 				}
 				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
 					//printf("%d\n", enemy01AreaTimeCount);
@@ -1764,7 +1765,6 @@ int main() {
 					|| bullet2.getGlobalBounds().intersects(enemy02.getGlobalBounds())
 					|| bullet3.getGlobalBounds().intersects(enemy02.getGlobalBounds())) {
 					enemy02AreaCheck = true;
-					AtkE2 = true;
 				}
 				if (enemy02AreaCheck == true && !(player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds()))) {
 					//printf("%d\n", enemy01AreaTimeCount);
@@ -1996,7 +1996,6 @@ int main() {
 					|| bullet2.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())
 					|| bullet3.getGlobalBounds().intersects(enemyLV201.getGlobalBounds())) {
 					enemy01AreaCheck = true;
-					AtkE1 = true;
 				}
 				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
 					//printf("%d\n", enemy01AreaTimeCount);
@@ -2192,9 +2191,8 @@ int main() {
 			if ((playerPosition.y > wallLV204Pos.y - 80) && (playerPosition.x > wallLV204Pos.x + 270 && playerPosition.x < wallLV204Pos.x + 280)) {
 				a = false;
 				//printf("a2\n");
-
 			}
-
+			
 			//Level2 > > Door//
 
 			if (DoorLV2Check == false) {
@@ -3572,7 +3570,7 @@ int main() {
 		}
 		//shield.rotate(10.0f);
 
-			//--------------------------------------Speed LEVEL2------------------------------------------//
+		//--------------------------------------Speed LEVEL2------------------------------------------//
 
 		speed.setTextureRect(sf::IntRect(speedSizeX* speedanimateFrame, speedSizeY * 0, speedSizeX, speedSizeY));
 		if (speedanimateTimeCount >= 20) {
@@ -3586,7 +3584,18 @@ int main() {
 			speedanimateFrame = 0;
 		}
 
-
+		//--------------------------------------Life Item LEVEL2------------------------------------------//
+		
+		lifeAnimateTimeDelay++;
+		if (lifeAnimateTimeDelay < 25) {
+			life.move(0.0f, 1.0f);
+		}
+		if (lifeAnimateTimeDelay >= 25 && lifeAnimateTimeDelay < 50) {
+			life.move(0.0f, -1.0f);
+		}
+		if (lifeAnimateTimeDelay > 50) {
+			lifeAnimateTimeDelay = 0;
+		}
 		//--------------------------------------ENEMY LEVEL1------------------------------------------//
 
 
