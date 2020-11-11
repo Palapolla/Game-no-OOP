@@ -948,6 +948,21 @@ int main() {
 	bool shieldStatusCheck = false;
 	int shieldLife = 0;
 
+
+	/*#########################################################################################################
+
+										Shield Status
+
+	###########################################################################################################*/
+
+	sf::Texture imortalStatus_tx;
+	imortalStatus_tx.loadFromFile("imortalStatus.png");
+	sf::RectangleShape imortalStatus(sf::Vector2f(35.0f, 40.0f));
+	imortalStatus.setTexture(&imortalStatus_tx);
+	imortalStatus.setPosition(200, 5);
+	bool imortalStatusCheck = false;
+
+
 	//####################################Timer##############################################//
 
 
@@ -3872,10 +3887,10 @@ int main() {
 		if (animateImortalTimeCount < 25) {
 			ImortalPot.move(0.0f, 1.0f);
 		}
-		if (animateImortalTimeCount >= 25 && animateImortalTimeCount < 50) {
+		if (animateImortalTimeCount > 25 && animateImortalTimeCount < 50) {
 			ImortalPot.move(0.0f, -1.0f);
 		}
-		if (animateImortalTimeCount > 50) {
+		if (animateImortalTimeCount >= 50) {
 			animateImortalTimeCount = 0;
 		}
 		if (animateImortalFrame >= 7) {
@@ -4370,6 +4385,10 @@ int main() {
 		window.draw(background);
 		window.draw(walltop);
 		//window.draw(playerHitbox);
+		//Render:Imortal//
+		if (imortalCheck == true) {
+			window.draw(imortalStatus);
+		}
 		//Render:Heart//
 		if (playerLife >= 1) {
 			if (heart1Check == true) {
