@@ -955,6 +955,7 @@ int main() {
 
 	###########################################################################################################*/
 
+
 	sf::Texture imortalStatus_tx;
 	imortalStatus_tx.loadFromFile("imortalStatus.png");
 	sf::RectangleShape imortalStatus(sf::Vector2f(35.0f, 40.0f));
@@ -3429,6 +3430,38 @@ int main() {
 					bullet3.setPosition(0, 0);
 					enemyLV403Life -= 1;
 					printf("hit - enemyLife = %d\n", enemyLV403Life);
+				}
+			}
+
+			//Level 4 > > bullet > > Enemy4//
+
+			if (enemyLV404Life > 0) {
+				if (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bulletNo[0] = 0;
+					bulletTimeOut[0] = 0;
+					bullet1.setPosition(0, 0);
+					enemyLV404Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV404Life);
+				}
+				if (bullet2.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bulletNo[1] = 0;
+					bulletTimeOut[1] = 0;
+					bullet2.setPosition(0, 0);
+					enemyLV404Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV404Life);
+				}
+				if (bullet3.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bulletNo[2] = 0;
+					bulletTimeOut[2] = 0;
+					bullet3.setPosition(0, 0);
+					enemyLV404Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV404Life);
 				}
 			}
 		}
