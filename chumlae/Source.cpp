@@ -3404,6 +3404,75 @@ int main() {
 			//Level 4 > > bullet > > Enemy3//
 
 			if (enemyLV403Life > 0) {
+
+				//DetectionZone&Attack//
+				enemy01Area.setPosition(enemyLV403Position.x, enemyLV403Position.y);
+				if (player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds())) {
+					//printf("Chonlaew NAAAAA 2\n");
+					enemy01AreaCheck = true;
+					enemy01AreaTimeCount = 0;
+					if (bullE1out == false) {
+						bullE1TimeCount++;
+						//printf("%d", bullE1TimeCount);
+						if (bullE1TimeCount >= 25) {
+							AtkE1 = true;
+						}
+					}
+				}
+
+				if (bullet1.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())
+					|| bullet2.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())
+					|| bullet3.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
+					enemy01AreaCheck = true;
+				}
+
+				if (enemy01AreaCheck == true && !(player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds()))) {
+					//printf("%d\n", enemy01AreaTimeCount);
+					if (enemy01AreaTimeCount > 50) {
+						enemy01AreaCheck = false;
+						enemy01AreaTimeCount = 0;
+						//printf("maichonlaew 2\n");
+					}
+					enemy01AreaTimeCount += 1;
+				}
+
+				if (AtkE1 == true) {
+					//Q1
+					if (playerPosition.x > enemyLV403Position.x && playerPosition.y < enemyLV403Position.y) {
+						//printf("1\n");
+						spBullE1Y = sqrt(100 / (pow(abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y), 2) + 1));
+						spBullE1X = (abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y)) * spBullE1Y;
+						spBullE1Y = spBullE1Y * -1;
+					}
+					//Q2
+					else if (playerPosition.x < enemyLV403Position.x && playerPosition.y < enemyLV403Position.y) {
+						//printf("2\n");
+						spBullE1Y = sqrt(100 / (pow(abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y), 2) + 1));
+						spBullE1X = (abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y)) * spBullE1Y;
+						spBullE1X = spBullE1X * -1;
+						spBullE1Y = spBullE1Y * -1;
+					}
+					//Q3
+					else if (playerPosition.x < enemyLV403Position.x && playerPosition.y > enemyLV403Position.y) {
+
+						//printf("3\n");
+						spBullE1Y = sqrt(100 / (pow(abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y), 2) + 1));
+						spBullE1X = (abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y)) * spBullE1Y;
+						spBullE1X = spBullE1X * -1;
+
+					}
+					//Q4
+					else if (playerPosition.x > enemyLV403Position.x && playerPosition.y > enemyLV403Position.y) {
+						//printf("4\n");
+						spBullE1Y = sqrt(100 / (pow(abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y), 2) + 1));
+						spBullE1X = (abs(enemyLV403Position.x - playerPosition.x) / abs(enemyLV403Position.y - playerPosition.y)) * spBullE1Y;
+
+					}
+					AtkE1 = false;
+					bullE1out = true;
+					bulletE1.setPosition(enemyLV403Position.x + 50, enemyLV403Position.y + 50);
+				}
+
 				if (bullet1.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
@@ -5016,8 +5085,12 @@ int main() {
 
 		else if (n == 6) {
 			window.draw(player);
-			window.draw(enemyLV403);
-			window.draw(enemyLV404);
+			if (enemyLV403Life > 0) {
+				window.draw(enemyLV403);
+			}
+			if (enemyLV404Life > 0) {
+				window.draw(enemyLV404);
+			}
 			
 			if (player.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
 				if (enemyLV403Position.y > playerPosition.y) {
@@ -5060,7 +5133,7 @@ int main() {
 				}
 			}
 			window.draw(DemocracLV4);
-			if (enemyLV403Life > 0) {
+			if (enemyLV403Life > 0 && enemy01AreaCheck == true) {
 				if (enemyLV403Life == 3) {
 					window.draw(enemy403Heart3);
 					window.draw(enemy403Heart2);
@@ -5087,6 +5160,9 @@ int main() {
 				if (enemyLV404Life == 1) {
 					window.draw(enemy404Heart3);
 				}
+			}
+			if (bullE1out == true) {
+				window.draw(bulletE1);
 			}
 		}
 
