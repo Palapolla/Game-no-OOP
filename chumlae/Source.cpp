@@ -877,6 +877,34 @@ int main() {
 	enemy404Heart3.setOrigin(10, 10);
 	enemy404Heart3.setTexture(&enemyHeart2_tx);
 
+
+	//**********Enemy06**********//
+
+
+	sf::Texture enemyLV406_tx;
+	enemyLV406_tx.loadFromFile("EnemyLV404.png");
+	sf::RectangleShape enemyLV406(sf::Vector2f(300.0f, 300.0f));
+	enemyLV406.setTexture(&enemyLV406_tx);
+	sf::Vector2u enemyLV406TextureSize = enemyLV406_tx.getSize();
+	int enemyLV406SizeX = enemyLV406TextureSize.x / 13;
+	int enemyLV406SizeY = enemyLV406TextureSize.y / 21;
+	enemyLV406.setTextureRect(sf::IntRect(enemyLV406SizeX * 2, enemyLV406SizeY * 2, enemyLV406SizeX, enemyLV406SizeY));
+	enemyLV406.setPosition(950, 100);
+	int  enemyLV406MaxY = 0;
+	float enemyLV406PosY = 0, enemyLV406FrameX = 0, enemyLV406FrameY = 10;
+	bool enemyLV406SetState = true;
+	int enemyLV406Life = 3;
+
+	sf::RectangleShape enemy406Heart1(sf::Vector2f(20.0f, 20.0f));
+	enemy406Heart1.setOrigin(10, 10);
+	enemy406Heart1.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy406Heart2(sf::Vector2f(20.0f, 20.0f));
+	enemy406Heart2.setOrigin(10, 10);
+	enemy406Heart2.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy406Heart3(sf::Vector2f(20.0f, 20.0f));
+	enemy406Heart3.setOrigin(10, 10);
+	enemy406Heart3.setTexture(&enemyHeart2_tx);
+
 	//**********Door Level 4**********//
 
 	sf::RectangleShape DoorLV4(sf::Vector2f(50.0f, 300.0f));
@@ -3505,6 +3533,75 @@ int main() {
 			//Level 4 > > bullet > > Enemy4//
 
 			if (enemyLV404Life > 0) {
+
+				//DetectionZone&Attack//
+				enemy02Area.setPosition(enemyLV404Position.x, enemyLV404Position.y);
+				if (player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds())) {
+					//printf("Chonlaew NAAAAA 2\n");
+					enemy02AreaCheck = true;
+					enemy02AreaTimeCount = 0;
+					if (bullE2out == false) {
+						bullE2TimeCount++;
+						//printf("%d", bullE1TimeCount);
+						if (bullE2TimeCount >= 25) {
+							AtkE2 = true;
+						}
+					}
+				}
+
+				if (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())
+					|| bullet2.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())
+					|| bullet3.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					enemy02AreaCheck = true;
+				}
+
+				if (enemy02AreaCheck == true && !(player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds()))) {
+					//printf("%d\n", enemy01AreaTimeCount);
+					if (enemy02AreaTimeCount > 50) {
+						enemy02AreaCheck = false;
+						enemy02AreaTimeCount = 0;
+						//printf("maichonlaew 2\n");
+					}
+					enemy02AreaTimeCount += 1;
+				}
+
+				if (AtkE2 == true) {
+					//Q1
+					if (playerPosition.x > enemyLV404Position.x && playerPosition.y < enemyLV404Position.y) {
+						//printf("1\n");
+						spBullE2Y = sqrt(100 / (pow(abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y), 2) + 1));
+						spBullE2X = (abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y)) * spBullE2Y;
+						spBullE2Y = spBullE2Y * -1;
+					}
+					//Q2
+					else if (playerPosition.x < enemyLV404Position.x && playerPosition.y < enemyLV404Position.y) {
+						//printf("2\n");
+						spBullE2Y = sqrt(100 / (pow(abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y), 2) + 1));
+						spBullE2X = (abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y)) * spBullE2Y;
+						spBullE2X = spBullE2X * -1;
+						spBullE2Y = spBullE2Y * -1;
+					}
+					//Q3
+					else if (playerPosition.x < enemyLV404Position.x && playerPosition.y > enemyLV404Position.y) {
+
+						//printf("3\n");
+						spBullE2Y = sqrt(100 / (pow(abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y), 2) + 1));
+						spBullE2X = (abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y)) * spBullE2Y;
+						spBullE2X = spBullE2X * -1;
+
+					}
+					//Q4
+					else if (playerPosition.x > enemyLV404Position.x && playerPosition.y > enemyLV404Position.y) {
+						//printf("4\n");
+						spBullE2Y = sqrt(100 / (pow(abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y), 2) + 1));
+						spBullE2X = (abs(enemyLV404Position.x - playerPosition.x) / abs(enemyLV404Position.y - playerPosition.y)) * spBullE2Y;
+
+					}
+					AtkE2 = false;
+					bullE2out = true;
+					bulletE2.setPosition(enemyLV404Position.x + 50, enemyLV404Position.y + 50);
+				}
+
 				if (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
@@ -5147,7 +5244,7 @@ int main() {
 					window.draw(enemy403Heart3);
 				}
 			}
-			if (enemyLV404Life > 0) {
+			if (enemyLV404Life > 0 && enemy02AreaCheck == true) {
 				if (enemyLV404Life == 3) {
 					window.draw(enemy404Heart3);
 					window.draw(enemy404Heart2);
@@ -5164,6 +5261,10 @@ int main() {
 			if (bullE1out == true) {
 				window.draw(bulletE1);
 			}
+			if (bullE2out == true) {
+				window.draw(bulletE2);
+			}
+			window.draw(enemyLV406);
 		}
 
 		//Render::Bullet//
