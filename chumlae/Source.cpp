@@ -889,11 +889,12 @@ int main() {
 	int enemyLV406SizeX = enemyLV406TextureSize.x / 13;
 	int enemyLV406SizeY = enemyLV406TextureSize.y / 21;
 	enemyLV406.setTextureRect(sf::IntRect(enemyLV406SizeX * 2, enemyLV406SizeY * 2, enemyLV406SizeX, enemyLV406SizeY));
-	enemyLV406.setPosition(950, 100);
+	enemyLV406.setPosition(950, 200);
 	int  enemyLV406MaxY = 0;
 	float enemyLV406PosY = 0, enemyLV406FrameX = 0, enemyLV406FrameY = 10;
 	bool enemyLV406SetState = true;
 	int enemyLV406Life = 3;
+	bool animateBoss = false;
 
 	sf::RectangleShape enemy406Heart1(sf::Vector2f(20.0f, 20.0f));
 	enemy406Heart1.setOrigin(10, 10);
@@ -1037,7 +1038,7 @@ int main() {
 	bulletE1_tx.loadFromFile("bullet.png");
 	sf::RectangleShape bulletE1(sf::Vector2f(20.0f, 20.0f));
 	bulletE1.setTexture(&bulletE1_tx);
-	bulletE1.setOrigin(15, 15);
+	bulletE1.setOrigin(10, 10);
 	bool bullE1out = false, bullE1Col = false, E1GetDes = false;
 	int bullE1TimeCount = 0;
 
@@ -1056,7 +1057,7 @@ int main() {
 	bulletE2_tx.loadFromFile("bullet.png");
 	sf::RectangleShape bulletE2(sf::Vector2f(20.0f, 20.0f));
 	bulletE2.setTexture(&bulletE2_tx);
-	bulletE2.setOrigin(15, 15);
+	bulletE2.setOrigin(10, 10);
 	bool bullE2out = false, bullE2Col = false, E2GetDes = false;
 	int bullE2TimeCount = 0;
 
@@ -1075,7 +1076,7 @@ int main() {
 	bulletE3_tx.loadFromFile("bullet.png");
 	sf::RectangleShape bulletE3(sf::Vector2f(20.0f, 20.0f));
 	bulletE3.setTexture(&bulletE3_tx);
-	bulletE3.setOrigin(15, 15);
+	bulletE3.setOrigin(10, 10);
 	bool bullE3out = false, bullE3Col = false, E3GetDes = false;
 	int bullE3TimeCount = 0;
 
@@ -1169,6 +1170,7 @@ int main() {
 		sf::Vector2f enemyLV403Position = enemyLV403.getPosition();
 		sf::Vector2f enemyLV404Position = enemyLV404.getPosition();
 		sf::Vector2f enemyLV405Position = enemyLV405.getPosition();
+		sf::Vector2f enemyLV406Position = enemyLV406.getPosition();
 		sf::Vector2f bull1Pos = bullet1.getPosition();
 		sf::Vector2f bull2Pos = bullet2.getPosition();
 		sf::Vector2f bull3Pos = bullet3.getPosition();
@@ -1294,6 +1296,7 @@ int main() {
 		}
 		if (bullE3Pos.x <= -20 || bullE3Pos.x > 1240 || bullE3Pos.y >= 720 || bullE3Pos.y < 0) {
 			bullE3out = false;
+			animateBoss = false;
 			bullE3TimeCount = 0;
 			bulletE3.setPosition(0, 0);
 		}
@@ -3434,19 +3437,18 @@ int main() {
 			if (enemyLV403Life > 0) {
 
 				//DetectionZone&Attack//
-				enemy01Area.setPosition(enemyLV403Position.x, enemyLV403Position.y);
-				if (player.getGlobalBounds().intersects(enemy01Area.getGlobalBounds())) {
+
 					//printf("Chonlaew NAAAAA 2\n");
-					enemy01AreaCheck = true;
-					enemy01AreaTimeCount = 0;
-					if (bullE1out == false) {
-						bullE1TimeCount++;
-						//printf("%d", bullE1TimeCount);
-						if (bullE1TimeCount >= 25) {
-							AtkE1 = true;
-						}
+				enemy01AreaCheck = true;
+				enemy01AreaTimeCount = 0;
+				if (bullE1out == false) {
+					bullE1TimeCount++;
+					//printf("%d", bullE1TimeCount);
+					if (bullE1TimeCount >= 25) {
+						AtkE1 = true;
 					}
 				}
+
 
 				if (bullet1.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())
 					|| bullet2.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())
@@ -3535,19 +3537,18 @@ int main() {
 			if (enemyLV404Life > 0) {
 
 				//DetectionZone&Attack//
-				enemy02Area.setPosition(enemyLV404Position.x, enemyLV404Position.y);
-				if (player.getGlobalBounds().intersects(enemy02Area.getGlobalBounds())) {
+
 					//printf("Chonlaew NAAAAA 2\n");
-					enemy02AreaCheck = true;
-					enemy02AreaTimeCount = 0;
-					if (bullE2out == false) {
-						bullE2TimeCount++;
-						//printf("%d", bullE1TimeCount);
-						if (bullE2TimeCount >= 25) {
-							AtkE2 = true;
-						}
+				enemy02AreaCheck = true;
+				enemy02AreaTimeCount = 0;
+				if (bullE2out == false) {
+					bullE2TimeCount++;
+					//printf("%d", bullE1TimeCount);
+					if (bullE2TimeCount >= 25) {
+						AtkE2 = true;
 					}
 				}
+
 
 				if (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())
 					|| bullet2.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())
@@ -3600,6 +3601,109 @@ int main() {
 					AtkE2 = false;
 					bullE2out = true;
 					bulletE2.setPosition(enemyLV404Position.x + 50, enemyLV404Position.y + 50);
+				}
+
+				if (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					bull1out = false;
+					bull1Col = false;
+					bulletNo[0] = 0;
+					bulletTimeOut[0] = 0;
+					bullet1.setPosition(0, 0);
+					enemyLV404Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV404Life);
+				}
+				if (bullet2.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					bull2out = false;
+					bull2Col = false;
+					bulletNo[1] = 0;
+					bulletTimeOut[1] = 0;
+					bullet2.setPosition(0, 0);
+					enemyLV404Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV404Life);
+				}
+				if (bullet3.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					bull3out = false;
+					bull3Col = false;
+					bulletNo[2] = 0;
+					bulletTimeOut[2] = 0;
+					bullet3.setPosition(0, 0);
+					enemyLV404Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV404Life);
+				}
+			}
+
+			//Level 4 > > bullet > > Enemy6//
+
+			if (enemyLV406Life > 0) {
+
+				//DetectionZone&Attack//
+
+				enemy03AreaCheck = true;
+				enemy03AreaTimeCount = 0;
+				if (bullE3out == false) {
+					bulletE3.setSize(sf::Vector2f(20.0f, 20.0f));
+					bulletE3.setOrigin(10, 10);
+					bullE3TimeCount++;
+					//printf("%d", bullE1TimeCount);
+					if (bullE3TimeCount >= 25) {
+						AtkE3 = true;
+					}
+				}
+
+				if (bullet1.getGlobalBounds().intersects(enemyLV406.getGlobalBounds())
+					|| bullet2.getGlobalBounds().intersects(enemyLV406.getGlobalBounds())
+					|| bullet3.getGlobalBounds().intersects(enemyLV406.getGlobalBounds())) {
+					enemy03AreaCheck = true;
+				}
+
+				if (enemy03AreaCheck == true && !(player.getGlobalBounds().intersects(enemy03Area.getGlobalBounds()))) {
+					//printf("%d\n", enemy01AreaTimeCount);
+					if (enemy03AreaTimeCount > 50) {
+						enemy03AreaCheck = false;
+						enemy03AreaTimeCount = 0;
+						//printf("maichonlaew 2\n");
+					}
+					enemy03AreaTimeCount += 1;
+				}
+
+				if (AtkE3 == true) {
+					//Q1
+					if (playerPosition.x > enemyLV406Position.x && playerPosition.y < enemyLV406Position.y) {
+						//printf("1\n");
+						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
+						spBullE3Y = spBullE3Y * -1;
+					}
+					//Q2
+					else if (playerPosition.x < enemyLV406Position.x && playerPosition.y < enemyLV406Position.y) {
+						//printf("2\n");
+						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
+						spBullE3X = spBullE3X * -1;
+						spBullE3Y = spBullE3Y * -1;
+					}
+					//Q3
+					else if (playerPosition.x < enemyLV406Position.x && playerPosition.y > enemyLV406Position.y) {
+
+						//printf("3\n");
+						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
+						spBullE3X = spBullE3X * -1;
+
+					}
+					//Q4
+					else if (playerPosition.x > enemyLV406Position.x && playerPosition.y > enemyLV406Position.y) {
+						//printf("4\n");
+						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
+
+					}
+					AtkE3 = false;
+					bullE3out = true;
+					bulletE3.setSize(sf::Vector2f(150.0f, 150.0f));
+					bulletE3.setOrigin(75, 75);
+					bulletE3.setPosition(enemyLV406Position.x + 150, enemyLV406Position.y + 150);
+					animateBoss = true;
 				}
 
 				if (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
@@ -4535,7 +4639,7 @@ int main() {
 		enemy404Heart2.setPosition(enemyLV404Position.x + 50, enemyLV404Position.y - 10);
 		enemy404Heart3.setPosition(enemyLV404Position.x + 75, enemyLV404Position.y - 10);
 
-		/**********enemy01 animation**********/
+		/**********enemy05 animation**********/
 
 		enemyLV405.move(enemyLV405PosX, 0.0f);
 		enemyLV405.setTextureRect(sf::IntRect(enemyLV405SizeX* enemyLV405FrameX, enemyLV405SizeY* enemyLV405FrameY, enemyLV405SizeX, enemyLV405SizeY));
@@ -4544,7 +4648,7 @@ int main() {
 			enemyLV405FrameX = 0;
 		}
 
-		//Check Enemy 01 Position//
+		//Check Enemy 05 Position//
 		
 		if (enemyLV405MaxX < 100) { 
 			enemyLV405PosX = -4.5;
@@ -4565,7 +4669,23 @@ int main() {
 		enemy405Heart2.setPosition(enemyLV405Position.x + 50, enemyLV405Position.y - 10);
 		enemy405Heart3.setPosition(enemyLV405Position.x + 75, enemyLV405Position.y - 10);
 
-		
+		/**********enemy06 animation**********/
+
+		//enemyLV406.move(enemyLV405PosX, 0.0f);
+		if (animateBoss == true) {
+			enemyLV406.setTextureRect(sf::IntRect(enemyLV406SizeX * enemyLV406FrameX, enemyLV406SizeY * 1, enemyLV406SizeX, enemyLV406SizeY));
+			enemyLV406FrameX++;
+			if (enemyLV406FrameX >= 7) {
+				animateBoss = false;
+				enemyLV406FrameX = 0;
+			}
+		}
+		else {
+			enemyLV406.setTextureRect(sf::IntRect(enemyLV406SizeX * 0, enemyLV406SizeY * 1, enemyLV406SizeX, enemyLV406SizeY));
+		}
+		enemy406Heart1.setPosition(enemyLV406Position.x + 25, enemyLV406Position.y - 10);
+		enemy406Heart2.setPosition(enemyLV406Position.x + 50, enemyLV406Position.y - 10);
+		enemy406Heart3.setPosition(enemyLV406Position.x + 75, enemyLV406Position.y - 10);
 
 		/***********************************************************************************************************
 
@@ -5258,13 +5378,17 @@ int main() {
 					window.draw(enemy404Heart3);
 				}
 			}
+			window.draw(enemyLV406);
 			if (bullE1out == true) {
 				window.draw(bulletE1);
 			}
 			if (bullE2out == true) {
 				window.draw(bulletE2);
 			}
-			window.draw(enemyLV406);
+			if (bullE3out == true) {
+				window.draw(bulletE3);
+			}
+			
 		}
 
 		//Render::Bullet//
