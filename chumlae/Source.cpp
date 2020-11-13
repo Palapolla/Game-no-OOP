@@ -893,7 +893,7 @@ int main() {
 	int  enemyLV406MaxY = 0;
 	float enemyLV406PosY = 0, enemyLV406FrameX = 0, enemyLV406FrameY = 10;
 	bool enemyLV406SetState = true;
-	int enemyLV406Life = 3;
+	int enemyLV406Life = 6;
 	bool animateBoss = false;
 
 	sf::RectangleShape enemy406Heart1(sf::Vector2f(20.0f, 20.0f));
@@ -905,6 +905,15 @@ int main() {
 	sf::RectangleShape enemy406Heart3(sf::Vector2f(20.0f, 20.0f));
 	enemy406Heart3.setOrigin(10, 10);
 	enemy406Heart3.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy406Heart4(sf::Vector2f(20.0f, 20.0f));
+	enemy406Heart4.setOrigin(10, 10);
+	enemy406Heart4.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy406Heart5(sf::Vector2f(20.0f, 20.0f));
+	enemy406Heart5.setOrigin(10, 10);
+	enemy406Heart5.setTexture(&enemyHeart2_tx);
+	sf::RectangleShape enemy406Heart6(sf::Vector2f(20.0f, 20.0f));
+	enemy406Heart6.setOrigin(10, 10);
+	enemy406Heart6.setTexture(&enemyHeart2_tx);
 
 	//**********Door Level 4**********//
 
@@ -980,7 +989,7 @@ int main() {
 
 	/*#########################################################################################################
 
-										Shield Status
+										Imortal Status
 
 	###########################################################################################################*/
 
@@ -1015,6 +1024,18 @@ int main() {
 	unit.setFillColor(sf::Color::White);
 	unit.setString("sec");
 	unit.setPosition(1100, 0);
+
+
+	/*#########################################################################################################
+
+											Mouse hitbox
+
+	###########################################################################################################*/
+
+	sf::RectangleShape mouseHitBox(sf::Vector2f(10.0f, 10.0f));
+	sf::Mouse::setPosition(sf::Vector2i(100, 200), window);
+	//sf::Vector2i mousePos = sf::Mouse::getPosition();
+
 
 	/*#############################################################################################
 
@@ -1123,6 +1144,13 @@ int main() {
 		timerClock.setPosition(900, 0);
 
 
+		//###########################################Mouse###################################################//
+
+		
+		sf::Vector2i mousePos = sf::Mouse::getPosition();
+		printf("x %f y %f\n", mousePos.x, mousePos.y);
+		mouseHitBox.setPosition(mousePos.x,mousePos.y);
+		
 		//Set Status//
 
 
@@ -3706,32 +3734,32 @@ int main() {
 					animateBoss = true;
 				}
 
-				if (bullet1.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+				if (bullet1.getGlobalBounds().intersects(enemyLV406.getGlobalBounds())) {
 					bull1out = false;
 					bull1Col = false;
 					bulletNo[0] = 0;
 					bulletTimeOut[0] = 0;
 					bullet1.setPosition(0, 0);
-					enemyLV404Life -= 1;
-					printf("hit - enemyLife = %d\n", enemyLV404Life);
+					enemyLV406Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV406Life);
 				}
-				if (bullet2.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+				if (bullet2.getGlobalBounds().intersects(enemyLV406.getGlobalBounds())) {
 					bull2out = false;
 					bull2Col = false;
 					bulletNo[1] = 0;
 					bulletTimeOut[1] = 0;
 					bullet2.setPosition(0, 0);
-					enemyLV404Life -= 1;
-					printf("hit - enemyLife = %d\n", enemyLV404Life);
+					enemyLV406Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV406Life);
 				}
-				if (bullet3.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+				if (bullet3.getGlobalBounds().intersects(enemyLV406.getGlobalBounds())) {
 					bull3out = false;
 					bull3Col = false;
 					bulletNo[2] = 0;
 					bulletTimeOut[2] = 0;
 					bullet3.setPosition(0, 0);
-					enemyLV404Life -= 1;
-					printf("hit - enemyLife = %d\n", enemyLV404Life);
+					enemyLV406Life -= 1;
+					printf("hit - enemyLife = %d\n", enemyLV406Life);
 				}
 			}
 		}
@@ -4683,9 +4711,12 @@ int main() {
 		else {
 			enemyLV406.setTextureRect(sf::IntRect(enemyLV406SizeX * 0, enemyLV406SizeY * 1, enemyLV406SizeX, enemyLV406SizeY));
 		}
-		enemy406Heart1.setPosition(enemyLV406Position.x + 25, enemyLV406Position.y - 10);
-		enemy406Heart2.setPosition(enemyLV406Position.x + 50, enemyLV406Position.y - 10);
-		enemy406Heart3.setPosition(enemyLV406Position.x + 75, enemyLV406Position.y - 10);
+		enemy406Heart1.setPosition(enemyLV406Position.x + 100, enemyLV406Position.y - 10);
+		enemy406Heart2.setPosition(enemyLV406Position.x + 125, enemyLV406Position.y - 10);
+		enemy406Heart3.setPosition(enemyLV406Position.x + 150, enemyLV406Position.y - 10);
+		enemy406Heart4.setPosition(enemyLV406Position.x + 175, enemyLV406Position.y - 10);
+		enemy406Heart5.setPosition(enemyLV406Position.x + 200, enemyLV406Position.y - 10);
+		enemy406Heart6.setPosition(enemyLV406Position.x + 225, enemyLV406Position.y - 10);
 
 		/***********************************************************************************************************
 
@@ -5378,7 +5409,44 @@ int main() {
 					window.draw(enemy404Heart3);
 				}
 			}
-			window.draw(enemyLV406);
+			if (enemyLV406Life > 0) {
+				window.draw(enemyLV406);
+			}
+			if (enemyLV406Life > 0 && enemy03AreaCheck == true) {
+				if (enemyLV406Life == 6) {
+					window.draw(enemy406Heart6);
+					window.draw(enemy406Heart5);
+					window.draw(enemy406Heart4);
+					window.draw(enemy406Heart3);
+					window.draw(enemy406Heart2);
+					window.draw(enemy406Heart1);
+				}
+				if (enemyLV406Life == 5) {
+					window.draw(enemy406Heart5);
+					window.draw(enemy406Heart4);
+					window.draw(enemy406Heart3);
+					window.draw(enemy406Heart2);
+					window.draw(enemy406Heart1);
+				}
+				if (enemyLV406Life == 4) {
+					window.draw(enemy406Heart4);
+					window.draw(enemy406Heart3);
+					window.draw(enemy406Heart2);
+					window.draw(enemy406Heart1);
+				}
+				if (enemyLV406Life == 3) {
+					window.draw(enemy406Heart3);
+					window.draw(enemy406Heart2);
+					window.draw(enemy406Heart1);
+				}
+				if (enemyLV406Life == 2) {
+					window.draw(enemy406Heart2);
+					window.draw(enemy406Heart1);
+				}
+				if (enemyLV406Life == 1) {
+					window.draw(enemy406Heart1);
+				}
+			}
 			if (bullE1out == true) {
 				window.draw(bulletE1);
 			}
@@ -5403,7 +5471,7 @@ int main() {
 			window.draw(bullet3);
 		}
 
-
+		window.draw(mouseHitBox);
 		//window.draw(enemy01Area);
 		window.draw(timerClock);
 		window.draw(time);
