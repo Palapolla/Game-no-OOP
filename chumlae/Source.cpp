@@ -25,7 +25,7 @@ void delay(int number_of_seconds)
 }
 
 int main() {
-	int n = 1;
+	int n = 0;
 	bool lv1ch = true;
 	//window
 	sf::RenderWindow window(sf::VideoMode(1240, 720), "Game");
@@ -1101,6 +1101,43 @@ int main() {
 	bool bullE3out = false, bullE3Col = false, E3GetDes = false;
 	int bullE3TimeCount = 0;
 
+
+	/*#########################################################################################################
+
+												Main MENU
+
+	###########################################################################################################*/
+
+	//Start button//
+
+	sf::Texture Start_tx;
+	Start_tx.loadFromFile("Start.png");
+	sf::RectangleShape Start(sf::Vector2f(200.0f, 80.0f));
+	Start.setTexture(&Start_tx);
+	sf::Vector2f StartScale1 = Start.getScale();
+	Start.setOrigin(100, 40);
+	Start.setPosition(200, 300);
+
+	//LeaderBoard button//
+
+	sf::Texture LeaderBoard_tx;
+	LeaderBoard_tx.loadFromFile("LeaderBoard.png");
+	sf::RectangleShape LeaderBoard(sf::Vector2f(400.0f, 80.0f));
+	LeaderBoard.setTexture(&LeaderBoard_tx);
+	sf::Vector2f LeaderBoardScale = LeaderBoard.getScale();
+	LeaderBoard.setOrigin(100, 40);
+	LeaderBoard.setPosition(200, 400);
+
+	//Exit button//
+
+	sf::Texture Exit_tx;
+	Exit_tx.loadFromFile("Exit.png");
+	sf::RectangleShape Exit(sf::Vector2f(200.0f, 80.0f));
+	Exit.setTexture(&Exit_tx);
+	sf::Vector2f ExitScale = Exit.getScale();
+	Exit.setOrigin(100, 40);
+	Exit.setPosition(200, 500);
+
 	/**********************************************************************************************************
 
 	-----------------------------------------------------------------------------------------------------------
@@ -1130,25 +1167,24 @@ int main() {
 
 		//###########################################Clock###################################################//
 
-
-		sf::Time timer = clock.getElapsedTime();
-		//printf("timer %f\n", timer.asSeconds());
-		char timetext[100];
-		if (timer.asSeconds() > 10) {
-			_gcvt_s(timetext, 100, timer.asSeconds(), 6);
+		if (n != 0) {
+			sf::Time timer = clock.getElapsedTime();
+			//printf("timer %f\n", timer.asSeconds());
+			char timetext[100];
+			if (timer.asSeconds() > 10) {
+				_gcvt_s(timetext, 100, timer.asSeconds(), 6);
+			}
+			else {
+				_gcvt_s(timetext, 100, timer.asSeconds(), 4);
+			}
+			timerClock.setString(timetext);
+			timerClock.setPosition(900, 0);
 		}
-		else {
-			_gcvt_s(timetext, 100, timer.asSeconds(), 4);
-		}
-		timerClock.setString(timetext);
-		timerClock.setPosition(900, 0);
-
 
 		//###########################################Mouse###################################################//
 
 		
-		sf::Vector2i mousePos = sf::Mouse::getPosition();
-		printf("x %f y %f\n", mousePos.x, mousePos.y);
+		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		mouseHitBox.setPosition(mousePos.x,mousePos.y);
 		
 		//Set Status//
@@ -1181,6 +1217,31 @@ int main() {
 
 		------------------------------------------------------------------------------------------------------------------------*/
 
+		//mouse with botton//
+
+		if (mouseHitBox.getGlobalBounds().intersects(Start.getGlobalBounds())) {
+			
+			Start.setScale(StartScale1.x * 1.2, StartScale1.y * 1.2);
+		}
+		if (!mouseHitBox.getGlobalBounds().intersects(Start.getGlobalBounds())) {
+			Start.setScale(StartScale1.x, StartScale1.y);
+		}
+
+		if (mouseHitBox.getGlobalBounds().intersects(LeaderBoard.getGlobalBounds())) {
+
+			LeaderBoard.setScale(LeaderBoardScale.x * 1.2, LeaderBoardScale.y * 1.2);
+		}
+		if (!mouseHitBox.getGlobalBounds().intersects(LeaderBoard.getGlobalBounds())) {
+			LeaderBoard.setScale(LeaderBoardScale.x, LeaderBoardScale.y);
+		}
+
+		if (mouseHitBox.getGlobalBounds().intersects(Exit.getGlobalBounds())) {
+
+			Exit.setScale(ExitScale.x * 1.2, ExitScale.y * 1.2);
+		}
+		if (!mouseHitBox.getGlobalBounds().intersects(Exit.getGlobalBounds())) {
+			Exit.setScale(ExitScale.x, ExitScale.y);
+		}
 
 		sf::Vector2f playerPosition = player.getPosition();
 		sf::Vector2f enemy01Position = enemy01.getPosition();
@@ -4734,6 +4795,13 @@ int main() {
 		window.clear();
 		window.draw(background);
 		window.draw(walltop);
+
+		//Render:MainMenu//
+
+		window.draw(Start);
+		window.draw(LeaderBoard);
+		window.draw(Exit);
+
 		//window.draw(playerHitbox);
 		//Render:Imortal//
 		if (imortalCheck == true) {
