@@ -1004,7 +1004,7 @@ int main() {
 
 	//####################################Timer##############################################//
 
-
+	bool timerload = false;
 	sf::Clock clock;
 	sf::Font font;
 	sf::Text timerClock;
@@ -1024,7 +1024,10 @@ int main() {
 	unit.setFillColor(sf::Color::White);
 	unit.setString("sec");
 	unit.setPosition(1100, 0);
-
+	int countRound = 0;
+	float timeSaver = 0;
+	int timeSet = 0;
+	float timeShow = 0;
 
 	/*#########################################################################################################
 
@@ -1117,6 +1120,7 @@ int main() {
 	sf::Vector2f StartScale1 = Start.getScale();
 	Start.setOrigin(100, 40);
 	Start.setPosition(200, 300);
+	bool mouseColStart = false;
 
 	//LeaderBoard button//
 
@@ -1127,7 +1131,8 @@ int main() {
 	sf::Vector2f LeaderBoardScale = LeaderBoard.getScale();
 	LeaderBoard.setOrigin(100, 40);
 	LeaderBoard.setPosition(200, 400);
-
+	bool mouseColLeaderboard = false;
+	
 	//Exit button//
 
 	sf::Texture Exit_tx;
@@ -1137,6 +1142,30 @@ int main() {
 	sf::Vector2f ExitScale = Exit.getScale();
 	Exit.setOrigin(100, 40);
 	Exit.setPosition(200, 500);
+	bool mouseColExit = false;
+
+	/*#########################################################################################################
+
+												Pause Button
+
+	###########################################################################################################*/
+
+	sf::Texture Pause_tx;
+	sf::RectangleShape Pause(sf::Vector2f(25.0f, 25.0f));
+	sf::Vector2f PauseScale = Pause.getScale();
+	Pause.setPosition(1210, 30);
+	Pause.setOrigin(12, 12);
+	bool mouseColPause = false;
+	bool pauseStatus = false;
+
+	sf::Texture Resume_tx;
+	//Resume_tx.loadFromFile("Start.png");
+	sf::RectangleShape Resume(sf::Vector2f(200.0f, 80.0f));
+	//Resume.setTexture(&Start_tx);
+	sf::Vector2f ResumeScale = Resume.getScale();
+	Resume.setOrigin(100, 40);
+	Resume.setPosition(500, 300);
+	bool mouseColResume = false;
 
 	/**********************************************************************************************************
 
@@ -1163,22 +1192,42 @@ int main() {
 			lv1ch = false;
 			KeyLV1Check = false;
 		}
-		
 
 		//###########################################Clock###################################################//
 
-		if (n != 0) {
+		if (n > 0 && timerload == true) {
+			clock.restart();
+			timerload = false;
+		}
+
+		else if (n > 0 && timerload == false) {
+			
 			sf::Time timer = clock.getElapsedTime();
+			float timeUse = timer.asSeconds();
 			//printf("timer %f\n", timer.asSeconds());
-			char timetext[100];
-			if (timer.asSeconds() > 10) {
-				_gcvt_s(timetext, 100, timer.asSeconds(), 6);
+			if (countRound == 1 && pauseStatus == true) {
+				timeSaver = timeUse;
+				printf("timeSaver %f\n", timeSaver);
+				countRound = 0;
+				
 			}
-			else {
-				_gcvt_s(timetext, 100, timer.asSeconds(), 4);
+			if (timeSet == 1) {
+				timeUse = timeUse + timeSaver;
+				printf("timeUse %f\n", timeUse);
+				timeSet = 0;
 			}
-			timerClock.setString(timetext);
-			timerClock.setPosition(900, 0);
+			timeShow = timeUse;
+			char timetext[100] = { _gcvt_s(timetext, 100, timeShow, 6) };
+			if (pauseStatus == false) {
+				if (timeUse > 10) {
+					_gcvt_s(timetext, 100, timeShow, 6);
+				}
+				else {
+					_gcvt_s(timetext, 100, timeShow, 4);
+				}
+				timerClock.setString(timetext);
+				timerClock.setPosition(900, 0);
+			}
 		}
 
 		//###########################################Mouse###################################################//
@@ -1187,9 +1236,38 @@ int main() {
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		mouseHitBox.setPosition(mousePos.x,mousePos.y);
 		
+		//###########################################Pause Button###################################################//
+
+		if (mouseHitBox.getGlobalBounds().intersects(Pause.getGlobalBounds())) {
+			mouseColPause = true;
+			Pause.setScale(PauseScale.x * 1.2, PauseScale.y * 1.2);
+		}
+		else {
+			mouseColPause = false;
+			Pause.setScale(PauseScale.x, PauseScale.y);
+		}
+
+		if (pauseStatus == false && n != 0 && mouseColPause == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			countRound = 1;
+			pauseStatus = true;
+		}
+		
+		if (mouseHitBox.getGlobalBounds().intersects(Resume.getGlobalBounds())) {
+			mouseColResume = true;
+			Resume.setScale(ResumeScale.x * 1.2, ResumeScale.y * 1.2);
+		}
+		else {
+			mouseColResume = false;
+			Resume.setScale(ResumeScale.x, ResumeScale.y);
+		}
+		if (pauseStatus == true && n != 0 && mouseColResume == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			clock.restart();
+			timeSet = 1;
+			pauseStatus = false;
+		}
+	if(pauseStatus == false){
+
 		//Set Status//
-
-
 		if (n == 1) {
 			if (enemy1SetState == true) {
 				enemy1Life = 3;
@@ -1218,28 +1296,35 @@ int main() {
 		------------------------------------------------------------------------------------------------------------------------*/
 
 		//mouse with botton//
-
+		
+		//with Start//
 		if (mouseHitBox.getGlobalBounds().intersects(Start.getGlobalBounds())) {
+			mouseColStart = true;
 			
 			Start.setScale(StartScale1.x * 1.2, StartScale1.y * 1.2);
 		}
 		if (!mouseHitBox.getGlobalBounds().intersects(Start.getGlobalBounds())) {
+			mouseColStart = false;
 			Start.setScale(StartScale1.x, StartScale1.y);
 		}
 
+		//with Leaderboard//
 		if (mouseHitBox.getGlobalBounds().intersects(LeaderBoard.getGlobalBounds())) {
-
+			mouseColLeaderboard = true;
 			LeaderBoard.setScale(LeaderBoardScale.x * 1.2, LeaderBoardScale.y * 1.2);
 		}
 		if (!mouseHitBox.getGlobalBounds().intersects(LeaderBoard.getGlobalBounds())) {
+			mouseColLeaderboard = false;
 			LeaderBoard.setScale(LeaderBoardScale.x, LeaderBoardScale.y);
 		}
 
+		//with Exit//
 		if (mouseHitBox.getGlobalBounds().intersects(Exit.getGlobalBounds())) {
-
+			mouseColExit = true;
 			Exit.setScale(ExitScale.x * 1.2, ExitScale.y * 1.2);
 		}
 		if (!mouseHitBox.getGlobalBounds().intersects(Exit.getGlobalBounds())) {
+			mouseColExit = false;
 			Exit.setScale(ExitScale.x, ExitScale.y);
 		}
 
@@ -3825,7 +3910,15 @@ int main() {
 			}
 		}
 
-		// ---------------------------------KeyboardInput------------------------------------// 
+		// ---------------------------------Keyboard&MouseInput------------------------------------// 
+
+		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			n = 1;
+			timerload = true;
+		}
+		if (n == 0 && mouseColExit == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			window.close();
+		}
 
 		int initialFrame = 0;
 
@@ -3852,6 +3945,7 @@ int main() {
 		}
 		player.setTextureRect(sf::IntRect(playerSizeX * 0, playerSizeY * initialFrame, playerSizeX, playerSizeY));
 
+		
 		if (d == true) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 				if (speedStatus == false) {
@@ -4779,6 +4873,7 @@ int main() {
 		enemy406Heart5.setPosition(enemyLV406Position.x + 200, enemyLV406Position.y - 10);
 		enemy406Heart6.setPosition(enemyLV406Position.x + 225, enemyLV406Position.y - 10);
 
+		
 		/***********************************************************************************************************
 
 		------------------------------------------------------------------------------------------------------------
@@ -4797,754 +4892,762 @@ int main() {
 		window.draw(walltop);
 
 		//Render:MainMenu//
-
-		window.draw(Start);
-		window.draw(LeaderBoard);
-		window.draw(Exit);
-
+		if (n == 0) {
+			window.draw(Start);
+			window.draw(LeaderBoard);
+			window.draw(Exit);
+		}
 		//window.draw(playerHitbox);
-		//Render:Imortal//
-		if (imortalCheck == true) {
-			window.draw(imortalStatus);
-		}
-		//Render:Heart//
-		if (playerLife >= 1) {
-			if (heart1Check == true) {
-				window.draw(heart1);
+		else {
+			//Render:Imortal//
+			if (imortalCheck == true) {
+				window.draw(imortalStatus);
 			}
-		}
-		if (playerLife >= 2) {
-			if (heart2Check == true) {
-				window.draw(heart2);
-			}
-		}
-		if (playerLife >= 3) {
-			if (heart3Check == true) {
-				window.draw(heart3);
-			}
-		}
-		if (shieldStatusCheck == true) {
-			window.draw(shieldStatus);
-		}
-
-		//Render:LEVEL 1//
-		
-		if (n == 1) {
-			//window.draw(enemy01Area);
-			//window.draw(enemy02Area);
-			window.draw(wall5);
-			if (DoorLV1Check == false) {
-				window.draw(KeyLV1);
-				window.draw(DoorLV1);
-			}
-			window.draw(wall4);
-			window.draw(wall1);
-			window.draw(wall2);
-			window.draw(player);
-			if (enemy1Life > 0) {
-				window.draw(enemy01);
-			}
-			if (enemy2Life > 0) {
-				window.draw(enemy02);
-			}
-			window.draw(DemocracLV1);
-			
-			if (playerPosition.y < 300&&playerPosition.y > 200) {
-				if (enemy1Life > 0) {
-					window.draw(enemy01);
-				}
-				window.draw(player);
-				window.draw(wall1);
-				window.draw(wall2);
-				if (enemy2Life > 0) {
-					window.draw(enemy02);
+			//Render:Heart//
+			if (playerLife >= 1) {
+				if (heart1Check == true) {
+					window.draw(heart1);
 				}
 			}
-			if (!playerPosition.y < 300 && !playerPosition.y > 200) {
-				if (enemy1Life > 0) {
-					window.draw(enemy01);
-				}
-				window.draw(player);
-				window.draw(wall1);
-				window.draw(wall2);
-				if (enemy2Life > 0) {
-					window.draw(enemy02);
+			if (playerLife >= 2) {
+				if (heart2Check == true) {
+					window.draw(heart2);
 				}
 			}
-			if (enemy02Position.y < playerPosition.y) {
-				if (enemy2Life > 0) {
-					window.draw(enemy02);
-				}
-				window.draw(player);
-			}
-			if (!enemy02Position.y < !playerPosition.y) {
-				window.draw(player);
-				if (enemy2Life > 0) {
-					window.draw(enemy02);
-				}
-			}
-			if (enemy1Life > 0 && enemy01AreaCheck == true) {
-				if (enemy1Life == 3) {
-					window.draw(enemy01Heart3);
-					window.draw(enemy01Heart2);
-					window.draw(enemy01Heart1);
-				}
-				if(enemy1Life == 2) {
-					window.draw(enemy01Heart2);
-					window.draw(enemy01Heart1);
-				}
-				if (enemy1Life == 1) {
-					window.draw(enemy01Heart1);
-				}
-			}
-			if (enemy2Life > 0 && enemy02AreaCheck == true) {
-				if (enemy2Life == 3) {
-					window.draw(enemy02Heart3);
-					window.draw(enemy02Heart2);
-					window.draw(enemy02Heart1);
-				}
-				if (enemy2Life == 2) {
-					window.draw(enemy02Heart2);
-					window.draw(enemy02Heart1);
-				}
-				if (enemy2Life == 1) {
-					window.draw(enemy02Heart1);
+			if (playerLife >= 3) {
+				if (heart3Check == true) {
+					window.draw(heart3);
 				}
 			}
 			if (shieldStatusCheck == true) {
 				window.draw(shieldStatus);
 			}
-			if (shieldCheck == false) {
-				window.draw(shield);
-			}
-			window.draw(wall3);
-			if (enemy1Life > 0 && bullE1out==true) {
-				window.draw(bulletE1);
-			}
-			if (enemy2Life > 0 && bullE2out == true) {
-				window.draw(bulletE2);
-			}
-			
-		}
 
-		//RENDER:LEVEL 2//
+			//Render:LEVEL 1//
 
-		else if (n == 2) {
-			window.draw(GateLV2);
-			if (playerPosition.y <= 350 && playerPosition.y > 250) {
-				window.draw(wallLV202);
-				if (enemyLV202Life > 0) {
-					window.draw(enemyLV202);
+			if (n == 1) {
+				//window.draw(enemy01Area);
+				//window.draw(enemy02Area);
+				window.draw(wall5);
+				if (DoorLV1Check == false) {
+					window.draw(KeyLV1);
+					window.draw(DoorLV1);
 				}
+				window.draw(wall4);
+				window.draw(wall1);
+				window.draw(wall2);
 				window.draw(player);
-				if (enemyLV201Life > 0) {
-					window.draw(enemyLV201);
+				if (enemy1Life > 0) {
+					window.draw(enemy01);
 				}
-				window.draw(wallLV201);
-			}
-			else if (playerPosition.y <= 250 && playerPosition.y > 100) {
-				window.draw(wallLV202);
-				window.draw(player);
-				if (enemyLV202Life > 0) {
-					window.draw(enemyLV202);
+				if (enemy2Life > 0) {
+					window.draw(enemy02);
 				}
-				if (enemyLV201Life > 0) {
-					window.draw(enemyLV201);
-				}
-				window.draw(wallLV201);
-			}
-			else if (playerPosition.y <= 100) {
-				window.draw(player);
-				window.draw(wallLV202);
-				if (enemyLV202Life > 0) {
-					window.draw(enemyLV202);
-				}
-				if (enemyLV201Life > 0) {
-					window.draw(enemyLV201);
-				}
-				window.draw(wallLV201);
-			}
-			else if (playerPosition.y >= 600) {
-				window.draw(wallLV202);
-				if (enemyLV202Life > 0) {
-					window.draw(enemyLV202);
-				}
-				if (enemyLV201Life > 0) {
-					window.draw(enemyLV201);
-				}
-				window.draw(player);
-				window.draw(wallLV201);
-			}
-			else {
-				window.draw(wallLV201);
-				window.draw(wallLV202);
-				window.draw(player);
-				if (enemyLV202Life > 0) {
-					window.draw(enemyLV202);
-				}
-				if (enemyLV201Life > 0) {
-					window.draw(enemyLV201);
-				}
-			}
-			
-			window.draw(wallLV203);
-			if (enemyLV201Life > 0 && enemy01AreaCheck == true) {
-				if (enemyLV201Life == 3) {
-					window.draw(enemy201Heart3);
-					window.draw(enemy201Heart2);
-					window.draw(enemy201Heart1);
-				}
-				if (enemyLV201Life == 2) {
-					window.draw(enemy201Heart3);
-					window.draw(enemy201Heart2);
-				}
-				if (enemyLV201Life == 1) {
-					window.draw(enemy201Heart3);
-				}
-			}
-			if (enemyLV202Life > 0 && enemy02AreaCheck == true) {
-				if (enemyLV202Life == 3) {
-					window.draw(enemy202Heart3);
-					window.draw(enemy202Heart2);
-					window.draw(enemy202Heart1);
-				}
-				if (enemyLV202Life == 2) {
-					window.draw(enemy202Heart3);
-					window.draw(enemy202Heart2);
-				}
-				if (enemyLV202Life == 1) {
-					window.draw(enemy202Heart3);
-				}
-				
-			}
-			if (enemyLV201Life > 0 && bullE1out == true) {
-				window.draw(bulletE1);
-			}
-			if (enemyLV202Life > 0 && bullE2out == true) {
-				window.draw(bulletE2);
-			}
-			if (speedCheck == false) {
-				window.draw(speed);
-			}
-		}
+				window.draw(DemocracLV1);
 
-		else if (n == 3) {
-			window.draw(player);
-			if (enemyLV203Life > 0) {
-				if (enemyLV203Position.y < playerPosition.y) {
-					window.draw(enemyLV203);
+				if (playerPosition.y < 300 && playerPosition.y > 200) {
+					if (enemy1Life > 0) {
+						window.draw(enemy01);
+					}
 					window.draw(player);
+					window.draw(wall1);
+					window.draw(wall2);
+					if (enemy2Life > 0) {
+						window.draw(enemy02);
+					}
+				}
+				if (!playerPosition.y < 300 && !playerPosition.y > 200) {
+					if (enemy1Life > 0) {
+						window.draw(enemy01);
+					}
+					window.draw(player);
+					window.draw(wall1);
+					window.draw(wall2);
+					if (enemy2Life > 0) {
+						window.draw(enemy02);
+					}
+				}
+				if (enemy02Position.y < playerPosition.y) {
+					if (enemy2Life > 0) {
+						window.draw(enemy02);
+					}
+					window.draw(player);
+				}
+				if (!enemy02Position.y < !playerPosition.y) {
+					window.draw(player);
+					if (enemy2Life > 0) {
+						window.draw(enemy02);
+					}
+				}
+				if (enemy1Life > 0 && enemy01AreaCheck == true) {
+					if (enemy1Life == 3) {
+						window.draw(enemy01Heart3);
+						window.draw(enemy01Heart2);
+						window.draw(enemy01Heart1);
+					}
+					if (enemy1Life == 2) {
+						window.draw(enemy01Heart2);
+						window.draw(enemy01Heart1);
+					}
+					if (enemy1Life == 1) {
+						window.draw(enemy01Heart1);
+					}
+				}
+				if (enemy2Life > 0 && enemy02AreaCheck == true) {
+					if (enemy2Life == 3) {
+						window.draw(enemy02Heart3);
+						window.draw(enemy02Heart2);
+						window.draw(enemy02Heart1);
+					}
+					if (enemy2Life == 2) {
+						window.draw(enemy02Heart2);
+						window.draw(enemy02Heart1);
+					}
+					if (enemy2Life == 1) {
+						window.draw(enemy02Heart1);
+					}
+				}
+				if (shieldStatusCheck == true) {
+					window.draw(shieldStatus);
+				}
+				if (shieldCheck == false) {
+					window.draw(shield);
+				}
+				window.draw(wall3);
+				if (enemy1Life > 0 && bullE1out == true) {
+					window.draw(bulletE1);
+				}
+				if (enemy2Life > 0 && bullE2out == true) {
+					window.draw(bulletE2);
+				}
+
+			}
+
+			//RENDER:LEVEL 2//
+
+			else if (n == 2) {
+				window.draw(GateLV2);
+				if (playerPosition.y <= 350 && playerPosition.y > 250) {
+					window.draw(wallLV202);
+					if (enemyLV202Life > 0) {
+						window.draw(enemyLV202);
+					}
+					window.draw(player);
+					if (enemyLV201Life > 0) {
+						window.draw(enemyLV201);
+					}
+					window.draw(wallLV201);
+				}
+				else if (playerPosition.y <= 250 && playerPosition.y > 100) {
+					window.draw(wallLV202);
+					window.draw(player);
+					if (enemyLV202Life > 0) {
+						window.draw(enemyLV202);
+					}
+					if (enemyLV201Life > 0) {
+						window.draw(enemyLV201);
+					}
+					window.draw(wallLV201);
+				}
+				else if (playerPosition.y <= 100) {
+					window.draw(player);
+					window.draw(wallLV202);
+					if (enemyLV202Life > 0) {
+						window.draw(enemyLV202);
+					}
+					if (enemyLV201Life > 0) {
+						window.draw(enemyLV201);
+					}
+					window.draw(wallLV201);
+				}
+				else if (playerPosition.y >= 600) {
+					window.draw(wallLV202);
+					if (enemyLV202Life > 0) {
+						window.draw(enemyLV202);
+					}
+					if (enemyLV201Life > 0) {
+						window.draw(enemyLV201);
+					}
+					window.draw(player);
+					window.draw(wallLV201);
 				}
 				else {
+					window.draw(wallLV201);
+					window.draw(wallLV202);
 					window.draw(player);
-					window.draw(enemyLV203);
-				}
-			}
-			if (enemyLV204Life > 0) {
-				if (enemyLV204Position.y < playerPosition.y) {
-					window.draw(enemyLV204);
-					window.draw(player);
-				}
-				else {
-					window.draw(player);
-					window.draw(enemyLV204);
-				}
-			}
-			if (enemyLV205Life > 0) {
-				if (enemyLV205Position.y < playerPosition.y) {
-					window.draw(enemyLV205);
-					window.draw(player);
-				}
-				else {
-					window.draw(player);
-					window.draw(enemyLV205);
-				}
-			}
-			window.draw(wallLV204);
-			if (DoorLV2Check == false) {
-				window.draw(KeyLV2);
-				window.draw(DoorLV2);
-			}
-			window.draw(DemocracLV2);
-			if (enemyLV203Life > 0 && enemy01AreaCheck == true) {
-				if (enemyLV203Life == 3) {
-					window.draw(enemy203Heart3);
-					window.draw(enemy203Heart2);
-					window.draw(enemy203Heart1);
-				}
-				if (enemyLV203Life == 2) {
-					window.draw(enemy203Heart3);
-					window.draw(enemy203Heart2);
-				}
-				if (enemyLV203Life == 1) {
-					window.draw(enemy203Heart3);
+					if (enemyLV202Life > 0) {
+						window.draw(enemyLV202);
+					}
+					if (enemyLV201Life > 0) {
+						window.draw(enemyLV201);
+					}
 				}
 
-			}
-			if (enemyLV203Life > 0 && bullE1out == true) {
-				window.draw(bulletE1);
-			}
-			if (enemyLV204Life > 0 && enemy02AreaCheck == true) {
-				if (enemyLV204Life == 3) {
-					window.draw(enemy204Heart3);
-					window.draw(enemy204Heart2);
-					window.draw(enemy204Heart1);
+				window.draw(wallLV203);
+				if (enemyLV201Life > 0 && enemy01AreaCheck == true) {
+					if (enemyLV201Life == 3) {
+						window.draw(enemy201Heart3);
+						window.draw(enemy201Heart2);
+						window.draw(enemy201Heart1);
+					}
+					if (enemyLV201Life == 2) {
+						window.draw(enemy201Heart3);
+						window.draw(enemy201Heart2);
+					}
+					if (enemyLV201Life == 1) {
+						window.draw(enemy201Heart3);
+					}
 				}
-				if (enemyLV204Life == 2) {
-					window.draw(enemy204Heart3);
-					window.draw(enemy204Heart2);
-				}
-				if (enemyLV204Life == 1) {
-					window.draw(enemy204Heart3);
-				}
-			}
-			if (enemyLV204Life > 0 && bullE2out == true) {
-				window.draw(bulletE2);
-			}
-			if (enemyLV205Life > 0 && enemy03AreaCheck == true) {
-				if (enemyLV205Life == 3) {
-					window.draw(enemy205Heart3);
-					window.draw(enemy205Heart2);
-					window.draw(enemy205Heart1);
-				}
-				if (enemyLV205Life == 2) {
-					window.draw(enemy205Heart3);
-					window.draw(enemy205Heart2);
-				}
-				if (enemyLV205Life == 1) {
-					window.draw(enemy205Heart3);
-				}
+				if (enemyLV202Life > 0 && enemy02AreaCheck == true) {
+					if (enemyLV202Life == 3) {
+						window.draw(enemy202Heart3);
+						window.draw(enemy202Heart2);
+						window.draw(enemy202Heart1);
+					}
+					if (enemyLV202Life == 2) {
+						window.draw(enemy202Heart3);
+						window.draw(enemy202Heart2);
+					}
+					if (enemyLV202Life == 1) {
+						window.draw(enemy202Heart3);
+					}
 
+				}
+				if (enemyLV201Life > 0 && bullE1out == true) {
+					window.draw(bulletE1);
+				}
+				if (enemyLV202Life > 0 && bullE2out == true) {
+					window.draw(bulletE2);
+				}
+				if (speedCheck == false) {
+					window.draw(speed);
+				}
 			}
-			if (enemyLV205Life > 0 && bullE3out == true) {
-				window.draw(bulletE3);
-			}
-			if (lifeCheck == false) {
-				window.draw(life);
-			}
-		}
 
-		//RENDER:LEVEL3//
-		
-		else if (n == 4) {
-			window.draw(wallLV302);
-			window.draw(wallLV303);
-			if (enemyLV301Life > 0) {
-				window.draw(enemyLV301);
-			}
-			if (enemyLV303Life > 0 ) {
-				if (enemyLV303Position.y < playerPosition.y) {
-					window.draw(enemyLV303);
-					window.draw(player);
-				}
-				else {
-					window.draw(player);
-					window.draw(enemyLV303);
-				}
-			}
-			else {
+			else if (n == 3) {
 				window.draw(player);
-			}
-			if (enemyLV302Life > 0) {
-				if (enemyLV302Position.y < playerPosition.y) {
-					window.draw(enemyLV302);
-					window.draw(player);
+				if (enemyLV203Life > 0) {
+					if (enemyLV203Position.y < playerPosition.y) {
+						window.draw(enemyLV203);
+						window.draw(player);
+					}
+					else {
+						window.draw(player);
+						window.draw(enemyLV203);
+					}
 				}
-				else {
-					window.draw(player);
-					window.draw(enemyLV302);
+				if (enemyLV204Life > 0) {
+					if (enemyLV204Position.y < playerPosition.y) {
+						window.draw(enemyLV204);
+						window.draw(player);
+					}
+					else {
+						window.draw(player);
+						window.draw(enemyLV204);
+					}
+				}
+				if (enemyLV205Life > 0) {
+					if (enemyLV205Position.y < playerPosition.y) {
+						window.draw(enemyLV205);
+						window.draw(player);
+					}
+					else {
+						window.draw(player);
+						window.draw(enemyLV205);
+					}
+				}
+				window.draw(wallLV204);
+				if (DoorLV2Check == false) {
+					window.draw(KeyLV2);
+					window.draw(DoorLV2);
+				}
+				window.draw(DemocracLV2);
+				if (enemyLV203Life > 0 && enemy01AreaCheck == true) {
+					if (enemyLV203Life == 3) {
+						window.draw(enemy203Heart3);
+						window.draw(enemy203Heart2);
+						window.draw(enemy203Heart1);
+					}
+					if (enemyLV203Life == 2) {
+						window.draw(enemy203Heart3);
+						window.draw(enemy203Heart2);
+					}
+					if (enemyLV203Life == 1) {
+						window.draw(enemy203Heart3);
+					}
+
+				}
+				if (enemyLV203Life > 0 && bullE1out == true) {
+					window.draw(bulletE1);
+				}
+				if (enemyLV204Life > 0 && enemy02AreaCheck == true) {
+					if (enemyLV204Life == 3) {
+						window.draw(enemy204Heart3);
+						window.draw(enemy204Heart2);
+						window.draw(enemy204Heart1);
+					}
+					if (enemyLV204Life == 2) {
+						window.draw(enemy204Heart3);
+						window.draw(enemy204Heart2);
+					}
+					if (enemyLV204Life == 1) {
+						window.draw(enemy204Heart3);
+					}
+				}
+				if (enemyLV204Life > 0 && bullE2out == true) {
+					window.draw(bulletE2);
+				}
+				if (enemyLV205Life > 0 && enemy03AreaCheck == true) {
+					if (enemyLV205Life == 3) {
+						window.draw(enemy205Heart3);
+						window.draw(enemy205Heart2);
+						window.draw(enemy205Heart1);
+					}
+					if (enemyLV205Life == 2) {
+						window.draw(enemy205Heart3);
+						window.draw(enemy205Heart2);
+					}
+					if (enemyLV205Life == 1) {
+						window.draw(enemy205Heart3);
+					}
+
+				}
+				if (enemyLV205Life > 0 && bullE3out == true) {
+					window.draw(bulletE3);
+				}
+				if (lifeCheck == false) {
+					window.draw(life);
 				}
 			}
-			else {
-				window.draw(player);
-			}
-			
-			if (playerPosition.y < 250 && playerPosition.y >= 200) {
+
+			//RENDER:LEVEL3//
+
+			else if (n == 4) {
+				window.draw(wallLV302);
+				window.draw(wallLV303);
 				if (enemyLV301Life > 0) {
 					window.draw(enemyLV301);
 				}
-				if (enemyLV302Position.y < playerPosition.y) {
-					if (enemyLV302Life > 0) {
-						if (enemyLV302Position.y < playerPosition.y) {
-							window.draw(enemyLV302);
-							//window.draw(player);
+				if (enemyLV303Life > 0) {
+					if (enemyLV303Position.y < playerPosition.y) {
+						window.draw(enemyLV303);
+						window.draw(player);
+					}
+					else {
+						window.draw(player);
+						window.draw(enemyLV303);
+					}
+				}
+				else {
+					window.draw(player);
+				}
+				if (enemyLV302Life > 0) {
+					if (enemyLV302Position.y < playerPosition.y) {
+						window.draw(enemyLV302);
+						window.draw(player);
+					}
+					else {
+						window.draw(player);
+						window.draw(enemyLV302);
+					}
+				}
+				else {
+					window.draw(player);
+				}
+
+				if (playerPosition.y < 250 && playerPosition.y >= 200) {
+					if (enemyLV301Life > 0) {
+						window.draw(enemyLV301);
+					}
+					if (enemyLV302Position.y < playerPosition.y) {
+						if (enemyLV302Life > 0) {
+							if (enemyLV302Position.y < playerPosition.y) {
+								window.draw(enemyLV302);
+								//window.draw(player);
+							}
 						}
+						window.draw(player);
+						window.draw(wallLV303);
 					}
-					window.draw(player);
-					window.draw(wallLV303);
-				}
-				if (enemyLV302Position.y > playerPosition.y) {
-					window.draw(player);
-					if (enemyLV302Life > 0) {
-						if (enemyLV302Position.y < playerPosition.y) {
-							window.draw(enemyLV302);
-							//window.draw(player);
+					if (enemyLV302Position.y > playerPosition.y) {
+						window.draw(player);
+						if (enemyLV302Life > 0) {
+							if (enemyLV302Position.y < playerPosition.y) {
+								window.draw(enemyLV302);
+								//window.draw(player);
+							}
 						}
+						window.draw(wallLV303);
 					}
-					window.draw(wallLV303);
 				}
-			}
-			if (playerPosition.y < 200) {
-				window.draw(player);
-				if (enemyLV302Position.y < playerPosition.y) {
-					if (enemyLV302Life > 0) {
-						if (enemyLV302Position.y < playerPosition.y) {
-							window.draw(enemyLV302);
-							//window.draw(player);
+				if (playerPosition.y < 200) {
+					window.draw(player);
+					if (enemyLV302Position.y < playerPosition.y) {
+						if (enemyLV302Life > 0) {
+							if (enemyLV302Position.y < playerPosition.y) {
+								window.draw(enemyLV302);
+								//window.draw(player);
+							}
 						}
+						window.draw(player);
+						window.draw(wallLV303);
 					}
-					window.draw(player);
-					window.draw(wallLV303);
-				}
-				if (enemyLV302Position.y > playerPosition.y) {
-					window.draw(player);
-					if (enemyLV302Life > 0) {
-						if (enemyLV302Position.y < playerPosition.y) {
-							window.draw(enemyLV302);
-							//window.draw(player);
+					if (enemyLV302Position.y > playerPosition.y) {
+						window.draw(player);
+						if (enemyLV302Life > 0) {
+							if (enemyLV302Position.y < playerPosition.y) {
+								window.draw(enemyLV302);
+								//window.draw(player);
+							}
 						}
+						window.draw(wallLV303);
 					}
-					window.draw(wallLV303);
-				}
-				if (enemyLV301Life > 0) {
-					window.draw(enemyLV301);
-				}
-			}
-			window.draw(DemocracLV3);
-			window.draw(wallLV301);
-
-			if (enemyLV301Life > 0 && enemy01AreaCheck == true) {
-				if (enemyLV301Life == 3) {
-					window.draw(enemy301Heart3);
-					window.draw(enemy301Heart2);
-					window.draw(enemy301Heart1);
-				}
-				if (enemyLV301Life == 2) {
-					window.draw(enemy301Heart3);
-					window.draw(enemy301Heart2);
-				}
-				if (enemyLV301Life == 1) {
-					window.draw(enemy301Heart3);
-				}
-			}
-			if (enemyLV302Life > 0 && enemy02AreaCheck == true) {
-				if (enemyLV302Life == 3) {
-					window.draw(enemy302Heart3);
-					window.draw(enemy302Heart2);
-					window.draw(enemy302Heart1);
-				}
-				if (enemyLV302Life == 2) {
-					window.draw(enemy302Heart3);
-					window.draw(enemy302Heart2);
-				}
-				if (enemyLV302Life == 1) {
-					window.draw(enemy302Heart3);
-				}
-			}
-			if (enemyLV303Life > 0 && enemy03AreaCheck == true) {
-				if (enemyLV303Life == 3) {
-					window.draw(enemy303Heart3);
-					window.draw(enemy303Heart2);
-					window.draw(enemy303Heart1);
-				}
-				if (enemyLV303Life == 2) {
-					window.draw(enemy303Heart3);
-					window.draw(enemy303Heart2);
-				}
-				if (enemyLV303Life == 1) {
-					window.draw(enemy303Heart3);
-				}
-			}
-			if (bullE1out == true) {
-				window.draw(bulletE1);
-			}
-			if (bullE2out == true) {
-				window.draw(bulletE2);
-			}
-			if (bullE3out == true) {
-				window.draw(bulletE3);
-			}
-			
-		}
-
-		//RENDER:LEVEL4//
-
-		else if (n == 5) {
-		
-			if (enemyLV402Life > 0) {
-				window.draw(enemyLV402);
-			}
-			window.draw(wallLV402);
-			window.draw(wallLV401);
-			if (enemyLV401Life > 0) {
-				window.draw(enemyLV401);
-			}
-			if (playerPosition.y < 350) {
-				if (playerPosition.y < enemyLV401Position.y) {
-					window.draw(player);
-					if (enemyLV401Life > 0) {
-						window.draw(enemyLV401);
+					if (enemyLV301Life > 0) {
+						window.draw(enemyLV301);
 					}
 				}
-				if (!(playerPosition.y < enemyLV401Position.y)) {
-					if (enemyLV401Life > 0) {
-						window.draw(enemyLV401);
-					}
-					window.draw(player);
+				window.draw(DemocracLV3);
+				window.draw(wallLV301);
 
-				}
-				if (playerPosition.y < enemyLV402Position.y) {
-					window.draw(player);
-					if (enemyLV402Life > 0) {
-						window.draw(enemyLV402);
+				if (enemyLV301Life > 0 && enemy01AreaCheck == true) {
+					if (enemyLV301Life == 3) {
+						window.draw(enemy301Heart3);
+						window.draw(enemy301Heart2);
+						window.draw(enemy301Heart1);
+					}
+					if (enemyLV301Life == 2) {
+						window.draw(enemy301Heart3);
+						window.draw(enemy301Heart2);
+					}
+					if (enemyLV301Life == 1) {
+						window.draw(enemy301Heart3);
 					}
 				}
-				if (!(playerPosition.y < enemyLV402Position.y)) {
-					if (enemyLV402Life > 0) {
-						window.draw(enemyLV402);
+				if (enemyLV302Life > 0 && enemy02AreaCheck == true) {
+					if (enemyLV302Life == 3) {
+						window.draw(enemy302Heart3);
+						window.draw(enemy302Heart2);
+						window.draw(enemy302Heart1);
 					}
-					window.draw(player);
+					if (enemyLV302Life == 2) {
+						window.draw(enemy302Heart3);
+						window.draw(enemy302Heart2);
+					}
+					if (enemyLV302Life == 1) {
+						window.draw(enemy302Heart3);
+					}
 				}
-
-				window.draw(wallLV401);  
+				if (enemyLV303Life > 0 && enemy03AreaCheck == true) {
+					if (enemyLV303Life == 3) {
+						window.draw(enemy303Heart3);
+						window.draw(enemy303Heart2);
+						window.draw(enemy303Heart1);
+					}
+					if (enemyLV303Life == 2) {
+						window.draw(enemy303Heart3);
+						window.draw(enemy303Heart2);
+					}
+					if (enemyLV303Life == 1) {
+						window.draw(enemy303Heart3);
+					}
+				}
+				if (bullE1out == true) {
+					window.draw(bulletE1);
+				}
+				if (bullE2out == true) {
+					window.draw(bulletE2);
+				}
+				if (bullE3out == true) {
+					window.draw(bulletE3);
+				}
 
 			}
-			if (!(playerPosition.y < 350)) {
+
+			//RENDER:LEVEL4//
+
+			else if (n == 5) {
+
+				if (enemyLV402Life > 0) {
+					window.draw(enemyLV402);
+				}
+				window.draw(wallLV402);
 				window.draw(wallLV401);
-				if (playerPosition.y < enemyLV401Position.y) {
-					window.draw(player);
-					if (enemyLV401Life > 0) {
-						window.draw(enemyLV401);
-					}
+				if (enemyLV401Life > 0) {
+					window.draw(enemyLV401);
 				}
-				if (!(playerPosition.y < enemyLV401Position.y)) {
-					if (enemyLV401Life > 0) {
-						window.draw(enemyLV401);
+				if (playerPosition.y < 350) {
+					if (playerPosition.y < enemyLV401Position.y) {
+						window.draw(player);
+						if (enemyLV401Life > 0) {
+							window.draw(enemyLV401);
+						}
 					}
-					window.draw(player);
+					if (!(playerPosition.y < enemyLV401Position.y)) {
+						if (enemyLV401Life > 0) {
+							window.draw(enemyLV401);
+						}
+						window.draw(player);
 
-				}
-			}
-			if (enemyLV405Life > 0) {
-				if (enemyLV405Position.y < playerPosition.y) {
-					window.draw(enemyLV405);
-					window.draw(player);
-				}
-				else {
-					
-					window.draw(player);
+					}
+					if (playerPosition.y < enemyLV402Position.y) {
+						window.draw(player);
+						if (enemyLV402Life > 0) {
+							window.draw(enemyLV402);
+						}
+					}
+					if (!(playerPosition.y < enemyLV402Position.y)) {
+						if (enemyLV402Life > 0) {
+							window.draw(enemyLV402);
+						}
+						window.draw(player);
+					}
+
 					window.draw(wallLV401);
-					window.draw(enemyLV405);
-				}
-			}
-			window.draw(GateLV4);
-			if (enemyLV401Life > 0 && enemy01AreaCheck == true) {
-				if (enemyLV401Life == 3) {
-					window.draw(enemy401Heart3);
-					window.draw(enemy401Heart2);
-					window.draw(enemy401Heart1);
-				}
-				if (enemyLV401Life == 2) {
-					window.draw(enemy401Heart3);
-					window.draw(enemy401Heart2);
-				}
-				if (enemyLV401Life == 1) {
-					window.draw(enemy401Heart3);
-				}
-			}
-			if (enemyLV402Life > 0 && enemy02AreaCheck == true) {
-				if (enemyLV402Life == 3) {
-					window.draw(enemy402Heart3);
-					window.draw(enemy402Heart2);
-					window.draw(enemy402Heart1);
-				}
-				if (enemyLV402Life == 2) {
-					window.draw(enemy402Heart3);
-					window.draw(enemy402Heart2);
-				}
-				if (enemyLV402Life == 1) {
-					window.draw(enemy402Heart3);
-				}
-			}
-			if (enemyLV405Life > 0 && enemy03AreaCheck == true) {
-				if (enemyLV405Life == 3) {
-					window.draw(enemy405Heart3);
-					window.draw(enemy405Heart2);
-					window.draw(enemy405Heart1);
-				}
-				if (enemyLV405Life == 2) {
-					window.draw(enemy405Heart3);
-					window.draw(enemy405Heart2);
-				}
-				if (enemyLV405Life == 1) {
-					window.draw(enemy405Heart3);
-				}
-			}
-			if (bullE1out == true) {
-				window.draw(bulletE1);
-			}
-			if (bullE2out == true) {
-				window.draw(bulletE2);
-			}
-			if (bullE3out == true) {
-				window.draw(bulletE3);
-			}
-			if (KeyLV4Check == false) {
-				window.draw(KeyLV4);
-				window.draw(DoorLV4);
-			}
-			if (imortalCheck == false) {
-				window.draw(ImortalPot);
-			}
-			window.draw(wallLV401forbull);
-		}
 
-		else if (n == 6) {
-			window.draw(player);
-			if (enemyLV403Life > 0) {
-				window.draw(enemyLV403);
-			}
-			if (enemyLV404Life > 0) {
-				window.draw(enemyLV404);
-			}
-			
-			if (player.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
-				if (enemyLV403Position.y > playerPosition.y) {
-					window.draw(player);
-					if (enemyLV403Life > 0) {
-						window.draw(enemyLV403);
+				}
+				if (!(playerPosition.y < 350)) {
+					window.draw(wallLV401);
+					if (playerPosition.y < enemyLV401Position.y) {
+						window.draw(player);
+						if (enemyLV401Life > 0) {
+							window.draw(enemyLV401);
+						}
 					}
-					if (enemyLV404Life > 0) {
-						window.draw(enemyLV404);
-					}
-				}
-				else if (enemyLV403Position.y <= playerPosition.y) {
-					if (enemyLV403Life > 0) {
-						window.draw(enemyLV403);
-					}
-					if (enemyLV404Life > 0) {
-						window.draw(enemyLV404);
-					}
-					window.draw(player);
-				}
-			}
-			if (player.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
-				if (enemyLV404Position.y > playerPosition.y) {
-					window.draw(player);
-					if (enemyLV404Life > 0) {
-						window.draw(enemyLV404);
-					}
-					if (enemyLV403Life > 0) {
-						window.draw(enemyLV403);
-					}
-				}
-				else if (enemyLV404Position.y <= playerPosition.y) {
-					if (enemyLV404Life > 0) {
-						window.draw(enemyLV404);
-					}
-					if (enemyLV403Life > 0) {
-						window.draw(enemyLV403);
-					}
-					window.draw(player);
-				}
-			}
-			window.draw(DemocracLV4);
-			if (enemyLV403Life > 0 && enemy01AreaCheck == true) {
-				if (enemyLV403Life == 3) {
-					window.draw(enemy403Heart3);
-					window.draw(enemy403Heart2);
-					window.draw(enemy403Heart1);
-				}
-				if (enemyLV403Life == 2) {
-					window.draw(enemy403Heart3);
-					window.draw(enemy403Heart2);
-				}
-				if (enemyLV403Life == 1) {
-					window.draw(enemy403Heart3);
-				}
-			}
-			if (enemyLV404Life > 0 && enemy02AreaCheck == true) {
-				if (enemyLV404Life == 3) {
-					window.draw(enemy404Heart3);
-					window.draw(enemy404Heart2);
-					window.draw(enemy404Heart1);
-				}
-				if (enemyLV404Life == 2) {
-					window.draw(enemy404Heart3);
-					window.draw(enemy404Heart2);
-				}
-				if (enemyLV404Life == 1) {
-					window.draw(enemy404Heart3);
-				}
-			}
-			if (enemyLV406Life > 0) {
-				window.draw(enemyLV406);
-			}
-			if (enemyLV406Life > 0 && enemy03AreaCheck == true) {
-				if (enemyLV406Life == 6) {
-					window.draw(enemy406Heart6);
-					window.draw(enemy406Heart5);
-					window.draw(enemy406Heart4);
-					window.draw(enemy406Heart3);
-					window.draw(enemy406Heart2);
-					window.draw(enemy406Heart1);
-				}
-				if (enemyLV406Life == 5) {
-					window.draw(enemy406Heart5);
-					window.draw(enemy406Heart4);
-					window.draw(enemy406Heart3);
-					window.draw(enemy406Heart2);
-					window.draw(enemy406Heart1);
-				}
-				if (enemyLV406Life == 4) {
-					window.draw(enemy406Heart4);
-					window.draw(enemy406Heart3);
-					window.draw(enemy406Heart2);
-					window.draw(enemy406Heart1);
-				}
-				if (enemyLV406Life == 3) {
-					window.draw(enemy406Heart3);
-					window.draw(enemy406Heart2);
-					window.draw(enemy406Heart1);
-				}
-				if (enemyLV406Life == 2) {
-					window.draw(enemy406Heart2);
-					window.draw(enemy406Heart1);
-				}
-				if (enemyLV406Life == 1) {
-					window.draw(enemy406Heart1);
-				}
-			}
-			if (bullE1out == true) {
-				window.draw(bulletE1);
-			}
-			if (bullE2out == true) {
-				window.draw(bulletE2);
-			}
-			if (bullE3out == true) {
-				window.draw(bulletE3);
-			}
-			
-		}
+					if (!(playerPosition.y < enemyLV401Position.y)) {
+						if (enemyLV401Life > 0) {
+							window.draw(enemyLV401);
+						}
+						window.draw(player);
 
-		//Render::Bullet//
+					}
+				}
+				if (enemyLV405Life > 0) {
+					if (enemyLV405Position.y < playerPosition.y) {
+						window.draw(enemyLV405);
+						window.draw(player);
+					}
+					else {
 
-		if (bulletNo[0] == 1) {
-			window.draw(bullet1);
-		}
-		if (bulletNo[1] == 1) {
-			window.draw(bullet2);
-		}
-		if (bulletNo[2] == 1) {
-			window.draw(bullet3);
-		}
+						window.draw(player);
+						window.draw(wallLV401);
+						window.draw(enemyLV405);
+					}
+				}
+				window.draw(GateLV4);
+				if (enemyLV401Life > 0 && enemy01AreaCheck == true) {
+					if (enemyLV401Life == 3) {
+						window.draw(enemy401Heart3);
+						window.draw(enemy401Heart2);
+						window.draw(enemy401Heart1);
+					}
+					if (enemyLV401Life == 2) {
+						window.draw(enemy401Heart3);
+						window.draw(enemy401Heart2);
+					}
+					if (enemyLV401Life == 1) {
+						window.draw(enemy401Heart3);
+					}
+				}
+				if (enemyLV402Life > 0 && enemy02AreaCheck == true) {
+					if (enemyLV402Life == 3) {
+						window.draw(enemy402Heart3);
+						window.draw(enemy402Heart2);
+						window.draw(enemy402Heart1);
+					}
+					if (enemyLV402Life == 2) {
+						window.draw(enemy402Heart3);
+						window.draw(enemy402Heart2);
+					}
+					if (enemyLV402Life == 1) {
+						window.draw(enemy402Heart3);
+					}
+				}
+				if (enemyLV405Life > 0 && enemy03AreaCheck == true) {
+					if (enemyLV405Life == 3) {
+						window.draw(enemy405Heart3);
+						window.draw(enemy405Heart2);
+						window.draw(enemy405Heart1);
+					}
+					if (enemyLV405Life == 2) {
+						window.draw(enemy405Heart3);
+						window.draw(enemy405Heart2);
+					}
+					if (enemyLV405Life == 1) {
+						window.draw(enemy405Heart3);
+					}
+				}
+				if (bullE1out == true) {
+					window.draw(bulletE1);
+				}
+				if (bullE2out == true) {
+					window.draw(bulletE2);
+				}
+				if (bullE3out == true) {
+					window.draw(bulletE3);
+				}
+				if (KeyLV4Check == false) {
+					window.draw(KeyLV4);
+					window.draw(DoorLV4);
+				}
+				if (imortalCheck == false) {
+					window.draw(ImortalPot);
+				}
+				window.draw(wallLV401forbull);
+			}
 
-		window.draw(mouseHitBox);
+			else if (n == 6) {
+				window.draw(player);
+				if (enemyLV403Life > 0) {
+					window.draw(enemyLV403);
+				}
+				if (enemyLV404Life > 0) {
+					window.draw(enemyLV404);
+				}
+
+				if (player.getGlobalBounds().intersects(enemyLV403.getGlobalBounds())) {
+					if (enemyLV403Position.y > playerPosition.y) {
+						window.draw(player);
+						if (enemyLV403Life > 0) {
+							window.draw(enemyLV403);
+						}
+						if (enemyLV404Life > 0) {
+							window.draw(enemyLV404);
+						}
+					}
+					else if (enemyLV403Position.y <= playerPosition.y) {
+						if (enemyLV403Life > 0) {
+							window.draw(enemyLV403);
+						}
+						if (enemyLV404Life > 0) {
+							window.draw(enemyLV404);
+						}
+						window.draw(player);
+					}
+				}
+				if (player.getGlobalBounds().intersects(enemyLV404.getGlobalBounds())) {
+					if (enemyLV404Position.y > playerPosition.y) {
+						window.draw(player);
+						if (enemyLV404Life > 0) {
+							window.draw(enemyLV404);
+						}
+						if (enemyLV403Life > 0) {
+							window.draw(enemyLV403);
+						}
+					}
+					else if (enemyLV404Position.y <= playerPosition.y) {
+						if (enemyLV404Life > 0) {
+							window.draw(enemyLV404);
+						}
+						if (enemyLV403Life > 0) {
+							window.draw(enemyLV403);
+						}
+						window.draw(player);
+					}
+				}
+				window.draw(DemocracLV4);
+				if (enemyLV403Life > 0 && enemy01AreaCheck == true) {
+					if (enemyLV403Life == 3) {
+						window.draw(enemy403Heart3);
+						window.draw(enemy403Heart2);
+						window.draw(enemy403Heart1);
+					}
+					if (enemyLV403Life == 2) {
+						window.draw(enemy403Heart3);
+						window.draw(enemy403Heart2);
+					}
+					if (enemyLV403Life == 1) {
+						window.draw(enemy403Heart3);
+					}
+				}
+				if (enemyLV404Life > 0 && enemy02AreaCheck == true) {
+					if (enemyLV404Life == 3) {
+						window.draw(enemy404Heart3);
+						window.draw(enemy404Heart2);
+						window.draw(enemy404Heart1);
+					}
+					if (enemyLV404Life == 2) {
+						window.draw(enemy404Heart3);
+						window.draw(enemy404Heart2);
+					}
+					if (enemyLV404Life == 1) {
+						window.draw(enemy404Heart3);
+					}
+				}
+				if (enemyLV406Life > 0) {
+					window.draw(enemyLV406);
+				}
+				if (enemyLV406Life > 0 && enemy03AreaCheck == true) {
+					if (enemyLV406Life == 6) {
+						window.draw(enemy406Heart6);
+						window.draw(enemy406Heart5);
+						window.draw(enemy406Heart4);
+						window.draw(enemy406Heart3);
+						window.draw(enemy406Heart2);
+						window.draw(enemy406Heart1);
+					}
+					if (enemyLV406Life == 5) {
+						window.draw(enemy406Heart5);
+						window.draw(enemy406Heart4);
+						window.draw(enemy406Heart3);
+						window.draw(enemy406Heart2);
+						window.draw(enemy406Heart1);
+					}
+					if (enemyLV406Life == 4) {
+						window.draw(enemy406Heart4);
+						window.draw(enemy406Heart3);
+						window.draw(enemy406Heart2);
+						window.draw(enemy406Heart1);
+					}
+					if (enemyLV406Life == 3) {
+						window.draw(enemy406Heart3);
+						window.draw(enemy406Heart2);
+						window.draw(enemy406Heart1);
+					}
+					if (enemyLV406Life == 2) {
+						window.draw(enemy406Heart2);
+						window.draw(enemy406Heart1);
+					}
+					if (enemyLV406Life == 1) {
+						window.draw(enemy406Heart1);
+					}
+				}
+				if (bullE1out == true) {
+					window.draw(bulletE1);
+				}
+				if (bullE2out == true) {
+					window.draw(bulletE2);
+				}
+				if (bullE3out == true) {
+					window.draw(bulletE3);
+				}
+
+			}
+
+			//Render::Bullet//
+
+			if (bulletNo[0] == 1) {
+				window.draw(bullet1);
+			}
+			if (bulletNo[1] == 1) {
+				window.draw(bullet2);
+			}
+			if (bulletNo[2] == 1) {
+				window.draw(bullet3);
+			}
+		
+			window.draw(timerClock);
+			window.draw(time);
+			window.draw(unit);
+			window.draw(Pause);
+		}
+	}
+	if (pauseStatus == true) {
+		window.draw(Resume);
+	}
+		//window.draw(mouseHitBox);
 		//window.draw(enemy01Area);
-		window.draw(timerClock);
-		window.draw(time);
-		window.draw(unit);
 		window.display();
+
 	}
 	return 0;
 	/*----------------------------------------------------------------------------------------------------------
