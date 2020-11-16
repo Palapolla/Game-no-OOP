@@ -48,6 +48,13 @@ int main() {
 	sf::Vector2f walltopPos = walltop.getPosition();
 
 	//--------------------------------------player & texture----------------------------------------//
+	sf::Texture fade_tx;
+	fade_tx.loadFromFile("fade.png");
+	sf::RectangleShape fade(sf::Vector2f(3500.0f, 3500.0f));
+	fade.setTexture(&fade_tx);
+	float fadeScaleTime = 1;
+	sf::Vector2f fadeScale = fade.getScale();
+	fade.setOrigin(1700, 1700);
 
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("player texture the real one for sure dont need to fix anynmore.png");
@@ -1007,17 +1014,27 @@ int main() {
 	bool timerload = false;
 	sf::Clock clock;
 	sf::Font font;
-	sf::Text timerClock;
+	sf::Text timerClockMilliSec;
 	font.loadFromFile("arial.ttf");
-	timerClock.setFont(font);
-	timerClock.setCharacterSize(40);
-	timerClock.setFillColor(sf::Color::White);
+	timerClockMilliSec.setFont(font);
+	timerClockMilliSec.setCharacterSize(40);
+	timerClockMilliSec.setFillColor(sf::Color::White);
+	sf::Text timerClockSec;
+	timerClockSec.setFont(font);
+	timerClockSec.setCharacterSize(40);
+	timerClockSec.setFillColor(sf::Color::White);
 	sf::Text time;
 	time.setFont(font);
 	time.setCharacterSize(40);
 	time.setFillColor(sf::Color::White);
 	time.setString("Time : ");
-	time.setPosition(750, 0);
+	time.setPosition(800, 0);
+	sf::Text dot;
+	dot.setFont(font);
+	dot.setCharacterSize(40);
+	dot.setFillColor(sf::Color::White);
+	dot.setString(".");
+	dot.setPosition(990, 0);
 	sf::Text unit;
 	unit.setFont(font);
 	unit.setCharacterSize(40);
@@ -1028,7 +1045,10 @@ int main() {
 	float timeSaver = 0;
 	int timeSet = 0;
 	float timeShow = 0;
+	float timeUse = 0;
 
+	int millisec = 0;
+	int sec = 0;
 	/*#########################################################################################################
 
 											Mouse hitbox
@@ -1151,20 +1171,22 @@ int main() {
 	###########################################################################################################*/
 
 	sf::Texture Pause_tx;
+	Pause_tx.loadFromFile("pause button.png");
 	sf::RectangleShape Pause(sf::Vector2f(25.0f, 25.0f));
 	sf::Vector2f PauseScale = Pause.getScale();
+	Pause.setTexture(&Pause_tx);
 	Pause.setPosition(1210, 30);
 	Pause.setOrigin(12, 12);
 	bool mouseColPause = false;
 	bool pauseStatus = false;
 
 	sf::Texture Resume_tx;
-	//Resume_tx.loadFromFile("Start.png");
+	//Resume_tx.loadFromFile("pause button.png");
 	sf::RectangleShape Resume(sf::Vector2f(200.0f, 80.0f));
 	//Resume.setTexture(&Start_tx);
 	sf::Vector2f ResumeScale = Resume.getScale();
 	Resume.setOrigin(100, 40);
-	Resume.setPosition(500, 300);
+	Resume.setPosition(600, 300);
 	bool mouseColResume = false;
 
 	/**********************************************************************************************************
@@ -1195,39 +1217,53 @@ int main() {
 
 		//###########################################Clock###################################################//
 
-		if (n > 0 && timerload == true) {
-			clock.restart();
-			timerload = false;
-		}
+		//if (n > 0 && timerload == true) {
+		//	clock.restart();
+		//	timerload = false;
+		//}
 
-		else if (n > 0 && timerload == false) {
-			
-			sf::Time timer = clock.getElapsedTime();
-			float timeUse = timer.asSeconds();
-			//printf("timer %f\n", timer.asSeconds());
-			if (countRound == 1 && pauseStatus == true) {
-				timeSaver = timeUse;
-				printf("timeSaver %f\n", timeSaver);
-				countRound = 0;
-				
+		//else if (n > 0 && timerload == false) {
+		//	
+		//	sf::Time timer = clock.getElapsedTime();
+		//	 timeUse = timer.asSeconds();
+		//	//printf("timer %f\n", timer.asSeconds());
+		//	if (countRound == 1 && pauseStatus == true) {
+		//		timeSaver = timeUse;
+		//		printf("timeSaver %f\n", timeSaver);
+		//		countRound = 0;
+		//	}
+		//	//printf("timeUse = %f\n", timeUse);
+		//	timeShow = timeUse;
+		//	char timetext[100] = { _gcvt_s(timetext, 100, timeShow, 6) };
+		//	if (pauseStatus == false) {
+		//		if (timeUse > 10) {
+		//			_gcvt_s(timetext, 100, timeShow, 6);
+		//		}
+		//		else {
+		//			_gcvt_s(timetext, 100, timeShow, 4);
+		//		}
+		//		timerClock.setString(timetext);
+		//		timerClock.setPosition(900, 0);
+		//	}
+		//}
+		if (pauseStatus == false&&n!=0) {
+			if (millisec >= 100) {
+				millisec = 0;
+				sec += 1;
 			}
-			if (timeSet == 1) {
-				timeUse = timeUse + timeSaver;
-				printf("timeUse %f\n", timeUse);
-				timeSet = 0;
-			}
-			timeShow = timeUse;
-			char timetext[100] = { _gcvt_s(timetext, 100, timeShow, 6) };
-			if (pauseStatus == false) {
-				if (timeUse > 10) {
-					_gcvt_s(timetext, 100, timeShow, 6);
-				}
-				else {
-					_gcvt_s(timetext, 100, timeShow, 4);
-				}
-				timerClock.setString(timetext);
-				timerClock.setPosition(900, 0);
-			}
+			millisec += 3;
+			printf("millisec = %d\n", millisec);
+			char millisecShow[100];
+			char secShow[100];
+			sprintf_s(millisecShow, "%d", millisec);
+			sprintf_s(secShow, "%d", sec);
+			timerClockMilliSec.setString(millisecShow);
+			timerClockMilliSec.setPosition(1005, 0);
+			timerClockSec.setString(secShow);
+			timerClockSec.setPosition(960, 0);
+		}
+		if (sec >= 10) {
+			timerClockSec.setPosition(940, 0);
 		}
 
 		//###########################################Mouse###################################################//
@@ -1261,10 +1297,13 @@ int main() {
 			Resume.setScale(ResumeScale.x, ResumeScale.y);
 		}
 		if (pauseStatus == true && n != 0 && mouseColResume == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			clock.restart();
-			timeSet = 1;
+			//clock.restart();
+			//timeUse = timeUse + timeSaver;
+			//printf("timeUse %f\n", timeUse);
+			//timeSet = 1;
 			pauseStatus = false;
 		}
+		//printf("timeShow = %f\ntimeUse", timeShow);
 	if(pauseStatus == false){
 
 		//Set Status//
@@ -1352,9 +1391,13 @@ int main() {
 		sf::Vector2f bullE2Pos = bulletE2.getPosition();
 		sf::Vector2f bullE3Pos = bulletE3.getPosition();
 		bool w = true, a = true, s = true, d = true;
-
+		//fade//
+		fade.setPosition(playerPosition);
 		playerHitbox.setPosition(playerPosition.x+25,playerPosition.y+20);
-		
+		if (n == 6) {
+			fadeScaleTime += 0.1;
+			fade.setScale(fadeScale.x * fadeScaleTime, fadeScale.y * fadeScaleTime);
+		}
 		//enemybullet with player//
 		if (imortalCheck == false) {
 			
@@ -4899,30 +4942,6 @@ int main() {
 		}
 		//window.draw(playerHitbox);
 		else {
-			//Render:Imortal//
-			if (imortalCheck == true) {
-				window.draw(imortalStatus);
-			}
-			//Render:Heart//
-			if (playerLife >= 1) {
-				if (heart1Check == true) {
-					window.draw(heart1);
-				}
-			}
-			if (playerLife >= 2) {
-				if (heart2Check == true) {
-					window.draw(heart2);
-				}
-			}
-			if (playerLife >= 3) {
-				if (heart3Check == true) {
-					window.draw(heart3);
-				}
-			}
-			if (shieldStatusCheck == true) {
-				window.draw(shieldStatus);
-			}
-
 			//Render:LEVEL 1//
 
 			if (n == 1) {
@@ -5634,12 +5653,38 @@ int main() {
 			if (bulletNo[2] == 1) {
 				window.draw(bullet3);
 			}
-		
-			window.draw(timerClock);
+			window.draw(fade);
+			window.draw(timerClockSec);
+			window.draw(timerClockMilliSec);
+			window.draw(dot);
 			window.draw(time);
 			window.draw(unit);
 			window.draw(Pause);
+			//Render:Imortal//
+			if (imortalCheck == true) {
+				window.draw(imortalStatus);
+			}
+			//Render:Heart//
+			if (playerLife >= 1) {
+				if (heart1Check == true) {
+					window.draw(heart1);
+				}
+			}
+			if (playerLife >= 2) {
+				if (heart2Check == true) {
+					window.draw(heart2);
+				}
+			}
+			if (playerLife >= 3) {
+				if (heart3Check == true) {
+					window.draw(heart3);
+				}
+			}
+			if (shieldStatusCheck == true) {
+				window.draw(shieldStatus);
+			}
 		}
+
 	}
 	if (pauseStatus == true) {
 		window.draw(Resume);
