@@ -100,7 +100,7 @@ int main() {
 	bullet1.setTexture(&bullet1_tx);
 	bullet1.setOrigin(15, 15);
 	bool bull1out = false, bull1Col = false;
-
+	float spBull1X = 0, spBull1Y = 0;
 
 	//Bullet > > 2//
 	
@@ -110,6 +110,7 @@ int main() {
 	bullet2.setTexture(&bullet2_tx);
 	bullet2.setOrigin(15, 15);
 	bool bull2out = false, bull2Col = false;
+	float spBull2X = 0, spBull2Y = 0;
 
 	//Bullet > > 3//
 
@@ -119,6 +120,7 @@ int main() {
 	bullet3.setTexture(&bullet3_tx);
 	bullet3.setOrigin(15, 15);
 	bool bull3out = false, bull3Col = false;
+	float spBull3X = 0, spBull3Y = 0;
 
 
 	//---------------------------------------level 1----------------------------------------------//
@@ -1290,7 +1292,7 @@ int main() {
 				sec += 1;
 			}
 			millisec += 3;
-			printf("millisec = %d\n", millisec);
+			//printf("millisec = %d\n", millisec);
 			char millisecShow[100];
 			char secShow[100];
 			sprintf_s(millisecShow, "%d", millisec);
@@ -4177,15 +4179,7 @@ int main() {
 				//printf("Keypress : Space %d\n", spaceEnable);
 			}
 		}
-		
-		
-		/*if (!sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::A)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::W)&& !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			player.setTextureRect(sf::IntRect(playerSizeX* animationFrame, playerSizeY * 2, playerSizeX, playerSizeY));
-			if (animationFrame >= 2 ) {
-				animationFrame = 0;
-			}
-		}*/
-		
+
 		if (spaceCheck == true) {
 			skillFrame++;
 			player.setTextureRect(sf::IntRect(playerSizeX * skillFrame, playerSizeY * 2, playerSizeX, playerSizeY));
@@ -4201,30 +4195,7 @@ int main() {
 					case 1: {bull2State = true; bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 60); break; }
 					case 2: {bull3State = true; bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 60); break; }
 					}
-					if (KeyA == true && bulletNo[bullOrder] == 0) {
-						bullA[bullOrder] = 1;
-						bullW[bullOrder] = 0;
-						bullS[bullOrder] = 0;
-						bullD[bullOrder] = 0;
-					}
-					if (KeyW == true && bulletNo[bullOrder] == 0) {
-						bullA[bullOrder] = 0;
-						bullW[bullOrder] = 1;
-						bullS[bullOrder] = 0;
-						bullD[bullOrder] = 0;
-					}
-					if (KeyD == true && bulletNo[bullOrder] == 0) {
-						bullA[bullOrder] = 0;
-						bullW[bullOrder] = 0;
-						bullS[bullOrder] = 0;
-						bullD[bullOrder] = 1;
-					}
-					if (KeyS == true && bulletNo[bullOrder] == 0) {
-						bullA[bullOrder] = 0;
-						bullW[bullOrder] = 0;
-						bullS[bullOrder] = 1;
-						bullD[bullOrder] = 0;
-					}
+					
 					bullOrder++;
 					
 				}
@@ -4242,77 +4213,105 @@ int main() {
 
 
 
-		//printf("X = %f\nY = %f\n", playerPosition.x, playerPosition.y);
-
 		//--------------------------------------Bullet 1------------------------------------------//
 		
 		if (bull1State == true && bulletNo[0] == 0) {
 			if (bull1Col == false) {
-				bull1Col = true;
-				//bullet1.setPosition(playerPosition.x + 50, playerPosition.y + 60);
-				bull1out = true;
+				//Q1
+				if (mousePos.x > playerPosition.x && mousePos.y < playerPosition.y) {
+					//printf("1\n");
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+					spBull1Y = spBull1Y * -1;
+				}
+				//Q2
+				else if (mousePos.x < playerPosition.x && mousePos.y < playerPosition.y) {
+					//printf("2\n");
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+					spBull1X = spBull1X * -1;
+					spBull1Y = spBull1Y * -1;
+				}
+				//Q3
+				else if (mousePos.x < playerPosition.x && mousePos.y > playerPosition.y) {
 
-				//printf("bull1 State %d", bull1out);
+					//printf("3\n");
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+					spBull1X = spBull1X * -1;
+
+				}
+				//Q4
+				else if (mousePos.x > playerPosition.x && mousePos.y > playerPosition.y) {
+					//printf("4\n");
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+
+				}
+				bullet1.setPosition(playerPosition.x + 50, playerPosition.y + 50);
+			}
+				bull1Col = true;
+				bull1out = true;
 				bull1State = false;
 				bulletNo[0] = 1;
-			}
+			
 		}
-			//printf("bull1 State %d\n", bull1out);
+			printf("X %f\nY %f", spBull1X, spBull1Y);
 		if (bulletNo[0] == 1) {
+			bullet1.move(spBull1X, spBull1Y);
 			bulletTimeOut[0]++;
-			if (bullA[0] == 1) {
-				bullet1.move(-25.0f, 0.0f);
-				//printf("1");
-			}
-			else if (bullD[0] == 1) {
-				bullet1.move(25.0f, 0.0f);
-				//printf("1");
-			}
-			else if (bullW[0] == 1) {
-				bullet1.move(0.0f, -25.0f);
-				//printf("1");
-			}
-			else if (bullS[0] == 1) {
-				bullet1.move(0.0f, 25.0f);
-				//printf("1");
-			}
 		}
 		//printf("bulletNO[0] = %d\n", bulletNo[0]);
+	
+		
 
 		//--------------------------------------Bullet 2------------------------------------------//
 
 		
 		if (bull2State == true && bulletNo[1] == 0) {
 			if (bull2Col == false) {
-				bull2Col = true;
-				//bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 60);
-				bull2out = true;
+				//Q1
+				if (mousePos.x > playerPosition.x && mousePos.y < playerPosition.y) {
+					//printf("1\n");
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+					spBull2Y = spBull2Y * -1;
+				}
+				//Q2
+				else if (mousePos.x < playerPosition.x && mousePos.y < playerPosition.y) {
+					//printf("2\n");
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+					spBull2X = spBull2X * -1;
+					spBull2Y = spBull2Y * -1;
+				}
+				//Q3
+				else if (mousePos.x < playerPosition.x && mousePos.y > playerPosition.y) {
 
-				//printf("bull1 State %d", bull1out);
+					//printf("3\n");
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+					spBull2X = spBull2X * -1;
+
+				}
+				//Q4
+				else if (mousePos.x > playerPosition.x && mousePos.y > playerPosition.y) {
+					//printf("4\n");
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+
+				}
+				bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 50);
+			}
+				bull2Col = true;
+				bull2out = true;
 				bull2State = false;
 				bulletNo[1] = 1;
-			}
 		}
-			//printf("bull1 State %d\n", bull1out);
 
 		if (bulletNo[1] == 1) {
 			bulletTimeOut[1]++;
-			if (bullA[1] == 1) {
-				bullet2.move(-25.0f, 0.0f);
-				//printf("1");
-			}
-			if (bullD[1] == 1) {
-				bullet2.move(25.0f, 0.0f);
-				//printf("1");
-			}
-			if (bullW[1] == 1) {
-				bullet2.move(0.0f, -25.0f);
-				//printf("1");
-			}
-			if (bullS[1] == 1) {
-				bullet2.move(0.0f, 25.0f);
-				//printf("1");
-			}
+			bullet2.move(spBull2X, spBull2Y);
 		}
 
 		//--------------------------------------Bullet 3------------------------------------------//
@@ -4320,53 +4319,61 @@ int main() {
 		
 		if (bull3State == true && bulletNo[2] == 0) {
 			if (bull3Col == false) {
-				bull3Col = true;
-				//bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 60);
-				bull3out = true;
+				//Q1
+				if (mousePos.x > playerPosition.x && mousePos.y < playerPosition.y) {
+					//printf("1\n");
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+					spBull3Y = spBull3Y * -1;
+				}
+				//Q2
+				else if (mousePos.x < playerPosition.x && mousePos.y < playerPosition.y) {
+					//printf("2\n");
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+					spBull3X = spBull3X * -1;
+					spBull3Y = spBull3Y * -1;
+				}
+				//Q3
+				else if (mousePos.x < playerPosition.x && mousePos.y > playerPosition.y) {
 
-				//printf("bull1 State %d", bull1out);
+					//printf("3\n");
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+					spBull3X = spBull3X * -1;
+
+				}
+				//Q4
+				else if (mousePos.x > playerPosition.x && mousePos.y > playerPosition.y) {
+					//printf("4\n");
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+
+				}
+				bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 50);
+			}
+				bull3Col = true;
+				bull3out = true;
 				bull3State = false;
 				bulletNo[2] = 1;
-			}
+			
 		}
-			//printf("bull1 State %d\n", bull1out);
 		if (bulletNo[2] == 1) {
 			bulletTimeOut[2]++;
-			if (bullA[2] == 1) {
-				bullet3.move(-25.0f, 0.0f);
-				//printf("1");
-			}
-			if (bullD[2] == 1) {
-				bullet3.move(25.0f, 0.0f);
-				//printf("1");
-			}
-			if (bullW[2] == 1) {
-				bullet3.move(0.0f, -25.0f);
-				//printf("1");
-			}
-			if (bullS[2] == 1) {
-				bullet3.move(0.0f, 25.0f);
-				//printf("1");
-			}
+			bullet3.move(spBull2X, spBull2Y);
 		}
 		
 		//--------------------------------------ENEMY BULLET---------------------------------------------//
 
 		if (bullE1out == true) {
-			//printf("vy %f\n", spBullE1Y);
-			//printf("vx %f\n", spBullE1X);
 			bulletE1.move(spBullE1X, spBullE1Y);
 		}
 
 		if (bullE2out == true) {
-			//printf("vy %f\n", spBullE2Y);
-			//printf("vx %f\n", spBullE2X);
 			bulletE2.move(spBullE2X, spBullE2Y);
 		}
 
 		if (bullE3out == true) {
-			//printf("vy %f\n", spBullE2Y);
-			//printf("vx %f\n", spBullE2X);
 			bulletE3.move(spBullE3X, spBullE3Y);
 		}
 		
