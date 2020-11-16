@@ -943,7 +943,7 @@ int main() {
 	DemocracLV4.setPosition(900, 350);
 	float animateDemocracLV4Frame = 0;
 
-	scanf_s("%d", &n);
+	//scanf_s("%d", &n);
 
 	/*#########################################################################################################
 
@@ -1181,13 +1181,22 @@ int main() {
 	bool pauseStatus = false;
 
 	sf::Texture Resume_tx;
-	//Resume_tx.loadFromFile("pause button.png");
-	sf::RectangleShape Resume(sf::Vector2f(200.0f, 80.0f));
-	//Resume.setTexture(&Start_tx);
+	Resume_tx.loadFromFile("Resume.png");
+	sf::RectangleShape Resume(sf::Vector2f(300.0f, 80.0f));
+	Resume.setTexture(&Resume_tx);
 	sf::Vector2f ResumeScale = Resume.getScale();
-	Resume.setOrigin(100, 40);
-	Resume.setPosition(600, 300);
+	Resume.setOrigin(150, 40);
+	Resume.setPosition(620, 300);
 	bool mouseColResume = false;
+
+	sf::Texture Mainmenu_tx;
+	Mainmenu_tx.loadFromFile("Mainmenu.png");
+	sf::RectangleShape Mainmenu(sf::Vector2f(450.0f, 80.0f));
+	Mainmenu.setTexture(&Mainmenu_tx);
+	sf::Vector2f MainmenuScale = Mainmenu.getScale();
+	Mainmenu.setOrigin(225, 40);
+	Mainmenu.setPosition(620, 400);
+	bool mouseColMainmenu= false;
 
 	/**********************************************************************************************************
 
@@ -1246,6 +1255,10 @@ int main() {
 		//		timerClock.setPosition(900, 0);
 		//	}
 		//}
+		if (n == 0) {
+			millisec = 0;
+			sec = 0;
+		}
 		if (pauseStatus == false&&n!=0) {
 			if (millisec >= 100) {
 				millisec = 0;
@@ -1297,12 +1310,23 @@ int main() {
 			Resume.setScale(ResumeScale.x, ResumeScale.y);
 		}
 		if (pauseStatus == true && n != 0 && mouseColResume == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			//clock.restart();
-			//timeUse = timeUse + timeSaver;
-			//printf("timeUse %f\n", timeUse);
-			//timeSet = 1;
 			pauseStatus = false;
 		}
+
+		if (mouseHitBox.getGlobalBounds().intersects(Mainmenu.getGlobalBounds())) {
+			mouseColMainmenu = true;
+			Mainmenu.setScale(MainmenuScale.x * 1.2, MainmenuScale.y * 1.2);
+		}
+		else {
+			mouseColMainmenu = false;
+			Mainmenu.setScale(MainmenuScale.x, MainmenuScale.y);
+		}
+		if (n != 0 && mouseColMainmenu == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			n = 0;
+			pauseStatus = false;
+		}
+
+		
 		//printf("timeShow = %f\ntimeUse", timeShow);
 	if(pauseStatus == false){
 
@@ -3962,7 +3986,7 @@ int main() {
 		if (n == 0 && mouseColExit == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			window.close();
 		}
-
+		
 		int initialFrame = 0;
 
 		if (speedStatus == true) {
@@ -5687,7 +5711,9 @@ int main() {
 
 	}
 	if (pauseStatus == true) {
+		window.clear();
 		window.draw(Resume);
+		window.draw(Mainmenu);
 	}
 		//window.draw(mouseHitBox);
 		//window.draw(enemy01Area);
