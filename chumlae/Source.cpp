@@ -48,6 +48,7 @@ int main() {
 	sf::Vector2f walltopPos = walltop.getPosition();
 
 	//--------------------------------------player & texture----------------------------------------//
+
 	sf::Texture fade_tx;
 	fade_tx.loadFromFile("fade.png");
 	sf::RectangleShape fade(sf::Vector2f(3500.0f, 3500.0f));
@@ -55,6 +56,13 @@ int main() {
 	float fadeScaleTime = 1;
 	sf::Vector2f fadeScale = fade.getScale();
 	fade.setOrigin(1700, 1700);
+
+
+	sf::Texture playerShadow_tx;
+	playerShadow_tx.loadFromFile("shadow.png");
+	sf::RectangleShape playerShadow(sf::Vector2f(120.0f, 110.0f));
+	playerShadow.setOrigin(10, 0);
+	playerShadow.setTexture(&playerShadow_tx);
 
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("player texture the real one for sure dont need to fix anynmore.png");
@@ -943,7 +951,7 @@ int main() {
 	DemocracLV4.setPosition(900, 350);
 	float animateDemocracLV4Frame = 0;
 
-	//scanf_s("%d", &n);
+	scanf_s("%d", &n);
 
 	/*#########################################################################################################
 
@@ -1124,6 +1132,23 @@ int main() {
 	bool bullE3out = false, bullE3Col = false, E3GetDes = false;
 	int bullE3TimeCount = 0;
 
+	/*#########################################################################################################
+
+												Enemy Shadow
+
+	###########################################################################################################*/
+
+	sf::Texture EnemyShadow_tx;
+	EnemyShadow_tx.loadFromFile("shadow.png");
+	sf::RectangleShape Enemy1Shadow(sf::Vector2f(120.0f, 110.0f));
+	Enemy1Shadow.setOrigin(10, 0);
+	Enemy1Shadow.setTexture(&EnemyShadow_tx);
+	sf::RectangleShape Enemy2Shadow(sf::Vector2f(120.0f, 110.0f));
+	Enemy2Shadow.setOrigin(10, 0);
+	Enemy2Shadow.setTexture(&EnemyShadow_tx);
+	sf::RectangleShape Enemy3Shadow(sf::Vector2f(120.0f, 110.0f));
+	Enemy3Shadow.setOrigin(10, 0);
+	Enemy3Shadow.setTexture(&EnemyShadow_tx);
 
 	/*#########################################################################################################
 
@@ -1223,7 +1248,7 @@ int main() {
 			lv1ch = false;
 			KeyLV1Check = false;
 		}
-
+		
 		//###########################################Clock###################################################//
 
 		//if (n > 0 && timerload == true) {
@@ -1278,6 +1303,9 @@ int main() {
 		if (sec >= 10) {
 			timerClockSec.setPosition(940, 0);
 		}
+		if (sec >= 100) {
+			timerClockSec.setPosition(920, 0);
+		}
 
 		//###########################################Mouse###################################################//
 
@@ -1331,6 +1359,11 @@ int main() {
 	if(pauseStatus == false){
 
 		//Set Status//
+
+		if (n == 0) {
+			player.setPosition(20, 600);
+		}
+
 		if (n == 1) {
 			if (enemy1SetState == true) {
 				enemy1Life = 3;
@@ -1417,10 +1450,37 @@ int main() {
 		bool w = true, a = true, s = true, d = true;
 		//fade//
 		fade.setPosition(playerPosition);
+
+		//shadow//
+		playerShadow.setPosition(playerPosition);
 		playerHitbox.setPosition(playerPosition.x+25,playerPosition.y+20);
 		if (n == 6) {
 			fadeScaleTime += 0.1;
 			fade.setScale(fadeScale.x * fadeScaleTime, fadeScale.y * fadeScaleTime);
+		}
+
+		if (n == 1) {
+			Enemy1Shadow.setPosition(enemy01Position);
+			Enemy2Shadow.setPosition(enemy02Position);
+		}
+		if (n == 2) {
+			Enemy1Shadow.setPosition(enemyLV201Position);
+			Enemy2Shadow.setPosition(enemyLV202Position);
+		}
+		if (n == 3) {
+			Enemy1Shadow.setPosition(enemyLV203Position);
+			Enemy2Shadow.setPosition(enemyLV204Position);
+			Enemy3Shadow.setPosition(enemyLV205Position);
+		}
+		if (n == 4) {
+			Enemy1Shadow.setPosition(enemyLV301Position);
+			Enemy2Shadow.setPosition(enemyLV302Position);
+			Enemy3Shadow.setPosition(enemyLV303Position);
+		}
+		if (n == 5) {
+			Enemy1Shadow.setPosition(enemyLV401Position);
+			Enemy2Shadow.setPosition(enemyLV402Position);
+			Enemy3Shadow.setPosition(enemyLV405Position);
 		}
 		//enemybullet with player//
 		if (imortalCheck == false) {
@@ -4967,8 +5027,12 @@ int main() {
 		//window.draw(playerHitbox);
 		else {
 			//Render:LEVEL 1//
-
+			window.draw(playerShadow);
 			if (n == 1) {
+				if(enemy1Life>0)
+				window.draw(Enemy1Shadow);
+				if (enemy2Life > 0)
+				window.draw(Enemy2Shadow);
 				//window.draw(enemy01Area);
 				//window.draw(enemy02Area);
 				window.draw(wall5);
@@ -5069,6 +5133,10 @@ int main() {
 			//RENDER:LEVEL 2//
 
 			else if (n == 2) {
+				if (enemyLV201Life > 0)
+					window.draw(Enemy1Shadow);
+				if (enemyLV202Life > 0)
+					window.draw(Enemy2Shadow);
 				window.draw(GateLV2);
 				if (playerPosition.y <= 350 && playerPosition.y > 250) {
 					window.draw(wallLV202);
@@ -5168,6 +5236,12 @@ int main() {
 			}
 
 			else if (n == 3) {
+			if (enemyLV203Life > 0)
+				window.draw(Enemy1Shadow);
+			if (enemyLV204Life > 0)
+				window.draw(Enemy2Shadow);
+			if (enemyLV205Life > 0)
+				window.draw(Enemy3Shadow);
 				window.draw(player);
 				if (enemyLV203Life > 0) {
 					if (enemyLV203Position.y < playerPosition.y) {
@@ -5266,6 +5340,12 @@ int main() {
 			//RENDER:LEVEL3//
 
 			else if (n == 4) {
+			if (enemyLV301Life > 0)
+				window.draw(Enemy1Shadow);
+			if (enemyLV302Life > 0)
+				window.draw(Enemy2Shadow);
+			if (enemyLV303Life > 0)
+				window.draw(Enemy3Shadow);
 				window.draw(wallLV302);
 				window.draw(wallLV303);
 				if (enemyLV301Life > 0) {
@@ -5409,7 +5489,12 @@ int main() {
 			//RENDER:LEVEL4//
 
 			else if (n == 5) {
-
+			if (enemyLV401Life > 0)
+				window.draw(Enemy1Shadow);
+			if (enemyLV402Life > 0)
+				window.draw(Enemy2Shadow);
+			if (enemyLV405Life > 0)
+				window.draw(Enemy3Shadow);
 				if (enemyLV402Life > 0) {
 					window.draw(enemyLV402);
 				}
@@ -5677,6 +5762,7 @@ int main() {
 			if (bulletNo[2] == 1) {
 				window.draw(bullet3);
 			}
+			
 			window.draw(fade);
 			window.draw(timerClockSec);
 			window.draw(timerClockMilliSec);
