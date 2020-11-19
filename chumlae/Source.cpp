@@ -25,6 +25,10 @@ void delay(int number_of_seconds)
 }
 
 int main() {
+	//for Random//
+	int num = 0;
+	int StageCount = 0;
+	int Stage[5] = { 0,0,0,0,0 };
 	int n = 0;
 	bool lv1ch = true;
 	//window
@@ -249,7 +253,7 @@ int main() {
 	sf::RectangleShape DemocracLV1(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV1.setTexture(&democrac_tx);
 	sf::Vector2u DemocracLV1TextureSize = democrac_tx.getSize();
-	int democracSizeX = DemocracLV1TextureSize.x / 12;
+	int democracSizeX = DemocracLV1TextureSize.x / 6;
 	int democracSizeY = DemocracLV1TextureSize.y / 1;
 	DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * 0, democracSizeY * 0, democracSizeX, democracSizeY));
 	DemocracLV1.setPosition(50, 150);
@@ -488,7 +492,7 @@ int main() {
 	//**********DemocracLevel 2**********//
 
 	sf::Texture DemocracLV2_tx;
-	DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png");
+	//DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png");
 	sf::RectangleShape DemocracLV2(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV2.setTexture(&DemocracLV2_tx);
 	sf::Vector2u DemocracLV2TextureSize = DemocracLV2_tx.getSize();
@@ -671,7 +675,7 @@ int main() {
 	//**********Democrac Level 3**********//
 
 	sf::Texture DemocracLV3_tx;
-	DemocracLV3_tx.loadFromFile("Democrac mk2 LV3.png");
+	//DemocracLV3_tx.loadFromFile("Democrac mk2 LV3.png");
 	sf::RectangleShape DemocracLV3(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV3.setTexture(&DemocracLV3_tx);
 	sf::Vector2u DemocracLV3TextureSize = DemocracLV3_tx.getSize();
@@ -943,7 +947,7 @@ int main() {
 	//**********Democrac Level 4**********//
 
 	sf::Texture DemocracLV4_tx;
-	DemocracLV4_tx.loadFromFile("Democrac mk2 LV4.png");
+	//DemocracLV4_tx.loadFromFile("Democrac mk2 LV4.png");
 	sf::RectangleShape DemocracLV4(sf::Vector2f(80.0f, 80.0f));
 	DemocracLV4.setTexture(&DemocracLV4_tx);
 	sf::Vector2u DemocracLV4TextureSize = DemocracLV4_tx.getSize();
@@ -1157,7 +1161,18 @@ int main() {
 												Main MENU
 
 	###########################################################################################################*/
+	//LOGO//
+	sf::Texture Logo1_tx;
+	Logo1_tx.loadFromFile("Something.png");
+	sf::RectangleShape Logo1(sf::Vector2f(900.0f, 150.0f));
+	Logo1.setTexture(&Logo1_tx);
+	Logo1.setPosition(300, 80);
 
+	sf::Texture Logo2_tx;
+	Logo2_tx.loadFromFile("not found.png");
+	sf::RectangleShape Logo2(sf::Vector2f(600.0f, 80.0f));
+	Logo2.setTexture(&Logo2_tx);
+	Logo2.setPosition(600, 250);
 	//Start button//
 
 	sf::Texture Start_tx;
@@ -1282,9 +1297,13 @@ int main() {
 		//		timerClock.setPosition(900, 0);
 		//	}
 		//}
+		printf("StageCount = %d\n", StageCount);
+		
 		if (n == 0) {
 			millisec = 0;
 			sec = 0;
+			
+			
 		}
 		if (pauseStatus == false&&n!=0) {
 			if (millisec >= 100) {
@@ -1363,7 +1382,54 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			num = 0;
+			StageCount = 0;
+			Stage[0] = 0;
+			Stage[1] = 0;
+			Stage[2] = 0;
+			Stage[3] = 0;
+			Stage[4] = 0;
 			player.setPosition(20, 600);
+			playerLife = 3;
+
+			//LEVEL 1//
+			enemy1Life = 3;
+			enemy2Life = 3;
+			fade.setScale(fadeScale);
+			shieldStatusCheck = false;
+			shieldCheck = false;
+			DoorLV1Check = false;
+			KeyLV1Check = false;
+			
+			//LEVEL 2//
+			//stage 1//
+			enemyLV201Life = 3;
+			enemyLV202Life = 3;
+			speedCheck = false;
+			//stage 2//
+			enemyLV203Life = 3;
+			enemyLV204Life = 3;
+			enemyLV205Life = 3;
+			DoorLV2Check = false;
+			KeyLV2Check = false;
+
+			//LEVEL 3//
+			enemyLV301Life = 3;
+			enemyLV302Life = 3;
+			enemyLV303Life = 3;
+
+			//LEVEL 4//
+			//stage 1//
+			enemyLV401Life = 3;
+			enemyLV402Life = 3;
+			enemyLV405Life = 3;
+			imortalCheck = false;
+			KeyLV4Check = false;
+			//stage 2//
+			enemyLV403Life = 3;
+			enemyLV404Life = 3;
+			enemyLV406Life = 3;
+			fadeScaleTime = 0;
 		}
 
 		if (n == 1) {
@@ -1702,7 +1768,20 @@ int main() {
 			//Level1 > > Democrac//
 
 			if (player.getGlobalBounds().intersects(DemocracLV1.getGlobalBounds())) {
-				n = 2;
+				if (StageCount < 5) {
+					num = (rand() % (5 - 1 + 1)) + 1;
+					while (num == Stage[0] || num == Stage[1] || num == Stage[2] || num == Stage[3] || num == Stage[4]) {
+						num = (rand() % (5 - 1 + 1)) + 1;
+					}
+					Stage[StageCount] = num;
+					n = num;
+					printf("num %d\n", num);
+				}
+				else if (StageCount == 5) {
+					n = 6;
+				}
+				StageCount += 1;
+					//n = 2;
 				player.setPosition(20, 600);
 			}
 
@@ -2116,7 +2195,20 @@ int main() {
 			//Level2 > > Gate//
 
 			if (player.getGlobalBounds().intersects(GateLV2.getGlobalBounds())) {
-				n = 3;
+				if (StageCount < 5) {
+					num = (rand() % (5 - 1 + 1)) + 1;
+					while (num == Stage[0] || num == Stage[1] || num == Stage[2] || num == Stage[3] || num == Stage[4]) {
+						num = (rand() % (5 - 1 + 1)) + 1;
+					}
+					Stage[StageCount] = num;
+					n = num;
+					printf("num %d\n", num);
+				}
+				else if (StageCount == 5) {
+					n = 6;
+				}
+				StageCount += 1;
+				//n = 3;
 				player.setPosition(20, 600);
 			}
 
@@ -2423,7 +2515,20 @@ int main() {
 			//Level2 > > Democrac//
 
 			if (player.getGlobalBounds().intersects(DemocracLV2.getGlobalBounds())) {
-				n = 4;
+				if (StageCount < 5) {
+					num = (rand() % (5 - 1 + 1)) + 1;
+					while (num == Stage[0] || num == Stage[1] || num == Stage[2] || num == Stage[3] || num == Stage[4]) {
+						num = (rand() % (5 - 1 + 1)) + 1;
+					}
+					Stage[StageCount] = num;
+					n = num;
+					printf("num %d\n", num);
+				}
+				else if (StageCount == 5) {
+					n = 6;
+				}
+				StageCount += 1;
+				//n = 4;
 				player.setPosition(20, 600);
 			}
 
@@ -2910,7 +3015,20 @@ int main() {
 			//Level3 > > Democradc//
 
 			if (player.getGlobalBounds().intersects(DemocracLV3.getGlobalBounds())) {
-				n = 5;
+				if (StageCount < 5) {
+					num = (rand() % (5 - 1 + 1)) + 1;
+					while (num == Stage[0] || num == Stage[1] || num == Stage[2] || num == Stage[3] || num == Stage[4]) {
+						num = (rand() % (5 - 1 + 1)) + 1;
+					}
+					Stage[StageCount] = num;
+					n = num;
+					printf("num %d\n", num);
+				}
+				else if (StageCount == 6) {
+					n = 6;
+				}
+				StageCount += 1;
+				//n = 5;
 				player.setPosition(20, 600);
 			}
 
@@ -3354,7 +3472,20 @@ int main() {
 			//Level4 > > Gate//
 
 			if (player.getGlobalBounds().intersects(GateLV4.getGlobalBounds())) {
-				n = 6;
+				if (StageCount < 5) {
+					num = (rand() % (5 - 1 + 1)) + 1;
+					while (num == Stage[0] || num == Stage[1] || num == Stage[2] || num == Stage[3] || num == Stage[4]) {
+						num = (rand() % (5 - 1 + 1)) + 1;
+					}
+					Stage[StageCount] = num;
+					n = num;
+					printf("num %d\n", num);
+				}
+				else if (StageCount == 5) {
+					n = 6;
+				}
+				StageCount += 1;
+				//n = 6;
 				player.setPosition(20, 600);
 			}
 
@@ -4042,7 +4173,11 @@ int main() {
 		// ---------------------------------Keyboard&MouseInput------------------------------------// 
 
 		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			n = 1;
+			//Random LEVEL//
+			int num = (rand() % (5 - 1 + 1)) + 1;
+			Stage[StageCount] = num;
+			StageCount += 1;
+			n = num;
 			timerload = true;
 		}
 		if (n == 0 && mouseColExit == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -4053,7 +4188,7 @@ int main() {
 
 		if (speedStatus == true) {
 			speedTimeCount++;
-			printf("speedTimeCount : %d \n", speedTimeCount);
+			//printf("speedTimeCount : %d \n", speedTimeCount);
 		}
 		if (speedTimeCount > 250) {
 			speedStatus = false;
@@ -4256,7 +4391,7 @@ int main() {
 				bulletNo[0] = 1;
 			
 		}
-			printf("X %f\nY %f", spBull1X, spBull1Y);
+			//printf("X %f\nY %f", spBull1X, spBull1Y);
 		if (bulletNo[0] == 1) {
 			bullet1.move(spBull1X, spBull1Y);
 			bulletTimeOut[0]++;
@@ -4383,7 +4518,7 @@ int main() {
 		DemocracLV1.setTextureRect(sf::IntRect(democracSizeX * animateDemocracFrame, democracSizeY * 0, democracSizeX, democracSizeY));
 		animateDemocracFrame++;
 
-		if (animateDemocracFrame > 11) {
+		if (animateDemocracFrame > 6) {
 			animateDemocracFrame=0;
 		}
 
@@ -5027,6 +5162,8 @@ int main() {
 
 		//Render:MainMenu//
 		if (n == 0) {
+			window.draw(Logo1);
+			window.draw(Logo2);
 			window.draw(Start);
 			window.draw(LeaderBoard);
 			window.draw(Exit);
@@ -5131,10 +5268,15 @@ int main() {
 				if (enemy1Life > 0 && bullE1out == true) {
 					window.draw(bulletE1);
 				}
+				else {
+					bulletE1.setPosition(0, 0);
+				}
 				if (enemy2Life > 0 && bullE2out == true) {
 					window.draw(bulletE2);
 				}
-
+				else {
+					bulletE2.setPosition(0, 0);
+				}
 			}
 
 			//RENDER:LEVEL 2//
