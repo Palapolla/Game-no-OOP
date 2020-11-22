@@ -11,6 +11,8 @@ LOOP Zone
 #include <SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include <stdlib.h>
+#include<SFML/Audio.hpp>
+
 
 void delay(int number_of_seconds)
 {
@@ -1240,6 +1242,21 @@ int main() {
 	Mainmenu.setPosition(620, 400);
 	bool mouseColMainmenu= false;
 
+	/*#########################################################################################################
+
+												Sound
+
+	###########################################################################################################*/
+	
+	/*sf::SoundBuffer backgroundSoundld;
+	backgroundSoundld.loadFromFile("BackgroundSound.wav");
+	sf::Sound backgroundSound;
+	backgroundSound.setBuffer(backgroundSoundld);
+	backgroundSound.play();
+	backgroundSound.setLoop(true);*/
+
+
+
 	/**********************************************************************************************************
 
 	-----------------------------------------------------------------------------------------------------------
@@ -1265,6 +1282,12 @@ int main() {
 			lv1ch = false;
 			KeyLV1Check = false;
 		}
+		//###########################################Sound###################################################//
+
+		//if (n != 0) {
+		//	backgroundSound.play();
+		//	backgroundSound.setLoop(true);
+		//}
 		
 		//###########################################Clock###################################################//
 
@@ -1382,6 +1405,7 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			//backgroundSound.pause();
 			num = 0;
 			StageCount = 0;
 			Stage[0] = 0;
