@@ -1430,6 +1430,7 @@ int main() {
 			enemyLV201Life = 3;
 			enemyLV202Life = 3;
 			speedCheck = false;
+			speedStatus = false;
 			//stage 2//
 			enemyLV203Life = 3;
 			enemyLV204Life = 3;
@@ -3048,7 +3049,7 @@ int main() {
 					n = num;
 					printf("num %d\n", num);
 				}
-				else if (StageCount == 6) {
+				else if (StageCount == 5) {
 					n = 6;
 				}
 				StageCount += 1;
