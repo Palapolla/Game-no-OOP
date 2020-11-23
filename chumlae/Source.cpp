@@ -1074,7 +1074,7 @@ int main() {
 	sf::RectangleShape mouseHitBox(sf::Vector2f(10.0f, 10.0f));
 	sf::Mouse::setPosition(sf::Vector2i(100, 200), window);
 	//sf::Vector2i mousePos = sf::Mouse::getPosition();
-
+	window.setMouseCursorVisible(false);
 
 	/*#############################################################################################
 
@@ -1248,14 +1248,12 @@ int main() {
 
 	###########################################################################################################*/
 	
-	/*sf::SoundBuffer backgroundSoundld;
-	backgroundSoundld.loadFromFile("BackgroundSound.wav");
+	sf::SoundBuffer backgroundSoundld;
+	backgroundSoundld.loadFromFile("BackgroundSound.ogg");
 	sf::Sound backgroundSound;
 	backgroundSound.setBuffer(backgroundSoundld);
+	backgroundSound.setLoop(true);
 	backgroundSound.play();
-	backgroundSound.setLoop(true);*/
-
-
 
 	/**********************************************************************************************************
 
@@ -1284,11 +1282,15 @@ int main() {
 		}
 		//###########################################Sound###################################################//
 
-		//if (n != 0) {
-		//	backgroundSound.play();
-		//	backgroundSound.setLoop(true);
+		//if (n > 0) {
+		//	//backgroundSound.play();
+		//	
 		//}
-		
+		//
+
+		//if (StageCount > 0) {
+		//	backgroundSound.play();
+		//}
 		//###########################################Clock###################################################//
 
 		//if (n > 0 && timerload == true) {
@@ -1320,7 +1322,7 @@ int main() {
 		//		timerClock.setPosition(900, 0);
 		//	}
 		//}
-		printf("StageCount = %d\n", StageCount);
+		//printf("StageCount = %d\n", StageCount);
 		
 		if (n == 0) {
 			millisec = 0;
@@ -1351,7 +1353,7 @@ int main() {
 			timerClockSec.setPosition(920, 0);
 		}
 
-		//###########################################Mouse###################################################//
+		//##############################################################################################//
 
 		
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -1405,6 +1407,7 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			backgroundSound.play();
 			//backgroundSound.pause();
 			num = 0;
 			StageCount = 0;
@@ -1454,7 +1457,7 @@ int main() {
 			enemyLV403Life = 3;
 			enemyLV404Life = 3;
 			enemyLV406Life = 3;
-			fadeScaleTime = 0;
+			fadeScaleTime = 1;
 		}
 
 		if (n == 1) {
@@ -5975,7 +5978,7 @@ int main() {
 		window.draw(Resume);
 		window.draw(Mainmenu);
 	}
-		//window.draw(mouseHitBox);
+		window.draw(mouseHitBox);
 		//window.draw(enemy01Area);
 		window.display();
 
