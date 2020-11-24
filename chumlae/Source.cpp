@@ -1065,6 +1065,9 @@ int main() {
 
 	int millisec = 0;
 	int sec = 0;
+
+	char millisecShow[100];
+	char secShow[100];
 	/*#########################################################################################################
 
 											Mouse hitbox
@@ -1074,7 +1077,7 @@ int main() {
 	sf::RectangleShape mouseHitBox(sf::Vector2f(10.0f, 10.0f));
 	sf::Mouse::setPosition(sf::Vector2i(100, 200), window);
 	//sf::Vector2i mousePos = sf::Mouse::getPosition();
-	window.setMouseCursorVisible(false);
+	//window.setMouseCursorVisible(false);
 
 	/*#############################################################################################
 
@@ -1253,7 +1256,37 @@ int main() {
 	sf::Sound backgroundSound;
 	backgroundSound.setBuffer(backgroundSoundld);
 	backgroundSound.setLoop(true);
-	backgroundSound.play();
+	 
+	/*#########################################################################################################
+
+											gameoverScene
+
+	###########################################################################################################*/
+
+	sf::Texture gameover_tx;
+	gameover_tx.loadFromFile("gameover.png");
+	sf::RectangleShape gameover(sf::Vector2f(700.0f, 400.0f));
+	gameover.setTexture(&gameover_tx);
+	gameover.setOrigin(350, 200);
+	gameover.setPosition(620, 360);
+
+	sf::Text finalTime;
+	finalTime.setFont(font);
+	finalTime.setCharacterSize(40);
+	finalTime.setFillColor(sf::Color::White);
+	finalTime.setString("Final Time : ");
+	finalTime.setPosition(700, 0);
+
+
+	sf::Text finalTimerClockSec;
+	finalTimerClockSec.setFont(font);
+	finalTimerClockSec.setCharacterSize(40);
+	finalTimerClockSec.setFillColor(sf::Color::White);
+
+	sf::Text finalTimerClockMilliSec;
+	finalTimerClockMilliSec.setFont(font);
+	finalTimerClockMilliSec.setCharacterSize(40);
+	finalTimerClockMilliSec.setFillColor(sf::Color::White);
 
 	/**********************************************************************************************************
 
@@ -1337,8 +1370,7 @@ int main() {
 			}
 			millisec += 3;
 			//printf("millisec = %d\n", millisec);
-			char millisecShow[100];
-			char secShow[100];
+			
 			sprintf_s(millisecShow, "%d", millisec);
 			sprintf_s(secShow, "%d", sec);
 			timerClockMilliSec.setString(millisecShow);
@@ -1375,7 +1407,7 @@ int main() {
 			pauseStatus = true;
 		}
 		
-		if (mouseHitBox.getGlobalBounds().intersects(Resume.getGlobalBounds())) {
+		if (pauseStatus == true && mouseHitBox.getGlobalBounds().intersects(Resume.getGlobalBounds())) {
 			mouseColResume = true;
 			Resume.setScale(ResumeScale.x * 1.2, ResumeScale.y * 1.2);
 		}
@@ -1387,7 +1419,7 @@ int main() {
 			pauseStatus = false;
 		}
 
-		if (mouseHitBox.getGlobalBounds().intersects(Mainmenu.getGlobalBounds())) {
+		if (pauseStatus == true && mouseHitBox.getGlobalBounds().intersects(Mainmenu.getGlobalBounds())) {
 			mouseColMainmenu = true;
 			Mainmenu.setScale(MainmenuScale.x * 1.2, MainmenuScale.y * 1.2);
 		}
@@ -1395,7 +1427,7 @@ int main() {
 			mouseColMainmenu = false;
 			Mainmenu.setScale(MainmenuScale.x, MainmenuScale.y);
 		}
-		if (n != 0 && mouseColMainmenu == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (pauseStatus == true && n != 0 && mouseColMainmenu == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			n = 0;
 			pauseStatus = false;
 		}
@@ -1407,6 +1439,7 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			Mainmenu.setPosition(620, 400);
 			backgroundSound.play();
 			//backgroundSound.pause();
 			num = 0;
@@ -5976,6 +6009,22 @@ int main() {
 	if (pauseStatus == true) {
 		window.clear();
 		window.draw(Resume);
+		window.draw(Mainmenu);
+	}
+	if (playerLife <= 0) {
+		pauseStatus = true;
+		window.clear();
+		window.draw(gameover);
+		finalTimerClockMilliSec.setString(millisecShow);
+		finalTimerClockMilliSec.setPosition(1005, 0);
+		finalTimerClockSec.setString(secShow);
+		finalTimerClockSec.setPosition(960, 0);
+		window.draw(finalTimerClockMilliSec);
+		window.draw(finalTimerClockSec);
+		window.draw(finalTime);
+		window.draw(unit);
+		window.draw(dot);
+		Mainmenu.setPosition(620, 600);
 		window.draw(Mainmenu);
 	}
 		window.draw(mouseHitBox);
