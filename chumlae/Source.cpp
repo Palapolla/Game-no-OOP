@@ -506,11 +506,11 @@ int main() {
 	//**********DemocracLevel 2**********//
 
 	sf::Texture DemocracLV2_tx;
-	//DemocracLV2_tx.loadFromFile("Democrac mk2 LV2.png");
-	sf::RectangleShape DemocracLV2(sf::Vector2f(80.0f, 80.0f));
+	DemocracLV2_tx.loadFromFile("Democrac 2.png");
+	sf::RectangleShape DemocracLV2(sf::Vector2f(100.0f, 70.0f));
 	DemocracLV2.setTexture(&DemocracLV2_tx);
 	sf::Vector2u DemocracLV2TextureSize = DemocracLV2_tx.getSize();
-	int democracLV2SizeX = DemocracLV2TextureSize.x / 10;
+	int democracLV2SizeX = DemocracLV2TextureSize.x / 8;
 	int democracLV2SizeY = DemocracLV2TextureSize.y / 1;
 	DemocracLV2.setTextureRect(sf::IntRect(democracLV2SizeX * 0, democracLV2SizeY * 0, democracLV2SizeX, democracLV2SizeY));
 	DemocracLV2.setPosition(1100, 150);
@@ -689,11 +689,11 @@ int main() {
 	//**********Democrac Level 3**********//
 
 	sf::Texture DemocracLV3_tx;
-	//DemocracLV3_tx.loadFromFile("Democrac mk2 LV3.png");
-	sf::RectangleShape DemocracLV3(sf::Vector2f(80.0f, 80.0f));
+	DemocracLV3_tx.loadFromFile("Democrac 3.png");
+	sf::RectangleShape DemocracLV3(sf::Vector2f(120.0f, 80.0f));
 	DemocracLV3.setTexture(&DemocracLV3_tx);
 	sf::Vector2u DemocracLV3TextureSize = DemocracLV3_tx.getSize();
-	int democracLV3SizeX = DemocracLV3TextureSize.x / 10;
+	int democracLV3SizeX = DemocracLV3TextureSize.x / 6;
 	int democracLV3SizeY = DemocracLV3TextureSize.y / 1;
 	DemocracLV3.setTextureRect(sf::IntRect(democracLV3SizeX * 0, democracLV3SizeY * 0, democracLV3SizeX, democracLV3SizeY));
 	DemocracLV3.setPosition(500, 550);
@@ -972,7 +972,7 @@ int main() {
 	bool DemocracLv4Col = false;
 	float animateDemocracLV4Frame = 0;
 
-	//scanf("%d", &n);
+	scanf("%d", &n);
 
 	/*#########################################################################################################
 
@@ -4706,7 +4706,7 @@ int main() {
 		DemocracLV2.setTextureRect(sf::IntRect(democracLV2SizeX* animateDemocracLV2Frame, democracLV2SizeY * 0, democracLV2SizeX, democracLV2SizeY));
 		animateDemocracLV2Frame++;
 
-		if (animateDemocracLV2Frame > 9) {
+		if (animateDemocracLV2Frame > 7) {
 			animateDemocracLV2Frame = 0;
 		}
 
@@ -4715,7 +4715,7 @@ int main() {
 		DemocracLV3.setTextureRect(sf::IntRect(democracLV3SizeX* animateDemocracLV3Frame, democracLV3SizeY * 0, democracLV3SizeX, democracLV3SizeY));
 		animateDemocracLV3Frame++;
 
-		if (animateDemocracLV3Frame > 9) {
+		if (animateDemocracLV3Frame > 5) {
 			animateDemocracLV3Frame = 0;
 		}
 
