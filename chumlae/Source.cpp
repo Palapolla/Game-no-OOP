@@ -8,11 +8,23 @@ Level 3
 Level 4
 LOOP Zone
 */
+#define _CRT_SECURE_NO_WARNINGS
 #include <SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include <stdlib.h>
 #include<SFML/Audio.hpp>
+#include<cstring>
+#include<iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
 
+
+std::vector<std::pair<std::string, float>> vec;
+bool sortbysecdesc(const std::pair<std::string, float>& a, const std::pair<std::string, float>& b)
+{
+	return a.second < b.second;
+}
 
 void delay(int number_of_seconds)
 {
@@ -957,9 +969,10 @@ int main() {
 	int democracLV4SizeY = DemocracLV4TextureSize.y / 1;
 	DemocracLV4.setTextureRect(sf::IntRect(democracLV4SizeX * 0, democracLV4SizeY * 0, democracLV4SizeX, democracLV4SizeY));
 	DemocracLV4.setPosition(900, 350);
+	bool DemocracLv4Col = false;
 	float animateDemocracLV4Frame = 0;
 
-	scanf_s("%d", &n);
+	scanf("%d", &n);
 
 	/*#########################################################################################################
 
@@ -1068,6 +1081,8 @@ int main() {
 
 	char millisecShow[100];
 	char secShow[100];
+
+	float totalTime = 0;
 	/*#########################################################################################################
 
 											Mouse hitbox
@@ -1211,6 +1226,9 @@ int main() {
 	Exit.setPosition(200, 500);
 	bool mouseColExit = false;
 
+	sf::Text EnterNametext("Enter name : ", font, 120);
+	EnterNametext.setPosition(400, -600);
+	
 	/*#########################################################################################################
 
 												Pause Button
@@ -1245,6 +1263,14 @@ int main() {
 	Mainmenu.setPosition(620, 400);
 	bool mouseColMainmenu= false;
 
+
+	sf::Text Name;
+	Name.setFont(font);
+	Name.setCharacterSize(40);
+	Name.setFillColor(sf::Color::White);
+	Name.setPosition(620, 400);
+	char playername[3];
+	sf::String inputName;
 	/*#########################################################################################################
 
 												Sound
@@ -1287,6 +1313,21 @@ int main() {
 	finalTimerClockMilliSec.setFont(font);
 	finalTimerClockMilliSec.setCharacterSize(40);
 	finalTimerClockMilliSec.setFillColor(sf::Color::White);
+
+	/*#########################################################################################################
+
+											HIGHSCORE
+
+	###########################################################################################################*/
+	bool fileWrite = false;
+	char intName[3];
+	int NameCount = 0;
+	//FILE* highscore;
+	//highscore = fopen("Score.txt", "w");
+
+	//fclose(highscore);
+	/*ofstream myfile;
+	myfile.open("Score.txt");*/
 
 	/**********************************************************************************************************
 
@@ -1363,14 +1404,14 @@ int main() {
 			
 			
 		}
-		if (pauseStatus == false&&n!=0) {
+		if (pauseStatus == false&&n!=0&&n!=10) {
 			if (millisec >= 100) {
 				millisec = 0;
 				sec += 1;
 			}
 			millisec += 3;
 			//printf("millisec = %d\n", millisec);
-			
+			totalTime += 0.03;
 			sprintf_s(millisecShow, "%d", millisec);
 			sprintf_s(secShow, "%d", sec);
 			timerClockMilliSec.setString(millisecShow);
@@ -1439,6 +1480,10 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			inputName.clear();
+			totalTime = 0;
+			fileWrite == false;
+			Start.setPosition(200, 300);
 			Mainmenu.setPosition(620, 400);
 			backgroundSound.play();
 			//backgroundSound.pause();
@@ -3519,7 +3564,7 @@ int main() {
 				imortalCheck = true;
 			}
 		
-
+			
 			//Level4 > > Key//
 
 			if (KeyLV4Check == false) {
@@ -3925,6 +3970,31 @@ int main() {
 			
 		}
 		if (n == 6) {
+			//Level4 > > Democrac//
+
+			if (DemocracLv4Col == false && player.getGlobalBounds().intersects(DemocracLV4.getGlobalBounds())) {
+				DemocracLv4Col = true;
+				std::string word;
+				std::ifstream ReadFile("Score.txt");
+				do {
+					ReadFile >> word;
+					std::string name = word.substr(0, word.find(','));
+					int num = std::stoi(word.substr(word.find(',') + 1, word.length()));
+					vec.push_back(std::make_pair(name, num));
+				} while (ReadFile.good());
+				ReadFile.close();
+				std::ofstream WriteFile("Score.txt");
+				vec.push_back(std::make_pair(inputName, totalTime));
+				std::sort(vec.begin(), vec.end(), sortbysecdesc);
+				for (int i = 0; i < 5; i++)
+				{
+					WriteFile << vec[i].first << "," << vec[i].second << std::endl;
+				}
+				vec.clear();
+				WriteFile.close();
+
+			}
+
 			// bullet collision //
 
 			//Level 4 > > bullet > > Enemy3//
@@ -4232,15 +4302,43 @@ int main() {
 		}
 
 		// ---------------------------------Keyboard&MouseInput------------------------------------// 
-
-		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		//printf("%d\n",n);
+		if (n == 10 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			//Random LEVEL//
+			//myfile << intName;
+			///*highscore = fopen("Score.txt", "a");
+			//fprintf(highscore, "%s\n", intName);*/
 			int num = (rand() % (5 - 1 + 1)) + 1;
 			Stage[StageCount] = num;
 			StageCount += 1;
 			n = num;
 			timerload = true;
 		}
+		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			//Random LEVEL//
+			n = 10;
+			Start.setPosition(360, 620);
+			
+		}
+
+		if (n>=10&&event.type == sf::Event::TextEntered) {
+			
+			delay(100);
+			if (event.text.unicode < 128) {
+				if (NameCount < 3) {
+					inputName += event.text.unicode;
+				}
+			}
+				delay(100);
+				////std::string intName = inputName;
+				//inputName.operator std::string = 
+				//strcpy(intName, &(inputName.operator std::string).c_str());
+				//NameCount += 1;
+				//printf("%d\n", event.text.unicode);
+				Name.setString(inputName);
+		}
+		
+
 		if (n == 0 && mouseColExit == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			window.close();
 		}
@@ -5229,6 +5327,10 @@ int main() {
 			window.draw(LeaderBoard);
 			window.draw(Exit);
 		}
+		else if (n >= 10) {
+			window.draw(Name);
+			window.draw(Start);
+		}
 		//window.draw(playerHitbox);
 		else {
 			//Render:LEVEL 1//
@@ -6006,6 +6108,7 @@ int main() {
 		}
 
 	}
+	
 	if (pauseStatus == true) {
 		window.clear();
 		window.draw(Resume);
@@ -6018,7 +6121,7 @@ int main() {
 		finalTimerClockMilliSec.setString(millisecShow);
 		finalTimerClockMilliSec.setPosition(1005, 0);
 		finalTimerClockSec.setString(secShow);
-		finalTimerClockSec.setPosition(960, 0);
+		finalTimerClockSec.setPosition(950, 0);
 		window.draw(finalTimerClockMilliSec);
 		window.draw(finalTimerClockSec);
 		window.draw(finalTime);
@@ -6026,6 +6129,26 @@ int main() {
 		window.draw(dot);
 		Mainmenu.setPosition(620, 600);
 		window.draw(Mainmenu);
+	}
+	if (DemocracLv4Col == true) {
+		pauseStatus = true;
+		window.clear();
+		//window.draw(gameover);
+		finalTimerClockMilliSec.setString(millisecShow);
+		finalTimerClockMilliSec.setPosition(1005, 0);
+		finalTimerClockSec.setString(secShow);
+		finalTimerClockSec.setPosition(950, 0);
+		window.draw(finalTimerClockMilliSec);
+		window.draw(finalTimerClockSec);
+		window.draw(finalTime);
+		window.draw(unit);
+		window.draw(dot);
+		Mainmenu.setPosition(620, 600);
+		window.draw(Mainmenu);
+
+		
+	
+
 	}
 		window.draw(mouseHitBox);
 		//window.draw(enemy01Area);
