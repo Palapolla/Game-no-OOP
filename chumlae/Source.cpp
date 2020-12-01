@@ -972,7 +972,7 @@ int main() {
 	bool DemocracLv4Col = false;
 	float animateDemocracLV4Frame = 0;
 
-	scanf("%d", &n);
+	//scanf("%d", &n);
 
 	/*#########################################################################################################
 
@@ -1268,9 +1268,11 @@ int main() {
 	Name.setFont(font);
 	Name.setCharacterSize(40);
 	Name.setFillColor(sf::Color::White);
-	Name.setPosition(620, 400);
+	Name.setPosition(390, 250);
 	char playername[3];
+	Name.setOutlineThickness(1);
 	sf::String inputName;
+	Name.setString("Enter name : ");
 	/*#########################################################################################################
 
 												Sound
@@ -1329,6 +1331,29 @@ int main() {
 	/*ofstream myfile;
 	myfile.open("Score.txt");*/
 
+	sf::Text highscoretext("LEADERBOARD", font, 60);
+	highscoretext.setOutlineThickness(3);
+	highscoretext.setPosition(400, 100);
+	sf::Text text[12];
+	for (int s = 0; s < 12; s++)
+	{
+		text[s].setFont(font);
+		text[s].setCharacterSize(50);
+		text[s].setOutlineThickness(2);
+	}
+	for (int i = 0; i < 12; i += 2)
+	{
+		text[i].setPosition(200,200+ i * 30);
+		text[i + 1].setPosition(800,200+ i * 30);
+	}
+	std::string str[12];
+	text[0].setString("NAME");
+	text[1].setString("TIME(second)");
+	text[0].setFillColor(sf::Color(211, 211, 211));
+	text[1].setFillColor(sf::Color(211, 211, 211));
+	text[0].setPosition(200, 200);
+	text[1].setPosition(800, 200);
+
 	/**********************************************************************************************************
 
 	-----------------------------------------------------------------------------------------------------------
@@ -1354,48 +1379,7 @@ int main() {
 			lv1ch = false;
 			KeyLV1Check = false;
 		}
-		//###########################################Sound###################################################//
 
-		//if (n > 0) {
-		//	//backgroundSound.play();
-		//	
-		//}
-		//
-
-		//if (StageCount > 0) {
-		//	backgroundSound.play();
-		//}
-		//###########################################Clock###################################################//
-
-		//if (n > 0 && timerload == true) {
-		//	clock.restart();
-		//	timerload = false;
-		//}
-
-		//else if (n > 0 && timerload == false) {
-		//	
-		//	sf::Time timer = clock.getElapsedTime();
-		//	 timeUse = timer.asSeconds();
-		//	//printf("timer %f\n", timer.asSeconds());
-		//	if (countRound == 1 && pauseStatus == true) {
-		//		timeSaver = timeUse;
-		//		printf("timeSaver %f\n", timeSaver);
-		//		countRound = 0;
-		//	}
-		//	//printf("timeUse = %f\n", timeUse);
-		//	timeShow = timeUse;
-		//	char timetext[100] = { _gcvt_s(timetext, 100, timeShow, 6) };
-		//	if (pauseStatus == false) {
-		//		if (timeUse > 10) {
-		//			_gcvt_s(timetext, 100, timeShow, 6);
-		//		}
-		//		else {
-		//			_gcvt_s(timetext, 100, timeShow, 4);
-		//		}
-		//		timerClock.setString(timetext);
-		//		timerClock.setPosition(900, 0);
-		//	}
-		//}
 		//printf("StageCount = %d\n", StageCount);
 		
 		if (n == 0) {
@@ -1433,45 +1417,44 @@ int main() {
 		mouseHitBox.setPosition(mousePos.x,mousePos.y);
 		
 		//###########################################Pause Button###################################################//
+			if (mouseHitBox.getGlobalBounds().intersects(Pause.getGlobalBounds())) {
+				mouseColPause = true;
+				Pause.setScale(PauseScale.x * 1.2, PauseScale.y * 1.2);
+			}
+			else {
+				mouseColPause = false;
+				Pause.setScale(PauseScale.x, PauseScale.y);
+			}
 
-		if (mouseHitBox.getGlobalBounds().intersects(Pause.getGlobalBounds())) {
-			mouseColPause = true;
-			Pause.setScale(PauseScale.x * 1.2, PauseScale.y * 1.2);
-		}
-		else {
-			mouseColPause = false;
-			Pause.setScale(PauseScale.x, PauseScale.y);
-		}
+			if (pauseStatus == false && n != 0 && mouseColPause == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				countRound = 1;
+				pauseStatus = true;
+			}
 
-		if (pauseStatus == false && n != 0 && mouseColPause == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			countRound = 1;
-			pauseStatus = true;
-		}
-		
-		if (pauseStatus == true && mouseHitBox.getGlobalBounds().intersects(Resume.getGlobalBounds())) {
-			mouseColResume = true;
-			Resume.setScale(ResumeScale.x * 1.2, ResumeScale.y * 1.2);
-		}
-		else {
-			mouseColResume = false;
-			Resume.setScale(ResumeScale.x, ResumeScale.y);
-		}
-		if (pauseStatus == true && n != 0 && mouseColResume == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			pauseStatus = false;
-		}
+			if (pauseStatus == true && mouseHitBox.getGlobalBounds().intersects(Resume.getGlobalBounds())) {
+				mouseColResume = true;
+				Resume.setScale(ResumeScale.x * 1.2, ResumeScale.y * 1.2);
+			}
+			else {
+				mouseColResume = false;
+				Resume.setScale(ResumeScale.x, ResumeScale.y);
+			}
+			if (pauseStatus == true && n != 0 && mouseColResume == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				pauseStatus = false;
+			}
 
-		if (pauseStatus == true && mouseHitBox.getGlobalBounds().intersects(Mainmenu.getGlobalBounds())) {
-			mouseColMainmenu = true;
-			Mainmenu.setScale(MainmenuScale.x * 1.2, MainmenuScale.y * 1.2);
-		}
-		else {
-			mouseColMainmenu = false;
-			Mainmenu.setScale(MainmenuScale.x, MainmenuScale.y);
-		}
-		if (pauseStatus == true && n != 0 && mouseColMainmenu == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			n = 0;
-			pauseStatus = false;
-		}
+			if ((pauseStatus == true|| n == 99|| DemocracLv4Col == true) && mouseHitBox.getGlobalBounds().intersects(Mainmenu.getGlobalBounds())) {
+				mouseColMainmenu = true;
+				Mainmenu.setScale(MainmenuScale.x * 1.2, MainmenuScale.y * 1.2);
+			}
+			else {
+				mouseColMainmenu = false;
+				Mainmenu.setScale(MainmenuScale.x, MainmenuScale.y);
+			}
+			if ((pauseStatus == true || n == 99) && n != 0 && mouseColMainmenu == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				n = 0;
+				pauseStatus = false;
+			}
 
 		
 		//printf("timeShow = %f\ntimeUse", timeShow);
@@ -1480,6 +1463,9 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			DemocracLv4Col = false;
+			bulletE3.setSize(sf::Vector2f(20.0f, 20.0f));
+			bulletE3.setOrigin(10, 10);
 			inputName.clear();
 			totalTime = 0;
 			fileWrite == false;
@@ -1511,6 +1497,7 @@ int main() {
 			enemyLV201Life = 3;
 			enemyLV202Life = 3;
 			speedCheck = false;
+			speedTimeCount = 0;
 			speedStatus = false;
 			//stage 2//
 			enemyLV203Life = 3;
@@ -1532,12 +1519,15 @@ int main() {
 			imortalCheck = false;
 			KeyLV4Check = false;
 			//stage 2//
+			imortalTimeCount = 0;
 			enemyLV403Life = 3;
 			enemyLV404Life = 3;
 			enemyLV406Life = 3;
 			fadeScaleTime = 1;
 		}
-
+		if (n == 10 || n == 99) {
+			backgroundSound.play ();
+		}
 		if (n == 1) {
 			if (enemy1SetState == true) {
 				enemy1Life = 3;
@@ -3979,7 +3969,7 @@ int main() {
 				do {
 					ReadFile >> word;
 					std::string name = word.substr(0, word.find(','));
-					int num = std::stoi(word.substr(word.find(',') + 1, word.length()));
+					float num = std::stoi(word.substr(word.find(',') + 1, word.length()));
 					vec.push_back(std::make_pair(name, num));
 				} while (ReadFile.good());
 				ReadFile.close();
@@ -4235,14 +4225,14 @@ int main() {
 					//Q1
 					if (playerPosition.x > enemyLV406Position.x && playerPosition.y < enemyLV406Position.y) {
 						//printf("1\n");
-						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 						spBullE3Y = spBullE3Y * -1;
 					}
 					//Q2
 					else if (playerPosition.x < enemyLV406Position.x && playerPosition.y < enemyLV406Position.y) {
 						//printf("2\n");
-						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 						spBullE3X = spBullE3X * -1;
 						spBullE3Y = spBullE3Y * -1;
@@ -4251,7 +4241,7 @@ int main() {
 					else if (playerPosition.x < enemyLV406Position.x && playerPosition.y > enemyLV406Position.y) {
 
 						//printf("3\n");
-						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 						spBullE3X = spBullE3X * -1;
 
@@ -4259,7 +4249,7 @@ int main() {
 					//Q4
 					else if (playerPosition.x > enemyLV406Position.x && playerPosition.y > enemyLV406Position.y) {
 						//printf("4\n");
-						spBullE3Y = sqrt(25 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 
 					}
@@ -4317,17 +4307,27 @@ int main() {
 		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			//Random LEVEL//
 			n = 10;
-			Start.setPosition(360, 620);
+			Start.setPosition(620, 360);
 			
 		}
 
-		if (n>=10&&event.type == sf::Event::TextEntered) {
+		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			//Random LEVEL//
+			n = 10;
+			Start.setPosition(620, 360);
+			inputName.clear();
+		}
+
+		if (n==10&&event.type == sf::Event::TextEntered) {
 			
 			delay(100);
-			if (event.text.unicode < 128) {
-				if (NameCount < 3) {
-					inputName += event.text.unicode;
-				}
+			if (event.text.unicode < 128 && inputName.getSize() < 5) {
+
+				inputName += event.text.unicode;
+			}
+			else if (event.text.unicode == 8)//backspace
+			{
+				inputName = inputName.substring(0, inputName.getSize() - 1);
 			}
 				delay(100);
 				////std::string intName = inputName;
@@ -4335,12 +4335,32 @@ int main() {
 				//strcpy(intName, &(inputName.operator std::string).c_str());
 				//NameCount += 1;
 				//printf("%d\n", event.text.unicode);
-				Name.setString(inputName);
+				Name.setString("Enter name : " + inputName);
 		}
 		
 
 		if (n == 0 && mouseColExit == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			window.close();
+		}
+
+		if (n == 0 && mouseColLeaderboard == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			n = 99;
+			std::string word;
+			std::ifstream ReadFile("Score.txt");
+			do {
+				ReadFile >> word;
+				std::string name = word.substr(0, word.find(','));
+				float num = std::stoi(word.substr(word.find(',') + 1, word.length()));
+				vec.push_back(std::make_pair(name, num));
+			} while (ReadFile.good());
+			ReadFile.close();
+			std::sort(vec.begin(), vec.end(), sortbysecdesc);
+			for (int i = 0; i < 5; i++)
+			{
+				text[2 * i + 2].setString(std::to_string(i + 1) + ". " + vec[i].first);
+				text[2 * i + 3].setString(std::to_string(vec[i].second));
+			}
+			vec.clear();
 		}
 		
 		int initialFrame = 0;
@@ -5327,9 +5347,16 @@ int main() {
 			window.draw(LeaderBoard);
 			window.draw(Exit);
 		}
-		else if (n >= 10) {
+		else if (n == 10) {
 			window.draw(Name);
 			window.draw(Start);
+		}
+		else if (n == 99) {
+			Mainmenu.setPosition(620, 650);
+			window.draw(Mainmenu);
+			window.draw(highscoretext);
+			for (int i = 0; i < 12; i++)
+				window.draw(text[i]);
 		}
 		//window.draw(playerHitbox);
 		else {
@@ -6113,6 +6140,7 @@ int main() {
 		window.clear();
 		window.draw(Resume);
 		window.draw(Mainmenu);
+		Mainmenu.setPosition(620, 400);
 	}
 	if (playerLife <= 0) {
 		pauseStatus = true;
@@ -6131,6 +6159,7 @@ int main() {
 		window.draw(Mainmenu);
 	}
 	if (DemocracLv4Col == true) {
+		
 		pauseStatus = true;
 		window.clear();
 		//window.draw(gameover);
