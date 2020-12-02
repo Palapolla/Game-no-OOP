@@ -1301,6 +1301,11 @@ int main() {
 	sf::Sound bossFightSound;
 	bossFightSound.setBuffer(bossFightSoundld);
 
+	sf::SoundBuffer shootSoundld;
+	shootSoundld.loadFromFile("shoot.ogg");
+	sf::Sound shootSound;
+	shootSound.setBuffer(shootSoundld);
+
 	/*#########################################################################################################
 
 											gameoverScene
@@ -4516,6 +4521,7 @@ int main() {
 		}
 		if (spaceCheck == false) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+				shootSound.play();
 				spaceEnable += 1;
 				spaceCheck = true;
 				//printf("Keypress : Space %d\n", spaceEnable);
@@ -5483,13 +5489,13 @@ int main() {
 					window.draw(shield);
 				}
 				window.draw(wall3);
-				if (enemy1Life > 0 && bullE1out == true) {
+				if (bullE1out == true) {
 					window.draw(bulletE1);
 				}
 				else {
 					bulletE1.setPosition(0, 0);
 				}
-				if (enemy2Life > 0 && bullE2out == true) {
+				if (bullE2out == true) {
 					window.draw(bulletE2);
 				}
 				else {
@@ -5591,10 +5597,10 @@ int main() {
 					}
 
 				}
-				if (enemyLV201Life > 0 && bullE1out == true) {
+				if (bullE1out == true) {
 					window.draw(bulletE1);
 				}
-				if (enemyLV202Life > 0 && bullE2out == true) {
+				if (bullE2out == true) {
 					window.draw(bulletE2);
 				}
 				if (speedCheck == false) {
@@ -5678,7 +5684,7 @@ int main() {
 						window.draw(enemy204Heart3);
 					}
 				}
-				if (enemyLV204Life > 0 && bullE2out == true) {
+				if ( bullE2out == true) {
 					window.draw(bulletE2);
 				}
 				if (enemyLV205Life > 0 && enemy03AreaCheck == true) {
@@ -5696,7 +5702,7 @@ int main() {
 					}
 
 				}
-				if (enemyLV205Life > 0 && bullE3out == true) {
+				if (bullE3out == true) {
 					window.draw(bulletE3);
 				}
 				if (lifeCheck == false) {
@@ -6176,7 +6182,7 @@ int main() {
 	if (playerLife <= 0) {
 		pauseStatus = true;
 		window.clear();
-		
+		bossFightSound.pause();
 		backgroundSound.pause();
 		window.draw(gameover);
 		finalTimerClockMilliSec.setString(millisecShow);
