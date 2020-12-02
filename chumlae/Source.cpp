@@ -1175,6 +1175,7 @@ int main() {
 	sf::RectangleShape Enemy3Shadow(sf::Vector2f(120.0f, 110.0f));
 	Enemy3Shadow.setOrigin(10, 0);
 	Enemy3Shadow.setTexture(&EnemyShadow_tx);
+	sf::Vector2f Shadow3Scale = Enemy3Shadow.getScale();
 
 	/*#########################################################################################################
 
@@ -1284,7 +1285,22 @@ int main() {
 	sf::Sound backgroundSound;
 	backgroundSound.setBuffer(backgroundSoundld);
 	backgroundSound.setLoop(true);
+
+	sf::SoundBuffer winSoundld;
+	winSoundld.loadFromFile("winsound.ogg");
+	sf::Sound winSound;
+	winSound.setBuffer(winSoundld);
+
+	sf::SoundBuffer gameoverSoundld;
+	gameoverSoundld.loadFromFile("gameoversound.ogg");
+	sf::Sound gameoverSound;
+	gameoverSound.setBuffer(gameoverSoundld);
 	 
+	sf::SoundBuffer bossFightSoundld;
+	bossFightSoundld.loadFromFile("Bossfight.ogg");
+	sf::Sound bossFightSound;
+	bossFightSound.setBuffer(bossFightSoundld);
+
 	/*#########################################################################################################
 
 											gameoverScene
@@ -1463,6 +1479,7 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			Enemy3Shadow.setScale(Shadow3Scale);
 			lifeCheck = false;
 			DemocracLv4Col = false;
 			bulletE3.setSize(sf::Vector2f(20.0f, 20.0f));
@@ -1523,7 +1540,7 @@ int main() {
 			imortalTimeCount = 0;
 			enemyLV403Life = 3;
 			enemyLV404Life = 3;
-			enemyLV406Life = 3;
+			enemyLV406Life = 6;
 			fadeScaleTime = 1;
 		}
 		if (n == 10 || n == 99) {
@@ -1646,6 +1663,11 @@ int main() {
 			Enemy1Shadow.setPosition(enemyLV401Position);
 			Enemy2Shadow.setPosition(enemyLV402Position);
 			Enemy3Shadow.setPosition(enemyLV405Position);
+		}
+		if (n == 6) {
+			Enemy1Shadow.setPosition(enemyLV403Position);
+			Enemy2Shadow.setPosition(enemyLV404Position);
+			Enemy3Shadow.setPosition(enemyLV406Position);
 		}
 		//enemybullet with player//
 		if (imortalCheck == false) {
@@ -3960,11 +3982,16 @@ int main() {
 			}
 			
 		}
+		if (n != 6) {
+			bossFightSound.play();
+		}
 		if (n == 6) {
 			//Level4 > > Democrac//
-
+			backgroundSound.pause();
 			if (DemocracLv4Col == false && player.getGlobalBounds().intersects(DemocracLV4.getGlobalBounds())) {
 				DemocracLv4Col = true;
+				winSound.play();
+				bossFightSound.pause();
 				std::string word;
 				std::ifstream ReadFile("Score.txt");
 				do {
@@ -4191,7 +4218,7 @@ int main() {
 			//Level 4 > > bullet > > Enemy6//
 
 			if (enemyLV406Life > 0) {
-
+				Enemy3Shadow.setScale(Shadow3Scale.x * 3, Shadow3Scale.y * 3);
 				//DetectionZone&Attack//
 
 				enemy03AreaCheck = true;
@@ -4226,14 +4253,14 @@ int main() {
 					//Q1
 					if (playerPosition.x > enemyLV406Position.x && playerPosition.y < enemyLV406Position.y) {
 						//printf("1\n");
-						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(225 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 						spBullE3Y = spBullE3Y * -1;
 					}
 					//Q2
 					else if (playerPosition.x < enemyLV406Position.x && playerPosition.y < enemyLV406Position.y) {
 						//printf("2\n");
-						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(225 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 						spBullE3X = spBullE3X * -1;
 						spBullE3Y = spBullE3Y * -1;
@@ -4242,7 +4269,7 @@ int main() {
 					else if (playerPosition.x < enemyLV406Position.x && playerPosition.y > enemyLV406Position.y) {
 
 						//printf("3\n");
-						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(225 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 						spBullE3X = spBullE3X * -1;
 
@@ -4250,7 +4277,7 @@ int main() {
 					//Q4
 					else if (playerPosition.x > enemyLV406Position.x && playerPosition.y > enemyLV406Position.y) {
 						//printf("4\n");
-						spBullE3Y = sqrt(100 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
+						spBullE3Y = sqrt(225 / (pow(abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y), 2) + 1));
 						spBullE3X = (abs(enemyLV406Position.x - playerPosition.x) / abs(enemyLV406Position.y - playerPosition.y)) * spBullE3Y;
 
 					}
@@ -6014,6 +6041,7 @@ int main() {
 				}
 				window.draw(DemocracLV4);
 				if (enemyLV403Life > 0 && enemy01AreaCheck == true) {
+					window.draw(Enemy1Shadow);
 					if (enemyLV403Life == 3) {
 						window.draw(enemy403Heart3);
 						window.draw(enemy403Heart2);
@@ -6028,6 +6056,7 @@ int main() {
 					}
 				}
 				if (enemyLV404Life > 0 && enemy02AreaCheck == true) {
+					window.draw(Enemy2Shadow);
 					if (enemyLV404Life == 3) {
 						window.draw(enemy404Heart3);
 						window.draw(enemy404Heart2);
@@ -6045,6 +6074,7 @@ int main() {
 					window.draw(enemyLV406);
 				}
 				if (enemyLV406Life > 0 && enemy03AreaCheck == true) {
+					window.draw(Enemy3Shadow);
 					if (enemyLV406Life == 6) {
 						window.draw(enemy406Heart6);
 						window.draw(enemy406Heart5);
@@ -6146,6 +6176,8 @@ int main() {
 	if (playerLife <= 0) {
 		pauseStatus = true;
 		window.clear();
+		
+		backgroundSound.pause();
 		window.draw(gameover);
 		finalTimerClockMilliSec.setString(millisecShow);
 		finalTimerClockMilliSec.setPosition(1005, 0);
@@ -6158,6 +6190,9 @@ int main() {
 		window.draw(dot);
 		Mainmenu.setPosition(620, 600);
 		window.draw(Mainmenu);
+	}
+	else {
+		gameoverSound.play();
 	}
 	if (DemocracLv4Col == true) {
 		backgroundSound.pause();
