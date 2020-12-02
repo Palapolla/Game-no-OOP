@@ -961,11 +961,11 @@ int main() {
 	//**********Democrac Level 4**********//
 
 	sf::Texture DemocracLV4_tx;
-	//DemocracLV4_tx.loadFromFile("Democrac mk2 LV4.png");
-	sf::RectangleShape DemocracLV4(sf::Vector2f(80.0f, 80.0f));
+	DemocracLV4_tx.loadFromFile("democrac 4.png");
+	sf::RectangleShape DemocracLV4(sf::Vector2f(80.0f, 130.0f));
 	DemocracLV4.setTexture(&DemocracLV4_tx);
 	sf::Vector2u DemocracLV4TextureSize = DemocracLV4_tx.getSize();
-	int democracLV4SizeX = DemocracLV4TextureSize.x / 10;
+	int democracLV4SizeX = DemocracLV4TextureSize.x / 9;
 	int democracLV4SizeY = DemocracLV4TextureSize.y / 1;
 	DemocracLV4.setTextureRect(sf::IntRect(democracLV4SizeX * 0, democracLV4SizeY * 0, democracLV4SizeX, democracLV4SizeY));
 	DemocracLV4.setPosition(900, 350);
@@ -4724,7 +4724,7 @@ int main() {
 		DemocracLV4.setTextureRect(sf::IntRect(democracLV4SizeX* animateDemocracLV4Frame, democracLV4SizeY * 0, democracLV4SizeX, democracLV4SizeY));
 		animateDemocracLV4Frame++;
 
-		if (animateDemocracLV4Frame > 9) {
+		if (animateDemocracLV4Frame > 8) {
 			animateDemocracLV4Frame = 0;
 		}
 
