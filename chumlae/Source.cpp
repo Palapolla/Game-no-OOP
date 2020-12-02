@@ -1463,6 +1463,7 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			lifeCheck = false;
 			DemocracLv4Col = false;
 			bulletE3.setSize(sf::Vector2f(20.0f, 20.0f));
 			bulletE3.setOrigin(10, 10);
@@ -3969,7 +3970,7 @@ int main() {
 				do {
 					ReadFile >> word;
 					std::string name = word.substr(0, word.find(','));
-					float num = std::stoi(word.substr(word.find(',') + 1, word.length()));
+					float num = std::stof(word.substr(word.find(',') + 1, word.length()));
 					vec.push_back(std::make_pair(name, num));
 				} while (ReadFile.good());
 				ReadFile.close();
@@ -4350,7 +4351,7 @@ int main() {
 			do {
 				ReadFile >> word;
 				std::string name = word.substr(0, word.find(','));
-				float num = std::stoi(word.substr(word.find(',') + 1, word.length()));
+				float num = std::stof(word.substr(word.find(',') + 1, word.length()));
 				vec.push_back(std::make_pair(name, num));
 			} while (ReadFile.good());
 			ReadFile.close();
@@ -6159,7 +6160,7 @@ int main() {
 		window.draw(Mainmenu);
 	}
 	if (DemocracLv4Col == true) {
-		
+		backgroundSound.pause();
 		pauseStatus = true;
 		window.clear();
 		//window.draw(gameover);
