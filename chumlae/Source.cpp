@@ -1375,6 +1375,28 @@ int main() {
 	text[0].setPosition(200, 200);
 	text[1].setPosition(800, 200);
 
+
+	/*#########################################################################################################
+
+											ENDINGPART
+
+	###########################################################################################################*/
+	
+
+	sf::Texture ending_tx;
+	ending_tx.loadFromFile("ending.png");
+	sf::RectangleShape ending(sf::Vector2f(350.0f, 300.0f));
+	ending.setTexture(&ending_tx);
+	ending.setPosition(600, 260);
+	ending.setOrigin(150, 150);
+	sf::Text endingtx;
+	endingtx.setFont(font);
+	endingtx.setCharacterSize(40);
+	endingtx.setFillColor(sf::Color::White);
+	endingtx.setString("NOW YOU HAVE PS5 !");
+	endingtx.setPosition(400, 460);
+	ending.setOutlineThickness(2);
+
 	/**********************************************************************************************************
 
 	-----------------------------------------------------------------------------------------------------------
@@ -1484,6 +1506,11 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+			DemocracLV1.setPosition(50, 150);
+			DemocracLV2.setPosition(1100, 150);
+			DemocracLV3.setPosition(500, 550);
+			DemocracLV4.setPosition(900, 350);
+
 			Enemy3Shadow.setScale(Shadow3Scale);
 			lifeCheck = false;
 			DemocracLv4Col = false;
@@ -6200,7 +6227,8 @@ int main() {
 	else {
 		gameoverSound.play();
 	}
-	if (DemocracLv4Col == true) {
+	//if (DemocracLv4Col == true) {
+	if(n==7){
 		backgroundSound.pause();
 		pauseStatus = true;
 		window.clear();
@@ -6216,12 +6244,10 @@ int main() {
 		window.draw(dot);
 		Mainmenu.setPosition(620, 600);
 		window.draw(Mainmenu);
-
-		
-	
-
+		window.draw(ending);
+		window.draw(endingtx);
 	}
-		window.draw(mouseHitBox);
+		//window.draw(mouseHitBox);
 		//window.draw(enemy01Area);
 		window.display();
 
