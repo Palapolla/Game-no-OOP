@@ -1274,6 +1274,7 @@ int main() {
 	Name.setOutlineThickness(1);
 	sf::String inputName;
 	Name.setString("Enter name : ");
+
 	/*#########################################################################################################
 
 												Sound
@@ -1325,7 +1326,6 @@ int main() {
 	finalTime.setFillColor(sf::Color::White);
 	finalTime.setString("Final Time : ");
 	finalTime.setPosition(700, 0);
-
 
 	sf::Text finalTimerClockSec;
 	finalTimerClockSec.setFont(font);
@@ -1458,7 +1458,9 @@ int main() {
 		
 		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 		mouseHitBox.setPosition(mousePos.x,mousePos.y);
+		sf::Vector2f hitBox = mouseHitBox.getPosition();
 		
+
 		//###########################################Pause Button###################################################//
 			if (mouseHitBox.getGlobalBounds().intersects(Pause.getGlobalBounds())) {
 				mouseColPause = true;
@@ -1506,6 +1508,7 @@ int main() {
 		//Set Status//
 
 		if (n == 0) {
+
 			DemocracLV1.setPosition(50, 150);
 			DemocracLV2.setPosition(1100, 150);
 			DemocracLV3.setPosition(500, 550);
@@ -4364,19 +4367,15 @@ int main() {
 			n = num;
 			timerload = true;
 		}
-		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			//Random LEVEL//
-			n = 10;
-			Start.setPosition(620, 360);
-			
-		}
+
 
 		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			//Random LEVEL//
 			n = 10;
-			Start.setPosition(620, 360);
 			inputName.clear();
+			Start.setPosition(620, 360);
 		}
+
 
 		if (n==10&&event.type == sf::Event::TextEntered) {
 			
@@ -4593,34 +4592,34 @@ int main() {
 		if (bull1State == true && bulletNo[0] == 0) {
 			if (bull1Col == false) {
 				//Q1
-				if (mousePos.x > playerPosition.x && mousePos.y < playerPosition.y) {
+				if (hitBox.x > playerPosition.x && hitBox.y < playerPosition.y) {
 					//printf("1\n");
-					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull1Y;
 					spBull1Y = spBull1Y * -1;
 				}
 				//Q2
-				else if (mousePos.x < playerPosition.x && mousePos.y < playerPosition.y) {
+				else if (hitBox.x < playerPosition.x && hitBox.y < playerPosition.y) {
 					//printf("2\n");
-					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull1Y;
 					spBull1X = spBull1X * -1;
 					spBull1Y = spBull1Y * -1;
 				}
 				//Q3
-				else if (mousePos.x < playerPosition.x && mousePos.y > playerPosition.y) {
+				else if (hitBox.x < playerPosition.x && hitBox.y > playerPosition.y) {
 
 					//printf("3\n");
-					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull1Y;
 					spBull1X = spBull1X * -1;
 
 				}
 				//Q4
-				else if (mousePos.x > playerPosition.x && mousePos.y > playerPosition.y) {
+				else if (hitBox.x > playerPosition.x && hitBox.y > playerPosition.y) {
 					//printf("4\n");
-					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull1X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull1Y;
+					spBull1Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull1X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull1Y;
 
 				}
 				bullet1.setPosition(playerPosition.x + 50, playerPosition.y + 50);
@@ -4646,34 +4645,34 @@ int main() {
 		if (bull2State == true && bulletNo[1] == 0) {
 			if (bull2Col == false) {
 				//Q1
-				if (mousePos.x > playerPosition.x && mousePos.y < playerPosition.y) {
+				if (hitBox.x > playerPosition.x && hitBox.y < playerPosition.y) {
 					//printf("1\n");
-					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull2Y;
 					spBull2Y = spBull2Y * -1;
 				}
 				//Q2
-				else if (mousePos.x < playerPosition.x && mousePos.y < playerPosition.y) {
+				else if (hitBox.x < playerPosition.x && hitBox.y < playerPosition.y) {
 					//printf("2\n");
-					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull2Y;
 					spBull2X = spBull2X * -1;
 					spBull2Y = spBull2Y * -1;
 				}
 				//Q3
-				else if (mousePos.x < playerPosition.x && mousePos.y > playerPosition.y) {
+				else if (hitBox.x < playerPosition.x && hitBox.y > playerPosition.y) {
 
 					//printf("3\n");
-					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull2Y;
 					spBull2X = spBull2X * -1;
 
 				}
 				//Q4
-				else if (mousePos.x > playerPosition.x && mousePos.y > playerPosition.y) {
+				else if (hitBox.x > playerPosition.x && hitBox.y > playerPosition.y) {
 					//printf("4\n");
-					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull2X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull2Y;
+					spBull2Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull2X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull2Y;
 
 				}
 				bullet2.setPosition(playerPosition.x + 50, playerPosition.y + 50);
@@ -4695,34 +4694,34 @@ int main() {
 		if (bull3State == true && bulletNo[2] == 0) {
 			if (bull3Col == false) {
 				//Q1
-				if (mousePos.x > playerPosition.x && mousePos.y < playerPosition.y) {
+				if (hitBox.x > playerPosition.x && hitBox.y < playerPosition.y) {
 					//printf("1\n");
-					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull3Y;
 					spBull3Y = spBull3Y * -1;
 				}
 				//Q2
-				else if (mousePos.x < playerPosition.x && mousePos.y < playerPosition.y) {
+				else if (hitBox.x < playerPosition.x && hitBox.y < playerPosition.y) {
 					//printf("2\n");
-					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull3Y;
 					spBull3X = spBull3X * -1;
 					spBull3Y = spBull3Y * -1;
 				}
 				//Q3
-				else if (mousePos.x < playerPosition.x && mousePos.y > playerPosition.y) {
+				else if (hitBox.x < playerPosition.x && hitBox.y > playerPosition.y) {
 
 					//printf("3\n");
-					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull3Y;
 					spBull3X = spBull3X * -1;
 
 				}
 				//Q4
-				else if (mousePos.x > playerPosition.x && mousePos.y > playerPosition.y) {
+				else if (hitBox.x > playerPosition.x && hitBox.y > playerPosition.y) {
 					//printf("4\n");
-					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y), 2) + 1));
-					spBull3X = (abs(playerPosition.x - mousePos.x) / abs(playerPosition.y - mousePos.y)) * spBull3Y;
+					spBull3Y = sqrt(625 / (pow(abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y), 2) + 1));
+					spBull3X = (abs(playerPosition.x - hitBox.x) / abs(playerPosition.y - hitBox.y)) * spBull3Y;
 
 				}
 				bullet3.setPosition(playerPosition.x + 50, playerPosition.y + 50);
