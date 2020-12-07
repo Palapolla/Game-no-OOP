@@ -972,7 +972,7 @@ int main() {
 	bool DemocracLv4Col = false;
 	float animateDemocracLV4Frame = 0;
 
-	scanf("%d", &n);
+	//scanf("%d", &n);
 
 	/*#########################################################################################################
 
@@ -6200,6 +6200,8 @@ int main() {
 	}
 	
 	if (pauseStatus == true) {
+		backgroundSound.play();
+		bossFightSound.play();
 		window.clear();
 		window.draw(Resume);
 		window.draw(Mainmenu);
@@ -6226,8 +6228,8 @@ int main() {
 	else {
 		gameoverSound.play();
 	}
-	//if (DemocracLv4Col == true) {
-	if(n==7){
+	if (DemocracLv4Col == true) {
+	
 		backgroundSound.pause();
 		pauseStatus = true;
 		window.clear();
