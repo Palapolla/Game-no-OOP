@@ -1485,7 +1485,7 @@ int main() {
 				pauseStatus = false;
 			}
 
-			if ((pauseStatus == true|| n == 99|| DemocracLv4Col == true) && mouseHitBox.getGlobalBounds().intersects(Mainmenu.getGlobalBounds())) {
+			if ((pauseStatus == true|| n == 99||n==10|| DemocracLv4Col == true) && mouseHitBox.getGlobalBounds().intersects(Mainmenu.getGlobalBounds())) {
 				mouseColMainmenu = true;
 				Mainmenu.setScale(MainmenuScale.x * 1.2, MainmenuScale.y * 1.2);
 			}
@@ -4365,6 +4365,9 @@ int main() {
 			timerload = true;
 		}
 
+		if (n == 10 && mouseColMainmenu == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			n = 0;
+		}
 
 		if (n == 0 && mouseColStart == true && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			//Random LEVEL//
@@ -5409,6 +5412,8 @@ int main() {
 		else if (n == 10) {
 			window.draw(Name);
 			window.draw(Start);
+			window.draw(Mainmenu);
+			Mainmenu.setPosition(620, 600);
 		}
 		else if (n == 99) {
 			Mainmenu.setPosition(620, 650);
