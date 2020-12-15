@@ -143,7 +143,6 @@ int main() {
 
 	//---------------------------------------level 1----------------------------------------------//
 
-
 	//**********wall1**********//
 
 	sf::Texture wall1_tx;
@@ -227,8 +226,6 @@ int main() {
 	enemy01Heart3.setOrigin(10, 10);
 	enemy01Heart3.setTexture(&enemy01Heart1_tx);
 	
-	
-
 
 	//**********Enemy02**********//
 
@@ -1273,7 +1270,7 @@ int main() {
 	char playername[3];
 	Name.setOutlineThickness(1);
 	sf::String inputName;
-	Name.setString("Enter name : ");
+	Name.setString("Enter name : ____ ");
 
 	/*#########################################################################################################
 
@@ -4394,6 +4391,8 @@ int main() {
 				//strcpy(intName, &(inputName.operator std::string).c_str());
 				//NameCount += 1;
 				//printf("%d\n", event.text.unicode);
+				Name.setString("Enter name : ____");
+				
 				Name.setString("Enter name : " + inputName);
 		}
 		
@@ -6216,7 +6215,13 @@ int main() {
 		finalTimerClockMilliSec.setString(millisecShow);
 		finalTimerClockMilliSec.setPosition(1005, 0);
 		finalTimerClockSec.setString(secShow);
-		finalTimerClockSec.setPosition(950, 0);
+		if (sec >= 10) {
+			finalTimerClockSec.setPosition(940, 0);
+		}
+		if (sec >= 100) {
+			finalTimerClockSec.setPosition(920, 0);
+		}
+
 		window.draw(finalTimerClockMilliSec);
 		window.draw(finalTimerClockSec);
 		window.draw(finalTime);
@@ -6237,7 +6242,13 @@ int main() {
 		finalTimerClockMilliSec.setString(millisecShow);
 		finalTimerClockMilliSec.setPosition(1005, 0);
 		finalTimerClockSec.setString(secShow);
-		finalTimerClockSec.setPosition(950, 0);
+		if (sec >= 10) {
+			finalTimerClockSec.setPosition(940, 0);
+		}
+		if (sec >= 100) {
+			finalTimerClockSec.setPosition(920, 0);
+		}
+
 		window.draw(finalTimerClockMilliSec);
 		window.draw(finalTimerClockSec);
 		window.draw(finalTime);
